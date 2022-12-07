@@ -1,5 +1,6 @@
-export { default as AllProductsPage } from "./AllProductsPage";
+export { default as AdminDashboard } from "./AdminDashboard";
+export { default as AllVinylsPage } from "./AllVinylsPage";
 export { default as LandingPage } from "./LandingPage";
 export { default as Login } from "./Login";
 export { default as SingleArtistPage } from "./SingleArtistPage";
-export { default as SingleProductPage } from "./SingleProductPage";
+export { default as SingleVinylPage } from "./SingleVinylPage";
