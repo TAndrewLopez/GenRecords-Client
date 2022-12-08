@@ -7,11 +7,11 @@ import vinylCollection from "./vinylCollection.jpg";
 import vinylShopper from "./vinylShopper.jpg";
 
 export default [
-  { src: garageCollection, alt: "garage-collection" },
+  { src: recordPlayerClose, alt: "record-player-close" },
+  { src: vinylShopper, alt: "vinyl-shopper" },
   { src: musicForPeople, alt: "music-for-the-people" },
   { src: recordPlayer, alt: "record-player" },
-  { src: recordPlayerClose, alt: "record-player-close" },
-  { src: recordsWithHeadphones, alt: "record-with-headphones" },
+  { src: garageCollection, alt: "garage-collection" },
   { src: vinylCollection, alt: "vinyl-collection" },
-  { src: vinylShopper, alt: "vinyl-shopper" },
+  { src: recordsWithHeadphones, alt: "record-with-headphones" },
 ];

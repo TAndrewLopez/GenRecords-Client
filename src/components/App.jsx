@@ -11,9 +11,9 @@ import {
 
 const App = () => {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen w-full flex flex-col">
       <Header />
-      <ToastNotification />
+      {/* <ToastNotification /> */}
       <Routes>
         <Route path={"/login"} element={<Login />} />
 

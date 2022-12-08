@@ -7,7 +7,7 @@ const Header = () => {
     { path: "/admin", name: "Admin" },
   ];
   return (
-    <header className="bg-shade-9 flex px-5 py-3">
+    <header className="bg-shade-9 flex p-5">
       <Link className="text-white hover:text-sec" to="/">
         Logo
       </Link>

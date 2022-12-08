@@ -1,5 +1,5 @@
 const AdminDashboard = () => {
-  return <div>ADMIN DASHBOARD</div>;
+  return <div className="flex-1">ADMIN DASHBOARD</div>;
 };
 
 export default AdminDashboard;

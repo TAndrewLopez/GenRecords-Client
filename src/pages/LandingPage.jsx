@@ -5,8 +5,8 @@ import images from "../assets/index";
 
 const LandingPage = () => {
   return (
-    <div className="">
-      <Carousel slides={images} />
+    <div className="flex-1 flex ">
+      <Carousel slides={images} interval={5000} />
     </div>
   );
 };
