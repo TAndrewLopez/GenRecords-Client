@@ -11,7 +11,7 @@ import {
 
 const App = () => {
   return (
-    <>
+    <div className="h-screen flex flex-col">
       <Header />
       <ToastNotification />
       <Routes>
@@ -25,7 +25,7 @@ const App = () => {
         <Route path={"/singleArtist/:id"} element={<LandingPage />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 };
 
