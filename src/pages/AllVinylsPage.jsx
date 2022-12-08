@@ -1,7 +1,9 @@
-import React from "react";
-
-const AllProductsPage = () => {
-  return <div className="flex-1">DISPLAY ALL PRODUCTS </div>;
+const AllVinylsPage = () => {
+  return (
+    <div className="flex-1 flex justify-center bg-shade-7">
+      DISPLAY ALL PRODUCTS
+    </div>
+  );
 };
 
-export default AllProductsPage;
+export default AllVinylsPage;

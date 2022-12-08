@@ -1,14 +1,5 @@
-import { Carousel } from "../components/DynamicCarousel/index";
-
-//ASSETS
-import images from "../assets/index";
-
 const LandingPage = () => {
-  return (
-    <div className="flex-1 flex ">
-      <Carousel slides={images} interval={5000} />
-    </div>
-  );
+  return <div className="flex-1 flex justify-center bg-shade-7">CONTENT</div>;
 };
 
 export default LandingPage;

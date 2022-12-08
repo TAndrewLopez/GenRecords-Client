@@ -70,9 +70,11 @@ const Carousel = ({
             active={currentSlide}
             images={slides}
             switchIndex={switchIndex}
+            hoverColor="sec"
           />
         )}
-        {controls && <CarouselControls slide={slide} />}
+
+        {controls && <CarouselControls slide={slide} hoverColor="sec" />}
       </div>
     </div>
   );
