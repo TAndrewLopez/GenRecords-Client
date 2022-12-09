@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getVinyls } from "../../redux/features/shopSlice";
+import { shopGetVinyls } from "../../redux/features/shopSlice";
 
 const AllVinylsPage = () => {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ const AllVinylsPage = () => {
 
   useEffect(() => {
     if (!allVinyls.length) {
-      dispatch(getVinyls());
+      dispatch(shopGetVinyls());
     }
   }, []);
 
