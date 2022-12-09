@@ -3,6 +3,9 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        shopperBG: `url(/src/assets/vinylShopper.jpg)`,
+      },
       colors: {
         "shade-1": "#f8f9fa",
         "shade-2": "#e9ecef",
@@ -17,6 +20,9 @@ module.exports = {
         sec: "#EA5455",
         accent: "#F07B3F",
         highlight: "#FFD460",
+      },
+      animation: {
+        loading: "1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite",
       },
     },
   },

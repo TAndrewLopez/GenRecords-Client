@@ -1,30 +1,31 @@
 import { Routes, Route } from "react-router-dom";
-import { Header, ToastNotification, Footer } from "./";
+import { PrivateRoute } from "./";
 import {
-  LandingPage,
   AdminDashboard,
   AllVinylsPage,
+  LandingPage,
   Login,
-  SingleVinylPage,
+  ProfilePage,
   SingleArtistPage,
+  SingleVinylPage,
 } from "../pages";
 
 const App = () => {
   return (
     <div className="h-screen w-full flex flex-col">
-      <Header />
-      {/* <ToastNotification /> */}
       <Routes>
         <Route path={"/login"} element={<Login />} />
 
         <Route index element={<LandingPage />} />
         <Route path={"/vinyls"} element={<AllVinylsPage />} />
-        <Route path={"/admin"} element={<AdminDashboard />} />
+        <Route element={<PrivateRoute />}>
+          <Route path={"/admin"} element={<AdminDashboard />} />
+        </Route>
+        <Route path={"/profilePage"} element={<ProfilePage />} />
 
         <Route path={"/singleVinyl/:id"} element={<SingleVinylPage />} />
-        <Route path={"/singleArtist/:id"} element={<LandingPage />} />
+        <Route path={"/singleArtist/:id"} element={<SingleArtistPage />} />
       </Routes>
-      <Footer />
     </div>
   );
 };

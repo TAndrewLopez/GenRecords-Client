@@ -1,15 +1,9 @@
 import { Link } from "react-router-dom";
 
-const NavLinks = () => {
-  const linkInfo = [
-    { path: "/", name: "Home" },
-    { path: "/vinyls", name: "Vinyls" },
-    { path: "/admin", name: "Admin" },
-  ];
-
+const NavLinks = ({ links }) => {
   return (
     <>
-      {linkInfo.map((link, i) => (
+      {links.map((link, i) => (
         <Link
           className="text-white hover:text-sec"
           to={link.path}
