@@ -17,8 +17,9 @@ const shopSlice = createSlice({
       state.shopError = action.payload;
     });
     builder.addCase(shopGetVinyls.fulfilled, (state, action) => {
+      const { vinyls } = action.payload;
       state.isLoading = false;
-      state.allVinyls = action.payload.sort((a, b) => a.id - b.id);
+      state.allVinyls = vinyls.sort((a, b) => a.id - b.id);
     });
   },
 });

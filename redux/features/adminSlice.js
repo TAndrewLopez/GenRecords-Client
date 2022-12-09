@@ -8,6 +8,7 @@ const adminSlice = createSlice({
     adminError: null,
   },
   extraReducers: (builder) => {
+    //VINYLS THUNK
     builder.addCase(adminGetVinyls.pending, (state) => {
       state.isLoading = true;
     });
@@ -17,8 +18,23 @@ const adminSlice = createSlice({
       state.adminError = action.payload;
     });
     builder.addCase(adminGetVinyls.fulfilled, (state, action) => {
+      const { vinyls } = action.payload;
       state.isLoading = false;
-      state.vinyls = action.payload.sort((a, b) => a.id - b.id);
+      state.vinyls = [...vinyls.sort((a, b) => a.id - b.id)];
+    });
+    //USERS THUNK
+    builder.addCase(adminGetUsers.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(adminGetUsers.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.users = [];
+      state.adminError = payload;
+    });
+    builder.addCase(adminGetUsers.fulfilled, (state, action) => {
+      const { users } = action.payload;
+      state.isLoading = false;
+      state.users = users.sort((a, b) => a.id - b.id);
     });
   },
 });
@@ -29,6 +45,23 @@ export const adminGetVinyls = createAsyncThunk(
     const baseURL = "http://localhost:7000/api/";
     const response = await fetch(baseURL + "shop", {
       method: "GET",
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    return response;
+  }
+);
+
+export const adminGetUsers = createAsyncThunk(
+  "adminGetUsers",
+  async (thunkAPI) => {
+    const baseURL = "http://localhost:7000/api/";
+    const response = await fetch(baseURL + "auth", {
+      method: "GET",
+      headers: {
+        authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzMwMTQxNjQsImlkIjoxLCJpYXQiOjE2NzA0MjIxNjR9.kbRz3rBmJIPZTBAY81ZxaNMK4PjvTCm69PoyYZh8AQY",
+      },
     })
       .then((res) => res.json())
       .catch((err) => console.error(err));
