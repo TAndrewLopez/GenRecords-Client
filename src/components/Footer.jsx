@@ -1,8 +1,8 @@
 import { GithubIcon, SpotifyIcon } from "./assets";
 
-const Footer = () => {
+const Footer = ({ twClass }) => {
   return (
-    <footer className="px-5 py-3 text-white flex justify-center bg-shade-9">
+    <footer className={twClass}>
       <a
         className="flex cursor-pointer"
         onClick={() => openInNewTab("https://github.com/TAndrewLopez")}>

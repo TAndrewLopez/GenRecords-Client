@@ -5,13 +5,13 @@ import { Header } from "../components";
 
 const LandingPage = () => {
   const bgImages = [
-    `url(/public/vinylShopper.jpg)`,
-    `url(/public/garageCollection.jpg)`,
-    `url(/public/musicForPeople.jpg)`,
-    `url(/public/recordPlayer.jpg)`,
-    `url(/public/recordPlayerClose.jpg)`,
-    `url(/public/recordsWithHeadphones.jpg)`,
-    `url(/public/vinylCollection.jpg)`,
+    `url(/vinylShopper.jpg)`,
+    `url(/garageCollection.jpg)`,
+    `url(/musicForPeople.jpg)`,
+    `url(/recordPlayer.jpg)`,
+    `url(/recordPlayerClose.jpg)`,
+    `url(/recordsWithHeadphones.jpg)`,
+    `url(/vinylCollection.jpg)`,
   ];
 
   let num = 0;
