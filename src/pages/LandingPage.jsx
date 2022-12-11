@@ -27,11 +27,14 @@ const LandingPage = () => {
 
   return (
     <>
-      <Header headerClass={"flex justify-between p-5"} />
+      <Header headerClass={"flex text-xl justify-between p-5 min-w-[350px]"} />
+
       <div className="flex-1 flex justify-center items-center ">
         <div
+          className={`absolute top-0 left-0 w-full h-full -z-10 bg-shopperBG bg-no-repeat bg-center bg-cover ease-in-out duration-300`}>
+          {/* <div
           style={{ backgroundImage: `${pageBG}` }}
-          className={`absolute top-0 left-0 w-full h-full -z-10 bg-no-repeat bg-center bg-cover ease-in-out duration-300`}>
+          className={`absolute top-0 left-0 w-full h-full -z-10 bg-no-repeat bg-center bg-cover ease-in-out duration-300`}> */}
           <div className="h-full w-full bg-shade-9 opacity-40"></div>
         </div>
         <div className="relative text-white flex flex-col items-center gap-5 p-5">
@@ -39,7 +42,7 @@ const LandingPage = () => {
           <h1 className="text-3xl">The Destination for Music Enthusiasts</h1>
           <button>
             <Link
-              className="bg-sec px-5 py-2 rounded hover:bg-highlight ease-in-out duration-300"
+              className="bg-accent px-5 py-2 rounded hover:bg-highlight ease-in-out duration-300"
               to={"/vinyls"}>
               Explore Vinyls
             </Link>

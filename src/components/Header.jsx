@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { NavLinks } from "./";
-import { CartIcon, ProfilesIcon } from "../components/assets";
+import { CartIcon, ProfileIcon } from "../components/assets";
 
 const Header = ({ headerClass }) => {
   const { isAdmin } = useSelector((state) => state.authReducer);
@@ -19,10 +19,16 @@ const Header = ({ headerClass }) => {
       <nav className="hidden sm:block">
         <ul className="flex gap-8">
           <NavLinks links={linkInfo} />
-          {isAdmin ? <Link to={"/admin"}>Admin Dashboard</Link> : ""}
+          {isAdmin ? (
+            <Link className="text-white hover:text-sec" to={"/admin"}>
+              Admin Dashboard
+            </Link>
+          ) : (
+            ""
+          )}
           <CartIcon twClass={"w-4 fill-white hover:fill-sec cursor-pointer"} />
           <Link to={"/profilePage"}>
-            <ProfilesIcon
+            <ProfileIcon
               twClass={"w-4 fill-white hover:fill-sec cursor-pointer"}
             />
           </Link>

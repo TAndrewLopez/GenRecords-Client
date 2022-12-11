@@ -1,0 +1,31 @@
+import { useState } from "react";
+import { Header, Footer, CreateAccountForm } from "../components";
+import { LoginForm } from "../components";
+
+const AuthForm = () => {
+  const [form, setForm] = useState(false);
+  return (
+    <>
+      <Header headerClass={"flex text-xl justify-between p-5"} />
+
+      <div
+        className={`absolute top-0 left-0 w-full h-full -z-10 bg-cassetteWallBG bg-no-repeat bg-center bg-cover ease-in-out duration-300`}>
+        <div className="h-full w-full bg-shade-9 opacity-40"></div>
+      </div>
+
+      <div className="flex-1 flex justify-center items-center">
+        {form ? (
+          <CreateAccountForm toggle={setForm} />
+        ) : (
+          <LoginForm toggle={setForm} />
+        )}
+      </div>
+
+      {/* <Footer
+        twClass={"px-5 py-3 text-white flex justify-center min-w-[350px]"}
+      /> */}
+    </>
+  );
+};
+
+export default AuthForm;

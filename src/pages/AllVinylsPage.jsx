@@ -1,7 +1,13 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { shopGetVinyls } from "../../redux/features/shopSlice";
-import { Header, Footer, SpinningLoader, VinylCard } from "../components";
+import {
+  Carousel,
+  Header,
+  Footer,
+  SpinningLoader,
+  VinylCard,
+} from "../components";
 
 const AllVinylsPage = () => {
   const dispatch = useDispatch();
@@ -26,19 +32,26 @@ const AllVinylsPage = () => {
   return (
     <>
       <Header
-        headerClass={"flex justify-between p-5 bg-shade-9 min-w-[350px]"}
+        headerClass={
+          "flex text-xl justify-between p-5 bg-shade-9 min-w-[350px]"
+        }
       />
-      <div className="flex-1 flex justify-center bg-shade-7 min-w-[350px]">
+
+      <div className="flex-1 flex flex-col justify-center min-w-[350px]">
         {isLoading ? (
           <div>Loading...</div>
         ) : (
-          <div className="flex flex-wrap justify-center">
-            {allVinyls.map((vinyl) => (
-              <VinylCard vinyl={vinyl} key={vinyl.id} />
-            ))}
-          </div>
+          <>
+            <div>sort options, searchbar, genres</div>
+            <div className="flex flex-wrap justify-center bg-shade-6">
+              {allVinyls.map((vinyl) => (
+                <VinylCard vinyl={vinyl} key={vinyl.id} />
+              ))}
+            </div>
+          </>
         )}
       </div>
+
       <Footer
         twClass={
           "px-5 py-3 text-white flex justify-center bg-shade-9 min-w-[350px]"

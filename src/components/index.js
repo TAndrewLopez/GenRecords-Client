@@ -6,4 +6,6 @@ export { default as NavLinks } from "./NavLinks";
 export { default as PrivateRoute } from "./PrivateRoute";
 export { default as SpinningLoader } from "./SpinningLoader";
 export { default as ToastNotification } from "./ToastNotification";
+export { default as LoginForm } from "./AuthForm/LoginForm";
+export { default as CreateAccountForm } from "./AuthForm/CreateAccountForm";
 export { default as VinylCard } from "./VinylCard";

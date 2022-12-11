@@ -1,4 +1,4 @@
-const ProfilesIcon = ({ twClass }) => {
+const ProfileIcon = ({ twClass }) => {
   return (
     <svg
       className={twClass}
@@ -9,4 +9,4 @@ const ProfilesIcon = ({ twClass }) => {
   );
 };
 
-export default ProfilesIcon;
+export default ProfileIcon;
