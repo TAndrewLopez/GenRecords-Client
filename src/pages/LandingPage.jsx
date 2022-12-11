@@ -27,7 +27,7 @@ const LandingPage = () => {
 
   return (
     <>
-      <Header headerClass={"flex text-xl justify-between p-5 min-w-[350px]"} />
+      <Header headerClass={"flex text-xl justify-between p-5"} />
 
       <div className="flex-1 flex justify-center items-center ">
         <div

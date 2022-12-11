@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Header, Footer } from "../components";
 
 const ProfilePage = () => {
+  const { loggedIn, firstName } = useSelector((state) => state.authReducer);
+
   return (
     <>
       <Header
@@ -10,10 +13,16 @@ const ProfilePage = () => {
         }
       />
       <div className="flex-1 flex flex-col items-center justify-center bg-shade-7">
-        <Link className="text-white hover:text-sec" to="/auth">
-          Login
-        </Link>
-        Welcome, to your profile page user.
+        {loggedIn ? (
+          <h1>Welcome to your profile page, {firstName}.</h1>
+        ) : (
+          <Link className="text-white hover:text-sec" to="/auth">
+            Login
+          </Link>
+        )}
+
+        <li>Update Profile Information</li>
+        <li>Order History</li>
       </div>
       <Footer
         twClass={

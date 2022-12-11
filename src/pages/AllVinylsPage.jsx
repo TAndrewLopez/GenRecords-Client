@@ -1,13 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { shopGetVinyls } from "../../redux/features/shopSlice";
-import {
-  Carousel,
-  Header,
-  Footer,
-  SpinningLoader,
-  VinylCard,
-} from "../components";
+import { Header, Footer, SpinningLoader, VinylCard } from "../components";
 
 const AllVinylsPage = () => {
   const dispatch = useDispatch();
@@ -38,6 +32,10 @@ const AllVinylsPage = () => {
       />
 
       <div className="flex-1 flex flex-col justify-center min-w-[350px]">
+        <li>Featured</li>
+        <li>Top</li>
+        <li>Holiday?</li>
+
         {isLoading ? (
           <div>Loading...</div>
         ) : (

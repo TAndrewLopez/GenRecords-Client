@@ -8,7 +8,7 @@ const authSlice = createSlice({
     lastName: "",
     username: "",
     email: "",
-    isAdmin: true,
+    isAdmin: false,
     loggedIn: false,
   },
   extraReducers: (builder) => {
@@ -25,16 +25,31 @@ const authSlice = createSlice({
     });
   },
 });
+const BASE_URL = "http://localhost:7000/api/auth/";
+
+export const me = createAsyncThunk("me", async (thunkAPI) => {
+  const authorization = localStorage.getItem("authorization");
+
+  const response = await fetch(BASE_URL + "me", {
+    method: "GET",
+    headers: { authorization },
+  })
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
+  console.log(response, "expecting user");
+  return response;
+});
 
 export const getUser = createAsyncThunk("login", async (form, thunkAPI) => {
-  const baseURL = "http://localhost:7000/api/auth/";
-  const response = await fetch(baseURL + "login", {
+  const { authorization } = await fetch(BASE_URL + "login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(form),
   })
     .then((res) => res.json())
     .catch((err) => console.error(err));
+  localStorage.setItem("authorization", authorization);
+  thunkAPI.dispatch(me());
   return response;
 });
 
