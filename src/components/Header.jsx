@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { NavLinks } from "./";
+import { NavLinks, MobileNavOverlay } from "./";
 import { CartIcon, ProfileIcon } from "../components/assets";
+import { useState } from "react";
 
 const Header = ({ headerClass }) => {
   const { isAdmin } = useSelector((state) => state.authReducer);
+  const [overlay, setOverlay] = useState(false);
 
   const linkInfo = [
     { path: "/", name: "Home" },
@@ -34,9 +36,12 @@ const Header = ({ headerClass }) => {
           </Link>
         </ul>
       </nav>
-      <div className="text-white sm:hidden">
+      <div
+        onClick={() => setOverlay(!overlay)}
+        className="relative z-30 text-white sm:hidden">
         <button>Hamburger</button>
       </div>
+      {overlay ? <MobileNavOverlay links={linkInfo} /> : <></>}
     </header>
   );
 };

@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        shopperBG: `url(/public/vinylShopper.jpg)`,
-        cassetteWallBG: `url(/public/cassetteWall.jpg)`,
+        shopperBG: `url(/vinylShopper.jpg)`,
+        cassetteWallBG: `url(/cassetteWall.jpg)`,
       },
       colors: {
         "shade-1": "#f8f9fa",
