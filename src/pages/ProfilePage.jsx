@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Footer } from "../components";
+import { logout } from "../../redux/features/authSlice";
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
   const { loggedIn, firstName } = useSelector((state) => state.authReducer);
 
   return (
@@ -14,7 +16,15 @@ const ProfilePage = () => {
       />
       <div className="flex-1 flex flex-col items-center justify-center bg-shade-7">
         {loggedIn ? (
-          <h1>Welcome to your profile page, {firstName}.</h1>
+          <>
+            <h1>Welcome to your profile page, {firstName}.</h1>
+            <button
+              onClick={() => dispatch(logout())}
+              className="text-white hover:text-sec"
+              to="/auth">
+              Logout
+            </button>
+          </>
         ) : (
           <Link className="text-white hover:text-sec" to="/auth">
             Login

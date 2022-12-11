@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Header, Footer, CreateAccountForm } from "../components";
+import { Header, CreateAccountForm } from "../components";
 import { LoginForm } from "../components";
 
 const AuthForm = () => {
   const [form, setForm] = useState(false);
+
   return (
     <>
       <Header headerClass={"flex text-xl justify-between p-5"} />
@@ -20,10 +21,6 @@ const AuthForm = () => {
           <LoginForm toggle={setForm} />
         )}
       </div>
-
-      {/* <Footer
-        twClass={"px-5 py-3 text-white flex justify-center min-w-[350px]"}
-      /> */}
     </>
   );
 };
