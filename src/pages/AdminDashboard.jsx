@@ -24,19 +24,13 @@ const AdminDashboard = () => {
 
   return (
     <>
-      <Header
-        headerClass={
-          "flex text-xl justify-between p-5 bg-shade-9 min-w-[350px]"
-        }
-      />
-      <div className="flex-1 flex justify-center bg-shade-7">
+      <Header headerClass={"flex text-xl justify-between p-5 bg-shade-9"} />
+      <div className="flex-1 flex justify-center bg-shade-7 ">
         {`Users loaded: ${users.length}`} <br />
         {`Vinyls loaded: ${vinyls.length}`}
       </div>
       <Footer
-        twClass={
-          "px-5 py-3 text-white flex justify-center bg-shade-9 min-w-[350px]"
-        }
+        twClass={"px-5 py-3 text-white flex justify-center bg-shade-9 "}
       />
     </>
   );

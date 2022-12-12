@@ -1,7 +1,14 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { shopGetVinyls } from "../../redux/features/shopSlice";
-import { Header, Footer, VinylCard } from "../components";
+import {
+  Header,
+  Footer,
+  VinylCard,
+  DropDown,
+  SearchField,
+} from "../components";
+
 import { SpinningLoader } from "../components/assets";
 
 const AllVinylsPage = () => {
@@ -17,7 +24,7 @@ const AllVinylsPage = () => {
   }, []);
 
   if (shopError) {
-    return <div>Error</div>;
+    return <div>{`Error: ${shopError}`}</div>;
   }
 
   if (isLoading) {
@@ -32,23 +39,27 @@ const AllVinylsPage = () => {
         }
       />
 
-      <div className="flex-1 flex flex-col justify-center min-w-[350px]">
-        <li>Featured</li>
-        <li>Top</li>
-        <li>Holiday?</li>
+      <div className="flex-1 flex flex-col justify-center min-w-[350px] bg-shade-6">
+        <ul>
+          <li>Featured</li>
+          <li>Top</li>
+          <li>Holiday?</li>
+        </ul>
 
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          <>
-            <div>sort options, searchbar, genres</div>
-            <div className="flex flex-wrap justify-center bg-shade-6">
-              {allVinyls.map((vinyl) => (
-                <VinylCard vinyl={vinyl} key={vinyl.id} />
-              ))}
-            </div>
-          </>
-        )}
+        <ul className="p-3 flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between">
+          <li>
+            <SearchField />
+          </li>
+          <li>
+            <DropDown />
+          </li>
+        </ul>
+
+        <div className="flex flex-wrap justify-center">
+          {allVinyls.map((vinyl) => (
+            <VinylCard vinyl={vinyl} key={vinyl.id} />
+          ))}
+        </div>
       </div>
 
       <Footer
