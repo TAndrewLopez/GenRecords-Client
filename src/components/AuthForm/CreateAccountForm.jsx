@@ -12,10 +12,10 @@ const CreateAccountForm = ({ toggle }) => {
   const [formError, setFormError] = useState(false);
 
   const [form, setForm] = useState({
-    username: "user",
-    email: "user@genRecords.com",
-    password: "userPassword",
-    confirm: "userPassword",
+    username: "",
+    email: "",
+    password: "",
+    confirm: "",
   });
 
   const handleSubmit = async (evt) => {
@@ -25,9 +25,7 @@ const CreateAccountForm = ({ toggle }) => {
       setFormError(true);
       return;
     }
-
     dispatch(createUser(form));
-
     setErrMessage("");
     setForm({
       username: "",

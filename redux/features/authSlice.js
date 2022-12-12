@@ -24,15 +24,21 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    //LOGIN
     builder.addCase(login.pending, (state) => {
       state.isLoading = true;
+      console.log(action.payload);
     });
     builder.addCase(createUser.rejected, (state, action) => {
       state.isLoading = false;
+      console.log(action.payload);
     });
     builder.addCase(login.rejected, (state, action) => {
       state.isLoading = false;
+      console.log(action.payload);
+    });
+    builder.addCase(demoLogin.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log(action.payload);
     });
     builder.addCase(me.rejected, (state, action) => {
       state.isLoading = false;
@@ -41,7 +47,6 @@ const authSlice = createSlice({
     builder.addCase(me.fulfilled, (state, action) => {
       const { id, firstName, lastName, username, email, isAdmin } =
         action.payload;
-
       state.id = id;
       state.firstName = firstName;
       state.lastName = lastName;
@@ -82,6 +87,38 @@ export const login = createAsyncThunk("login", async (form, thunkAPI) => {
   }
   return authorization;
 });
+
+export const demoLogin = createAsyncThunk(
+  "demoLogin",
+  async (user, thunkAPI) => {
+    let demoForm;
+    if (user) {
+      demoForm = {
+        username: "administrator",
+        password: "adminPassword",
+      };
+    } else {
+      demoForm = {
+        username: "employee",
+        password: "employeePassword",
+      };
+    }
+
+    const { authorization } = await fetch(BASE_URL + "login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(demoForm),
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+
+    if (authorization) {
+      localStorage.setItem("authorization", authorization);
+      thunkAPI.dispatch(me());
+    }
+    return authorization;
+  }
+);
 
 export const createUser = createAsyncThunk(
   "createUser",

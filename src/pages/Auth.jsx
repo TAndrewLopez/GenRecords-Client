@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Header, CreateAccountForm } from "../components";
+import { Header, CreateAccountForm, DemoLoginButtons } from "../components";
 import { LoginForm } from "../components";
 
 const AuthForm = () => {
@@ -20,6 +20,7 @@ const AuthForm = () => {
         ) : (
           <LoginForm toggle={setForm} />
         )}
+        <DemoLoginButtons />
       </div>
     </>
   );

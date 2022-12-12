@@ -1,8 +1,9 @@
+export { default as App } from "./App";
 export { default as CreateAccountForm } from "./AuthForm/CreateAccountForm";
 export { default as LoginForm } from "./AuthForm/LoginForm";
 export { default as Carousel } from "./DynamicCarousel/Carousel";
 export { default as VinylCard } from "./ProductCard/VinylCard";
-export { default as App } from "./App";
+export { default as DemoLoginButtons } from "./DemoLoginButtons";
 export { default as Footer } from "./Footer";
 export { default as Header } from "./Header";
 export { default as MobileNavOverlay } from "./MobileNavOverlay";

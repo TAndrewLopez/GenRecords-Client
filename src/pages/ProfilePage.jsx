@@ -17,7 +17,9 @@ const ProfilePage = () => {
       <div className="flex-1 flex flex-col items-center justify-center bg-shade-7">
         {loggedIn ? (
           <>
-            <h1>Welcome to your profile page, {firstName}.</h1>
+            <h1>
+              Welcome to your profile page, {firstName ? firstName : "User"}.
+            </h1>
             <button
               onClick={() => dispatch(logout())}
               className="text-white hover:text-sec"
