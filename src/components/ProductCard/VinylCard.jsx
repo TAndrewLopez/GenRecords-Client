@@ -1,4 +1,4 @@
-import { StarIcon } from "../";
+import { StarIcon } from "../assets";
 
 const VinylCard = ({ vinyl }) => {
   const numberOfStars = Math.floor(popularityToStart(vinyl.popularity));

@@ -99,8 +99,8 @@ export const demoLogin = createAsyncThunk(
       };
     } else {
       demoForm = {
-        username: "employee",
-        password: "employeePassword",
+        username: "visitor",
+        password: "visitorPassword",
       };
     }
 

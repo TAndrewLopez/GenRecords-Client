@@ -1,4 +1,4 @@
-import { GithubIcon, SpotifyIcon } from "./assets";
+import { GithubIcon, SpotifyIcon } from "../assets";
 
 const Footer = ({ twClass }) => {
   return (

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { NavLinks, MobileNavOverlay } from "./";
-import { CartIcon, ProfileIcon } from "../components/assets";
+import { NavLinks, MobileNavOverlay } from "..";
+import { CartIcon, ProfileIcon } from "../assets";
 import { useState } from "react";
 
 const Header = ({ headerClass }) => {
@@ -42,6 +42,7 @@ const Header = ({ headerClass }) => {
         <button>Hamburger</button>
       </div>
       {overlay ? <MobileNavOverlay links={linkInfo} /> : <></>}
+      {/* <MobileNavOverlay links={linkInfo} isOpen={overlay} /> */}
     </header>
   );
 };

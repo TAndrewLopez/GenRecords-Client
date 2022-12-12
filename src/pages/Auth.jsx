@@ -14,14 +14,14 @@ const AuthForm = () => {
         <div className="h-full w-full bg-shade-9 opacity-40"></div>
       </div>
 
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 flex flex-col justify-center items-center">
         {form ? (
           <CreateAccountForm toggle={setForm} />
         ) : (
           <LoginForm toggle={setForm} />
         )}
-        <DemoLoginButtons />
       </div>
+      <DemoLoginButtons />
     </>
   );
 };

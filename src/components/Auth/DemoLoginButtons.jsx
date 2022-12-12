@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AdminIcon, UsersIcon } from "./assets";
-import { demoLogin } from "../../redux/features/authSlice";
+import { AdminIcon, UsersIcon } from "../assets";
+import { demoLogin } from "../../../redux/features/authSlice";
 
 const DemoLoginButtons = () => {
   const dispatch = useDispatch();
@@ -12,11 +12,11 @@ const DemoLoginButtons = () => {
   const [employeeHover, setEmployeeHover] = useState(false);
 
   return (
-    <div className="w-full fixed bottom-3 flex justify-center gap-16 md:gap-24">
+    <div className="w-full flex justify-center gap-16 md:gap-24 pb-3">
       <div
         onClick={() => {
           dispatch(demoLogin(true));
-          navigate("/");
+          navigate("/profilePage");
         }}
         onMouseEnter={() => {
           if (!adminHover) setAdminHover(true);
@@ -42,7 +42,7 @@ const DemoLoginButtons = () => {
       <div
         onClick={() => {
           dispatch(demoLogin(false));
-          navigate("/");
+          navigate("/profilePage");
         }}
         onMouseEnter={() => {
           if (!employeeHover) setEmployeeHover(true);

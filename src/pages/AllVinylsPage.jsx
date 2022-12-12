@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { shopGetVinyls } from "../../redux/features/shopSlice";
-import { Header, Footer, SpinningLoader, VinylCard } from "../components";
+import { Header, Footer, VinylCard } from "../components";
+import { SpinningLoader } from "../components/assets";
 
 const AllVinylsPage = () => {
   const dispatch = useDispatch();

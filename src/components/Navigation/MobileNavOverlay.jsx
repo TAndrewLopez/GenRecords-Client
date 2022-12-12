@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { NavLinks } from "./";
+import { NavLinks } from "..";
 
-const MobileNavOverlay = ({ links }) => {
+const MobileNavOverlay = ({ links, isOpen }) => {
   const { isAdmin } = useSelector((state) => state.authReducer);
 
   return (
