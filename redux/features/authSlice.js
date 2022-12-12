@@ -25,10 +25,13 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     //LOGIN
-    builder.addCase(getUser.pending, (state) => {
+    builder.addCase(login.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getUser.rejected, (state, action) => {
+    builder.addCase(createUser.rejected, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(login.rejected, (state, action) => {
       state.isLoading = false;
     });
     builder.addCase(me.rejected, (state, action) => {
@@ -64,7 +67,7 @@ export const me = createAsyncThunk("me", async (thunkAPI) => {
   return response;
 });
 
-export const getUser = createAsyncThunk("login", async (form, thunkAPI) => {
+export const login = createAsyncThunk("login", async (form, thunkAPI) => {
   const { authorization } = await fetch(BASE_URL + "login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -73,13 +76,31 @@ export const getUser = createAsyncThunk("login", async (form, thunkAPI) => {
     .then((res) => res.json())
     .catch((err) => console.error(err));
 
-  console.log(authorization, "somethiing");
   if (authorization) {
     localStorage.setItem("authorization", authorization);
     thunkAPI.dispatch(me());
   }
   return authorization;
 });
+
+export const createUser = createAsyncThunk(
+  "createUser",
+  async (form, thunkAPI) => {
+    const { authorization } = await fetch(BASE_URL + "signUp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+
+    if (authorization) {
+      localStorage.setItem("authorization", authorization);
+      thunkAPI.dispatch(me());
+    }
+    return authorization;
+  }
+);
 
 export default authSlice.reducer;
 export const { logout } = authSlice.actions;

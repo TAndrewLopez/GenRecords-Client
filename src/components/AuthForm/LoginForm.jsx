@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ErrorIcon, ProfileIcon, LockIcon } from "../assets";
-import { getUser } from "../../../redux/features/authSlice";
+import { login } from "../../../redux/features/authSlice";
 
 const LoginForm = ({ toggle }) => {
   const dispatch = useDispatch();
@@ -14,8 +14,8 @@ const LoginForm = ({ toggle }) => {
   const [passwordFieldValidation, setPasswordFieldValidation] = useState(false);
 
   const [form, setForm] = useState({
-    username: "administrator",
-    password: "adminPassword",
+    username: "",
+    password: "",
   });
 
   const handleSubmit = async (evt) => {
@@ -31,7 +31,7 @@ const LoginForm = ({ toggle }) => {
       return;
     }
 
-    dispatch(getUser(form));
+    dispatch(login(form));
     //RESET STATES
     setNameFocused(false);
     setPasswordFocused(false);

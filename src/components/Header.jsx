@@ -29,7 +29,7 @@ const Header = ({ headerClass }) => {
             ""
           )}
           <CartIcon twClass={"w-4 fill-white hover:fill-sec cursor-pointer"} />
-          <Link to={"/profilePage"}>
+          <Link className="flex" to={"/profilePage"}>
             <ProfileIcon
               twClass={"w-4 fill-white hover:fill-sec cursor-pointer"}
             />

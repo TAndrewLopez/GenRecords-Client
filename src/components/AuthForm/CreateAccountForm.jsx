@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ErrorIcon } from "../assets";
+import { createUser } from "../../../redux/features/authSlice";
 
 const CreateAccountForm = ({ toggle }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [errMessage, setErrMessage] = useState("");
   const [formError, setFormError] = useState(false);
 
   const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirm: "",
+    username: "user",
+    email: "user@genRecords.com",
+    password: "userPassword",
+    confirm: "userPassword",
   });
 
   const handleSubmit = async (evt) => {
@@ -22,28 +25,9 @@ const CreateAccountForm = ({ toggle }) => {
       setFormError(true);
       return;
     }
-    return;
-    const { message, error } = await fetch("api/auth/signUp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    })
-      .then((response) => response.json())
-      .catch((err) => console.error(err));
 
-    if (error) {
-      const message = error.errors[0].message;
-      if (message.includes("username")) {
-        setErrMessage("username is unavailable");
-      }
-      if (message.includes("email")) {
-        setErrMessage("email is unavailable");
-      }
-      setFormError(true);
-      return;
-    }
+    dispatch(createUser(form));
 
-    dispatch(getUser());
     setErrMessage("");
     setForm({
       username: "",
@@ -51,6 +35,7 @@ const CreateAccountForm = ({ toggle }) => {
       password: "",
       confirm: "",
     });
+    navigate("/");
   };
 
   return (
