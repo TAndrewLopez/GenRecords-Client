@@ -12,17 +12,32 @@ import {
 
 import { SpinningLoader } from "../components/assets";
 
+import {
+  sortAlbumNames,
+  sortArtistName,
+  sortPopularityScore,
+  sortPrice,
+} from "../../redux/features/shopSlice";
+
 const AllVinylsPage = () => {
   const dispatch = useDispatch();
   const { allVinyls, isLoading, shopError } = useSelector(
     (state) => state.shopReducer
   );
 
+  const sortOptions = [
+    { method: "Name", sort: sortAlbumNames },
+    { method: "Artist", sort: sortArtistName },
+    { method: "Popularity", sort: sortPopularityScore },
+    { method: "Price", sort: sortPrice },
+  ];
+
   //PAGINATION
   const [currPage, setCurrPage] = useState(1);
   const [itemsPerPage] = useState(20);
   const indexOfLastPost = currPage * 20;
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
+
   const currSlice = allVinyls.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNumber) => setCurrPage(pageNumber);
@@ -56,12 +71,12 @@ const AllVinylsPage = () => {
           <li>Holiday?</li>
         </ul> */}
 
-        <ul className="p-3 flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between">
+        <ul className="p-3 flex flex-col gap-5 sm:gap-0 sm:flex-row justify-between">
           <li>
             <SearchField />
           </li>
           <li>
-            <DropDown />
+            <DropDown sortOptions={sortOptions} vinyls={allVinyls} />
           </li>
         </ul>
 

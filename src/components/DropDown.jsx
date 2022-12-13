@@ -1,15 +1,16 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+const DropDown = ({ sortOptions, vinyls }) => {
+  const dispatch = useDispatch();
 
-const DropDown = () => {
   const [sortDropDown, setSortDropDown] = useState(false);
-  const sortOptions = ["Price", "Popularity"];
+  const [albumDir, setAlbumDir] = useState(false);
 
   return (
     <div className="flex justify-center">
       <div>
         <div className="dropdown relative">
           <button
-            onBlur={() => setSortDropDown(false)}
             onClick={() => setSortDropDown(!sortDropDown)}
             className="dropdown-toggle
             px-6
@@ -76,9 +77,17 @@ const DropDown = () => {
             "
             aria-labelledby="dropdownMenuButton1">
             {sortOptions.map((option, i) => (
-              <li key={option + i}>
+              <li
+                onClick={() => {
+                  dispatch(option.sort(albumDir));
+                  setAlbumDir(!albumDir);
+                  setSortDropDown(false);
+                }}
+                className="cursor-pointer"
+                key={option + i}>
                 <a
                   className="
+                  hover:bg-shade-2
                   dropdown-item
                   text-sm
                   py-2
@@ -87,12 +96,9 @@ const DropDown = () => {
                   block
                   w-full
                   whitespace-nowrap
-                  bg-transparent
                   text-shade-9
-                  hover:bg-shade-1
-                  "
-                  href="#">
-                  {option}
+                  ">
+                  {option.method}
                 </a>
               </li>
             ))}
