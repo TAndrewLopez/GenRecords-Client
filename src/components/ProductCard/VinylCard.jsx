@@ -4,7 +4,9 @@ const VinylCard = ({ vinyl }) => {
   const numberOfStars = Math.floor(popularityToStart(vinyl.popularity));
 
   return (
-    <div className="w-full m-5 max-w-[300px] rounded-lg shadow-md bg-shade-9">
+    <div
+      onClick={() => console.log(vinyl)}
+      className="w-full m-5 max-w-[300px] rounded-lg shadow-md bg-shade-9">
       <a href="#">
         <img className="p-5 rounded-t-lg" src={vinyl.img} alt="vinyl-image" />
       </a>

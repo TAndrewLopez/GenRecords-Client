@@ -11,4 +11,5 @@ export { default as MobileNavOverlay } from "./Navigation/MobileNavOverlay";
 export { default as VinylCard } from "./ProductCard/VinylCard";
 export { default as AdminTable } from "./AdminTable";
 export { default as DropDown } from "./DropDown";
+export { default as Pagination } from "./Pagination";
 export { default as SearchField } from "./SearchField";
