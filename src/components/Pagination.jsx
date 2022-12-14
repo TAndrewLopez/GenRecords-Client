@@ -5,7 +5,7 @@ const Pagination = ({ itemsPerPage, total, setPage, currPage }) => {
   }
 
   return (
-    <div className="flex justify-center my-2">
+    <div className="flex justify-center mb-5">
       <ul className="flex bg-shade-9 rounded-md">
         <li
           onClick={() => {

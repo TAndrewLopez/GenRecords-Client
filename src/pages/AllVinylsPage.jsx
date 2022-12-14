@@ -8,6 +8,7 @@ import {
   DropDown,
   Pagination,
   SearchField,
+  SortSelector,
 } from "../components";
 
 import { SpinningLoader } from "../components/assets";
@@ -25,11 +26,14 @@ const AllVinylsPage = () => {
     (state) => state.shopReducer
   );
 
+  //SEARCH FIELD STATES
+  const [userInput, setUserInput] = useState("");
+  const [filteredAlbums, setFilterAlbums] = useState([]);
   const sortOptions = [
-    { method: "Name", sort: sortAlbumNames },
-    { method: "Artist", sort: sortArtistName },
-    { method: "Popularity", sort: sortPopularityScore },
-    { method: "Price", sort: sortPrice },
+    { method: "Name", sort: sortAlbumNames, test: sortByAlbumName },
+    { method: "Artist", sort: sortArtistName, test: null },
+    { method: "Popularity", sort: sortPopularityScore, test: null },
+    { method: "Price", sort: sortPrice, test: null },
   ];
 
   //PAGINATION
@@ -37,9 +41,10 @@ const AllVinylsPage = () => {
   const [itemsPerPage] = useState(20);
   const indexOfLastPost = currPage * 20;
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
-
-  const currSlice = allVinyls.slice(indexOfFirstPost, indexOfLastPost);
-
+  const currSlice =
+    filteredAlbums.length || userInput
+      ? filteredAlbums.slice(indexOfFirstPost, indexOfLastPost)
+      : allVinyls.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = (pageNumber) => setCurrPage(pageNumber);
 
   useEffect(() => {
@@ -47,6 +52,10 @@ const AllVinylsPage = () => {
       dispatch(shopGetVinyls());
     }
   }, []);
+
+  useEffect(() => {
+    setFilterAlbums(allVinyls);
+  }, [allVinyls]);
 
   if (shopError) {
     return <div>{`Error: ${shopError}`}</div>;
@@ -65,26 +74,38 @@ const AllVinylsPage = () => {
       />
 
       <div className="flex-1 flex flex-col justify-center min-w-[350px] bg-shade-6">
-        {/* <ul>
-          <li>Featured</li>
-          <li>Top</li>
-          <li>Holiday?</li>
-        </ul> */}
-
-        <ul className="p-3 flex flex-col gap-5 sm:gap-0 sm:flex-row justify-between">
+        <ul className="p-3 flex flex-col gap-5 sm:gap-0 sm:flex-row justify-between bg-shade-8">
           <li>
-            <SearchField />
+            <SearchField
+              setInput={setUserInput}
+              vinyls={allVinyls}
+              filter={setFilterAlbums}
+            />
           </li>
           <li>
-            <DropDown sortOptions={sortOptions} vinyls={allVinyls} />
+            {/* FIXME: DROP DOWN ONLY WORKS FOR THE STORE BUT SEARCH FIELD USES LOCAL STATE */}
+            <DropDown
+              set={setFilterAlbums}
+              sortOptions={sortOptions}
+              vinyls={filteredAlbums}
+            />
           </li>
         </ul>
 
-        <div className="flex flex-wrap justify-center">
-          {currSlice.map((vinyl) => (
-            <VinylCard vinyl={vinyl} key={vinyl.id} />
-          ))}
+        <h1 className="text-center text-5xl my-5 text-shade-1 whitespace-nowrap after:content=[''] after:block after:h-1 after:mt-2 after:m-auto after:max-w-xs after:bg-accent">
+          Discover Vinyls
+        </h1>
+
+        <div className="flex flex-1 flex-wrap justify-center">
+          {currSlice.length ? (
+            currSlice.map((vinyl) => <VinylCard vinyl={vinyl} key={vinyl.id} />)
+          ) : (
+            <p className="text-shade-1 text-3xl m-auto">
+              Unfortunately, no results.
+            </p>
+          )}
         </div>
+
         <Pagination
           itemsPerPage={itemsPerPage}
           total={allVinyls.length}
@@ -102,3 +123,20 @@ const AllVinylsPage = () => {
 };
 
 export default AllVinylsPage;
+
+const sortByAlbumName = (arr, dir) => {
+  if (dir) {
+    arr.sort((a, b) => {
+      if (a.name < b.name) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+  arr.sort((a, b) => {
+    if (a.name > b.name) {
+      return -1;
+    }
+    return 0;
+  });
+};

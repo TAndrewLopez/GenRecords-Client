@@ -18,6 +18,7 @@ const CreateAccountForm = ({ toggle }) => {
     confirm: "",
   });
 
+  //FIXME NAVIGATING TO NEXT PAGE DOESN'T HAPPEN ON FIRST CLICK
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (form.password !== form.confirm) {
@@ -33,7 +34,7 @@ const CreateAccountForm = ({ toggle }) => {
       password: "",
       confirm: "",
     });
-    navigate("/");
+    navigate("/profilePage");
   };
 
   return (

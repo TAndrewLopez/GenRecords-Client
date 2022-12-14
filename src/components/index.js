@@ -13,3 +13,5 @@ export { default as AdminTable } from "./AdminTable";
 export { default as DropDown } from "./DropDown";
 export { default as Pagination } from "./Pagination";
 export { default as SearchField } from "./SearchField";
+export { default as SortSelector } from "./SortSelector";
+export { default as UserProfileCard } from "./UserProfileCard";

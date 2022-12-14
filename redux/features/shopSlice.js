@@ -57,7 +57,6 @@ const shopSlice = createSlice({
         return;
       }
       state.allVinyls = arr.sort((a, b) => {
-        f;
         if (a.popularity > b.popularity) {
           return -1;
         }

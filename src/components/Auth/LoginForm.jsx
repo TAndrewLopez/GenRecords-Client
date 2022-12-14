@@ -18,6 +18,7 @@ const LoginForm = ({ toggle }) => {
     password: "",
   });
 
+  //FIXME NAVIGATING TO NEXT PAGE DOESN'T HAPPEN ON FIRST CLICK
   const handleSubmit = async (evt) => {
     evt.preventDefault();
 
@@ -30,8 +31,8 @@ const LoginForm = ({ toggle }) => {
       }
       return;
     }
-
     dispatch(login(form));
+
     //RESET STATES
     setNameFocused(false);
     setPasswordFocused(false);
@@ -39,7 +40,8 @@ const LoginForm = ({ toggle }) => {
       username: "",
       password: "",
     });
-    navigate("/");
+
+    navigate("/profilePage");
   };
 
   return (

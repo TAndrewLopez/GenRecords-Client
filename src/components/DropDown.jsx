@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-const DropDown = ({ sortOptions, vinyls }) => {
+const DropDown = ({ sortOptions, vinyls, set }) => {
   const dispatch = useDispatch();
 
   const [sortDropDown, setSortDropDown] = useState(false);
@@ -61,7 +61,7 @@ const DropDown = ({ sortOptions, vinyls }) => {
             min-w-full
             absolute
             hidden
-            bg-shade-1
+            bg-shade-8
             text-base
             z-50
             float-left
@@ -75,11 +75,12 @@ const DropDown = ({ sortOptions, vinyls }) => {
             bg-clip-padding
             border-none
             "
-            aria-labelledby="dropdownMenuButton1">
+            aria-labelledby="sort-options">
             {sortOptions.map((option, i) => (
               <li
                 onClick={() => {
-                  dispatch(option.sort(albumDir));
+                  // option.test(vinyls);
+                  // dispatch(option.sort(albumDir));
                   setAlbumDir(!albumDir);
                   setSortDropDown(false);
                 }}
@@ -96,7 +97,8 @@ const DropDown = ({ sortOptions, vinyls }) => {
                   block
                   w-full
                   whitespace-nowrap
-                  text-shade-9
+                  text-shade-1
+                  hover:text-shade-9
                   ">
                   {option.method}
                 </a>

@@ -11,6 +11,7 @@ const DemoLoginButtons = () => {
   const [adminHover, setAdminHover] = useState(false);
   const [employeeHover, setEmployeeHover] = useState(false);
 
+  //FIXME NAVIGATING TO NEXT PAGE DOESN'T HAPPEN ON FIRST CLICK
   return (
     <div className="w-full flex justify-center gap-16 md:gap-24 pb-3">
       <div

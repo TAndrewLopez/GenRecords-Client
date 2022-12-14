@@ -26,19 +26,18 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state) => {
       state.isLoading = true;
-      console.log(action.payload);
     });
     builder.addCase(createUser.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      console.log(action.error);
     });
     builder.addCase(login.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      console.log(action.error);
     });
     builder.addCase(demoLogin.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      console.log(action.error);
     });
     builder.addCase(me.rejected, (state, action) => {
       state.isLoading = false;
@@ -73,7 +72,7 @@ export const me = createAsyncThunk("me", async (thunkAPI) => {
 });
 
 export const login = createAsyncThunk("login", async (form, thunkAPI) => {
-  const { authorization } = await fetch(BASE_URL + "login", {
+  const response = await fetch(BASE_URL + "login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(form),
@@ -81,11 +80,15 @@ export const login = createAsyncThunk("login", async (form, thunkAPI) => {
     .then((res) => res.json())
     .catch((err) => console.error(err));
 
-  if (authorization) {
-    localStorage.setItem("authorization", authorization);
+  if (typeof response === "string") {
+    console.log("invalid credentials");
+  }
+
+  if (response.authorization) {
+    localStorage.setItem("authorization", response.authorization);
     thunkAPI.dispatch(me());
   }
-  return authorization;
+  return response.authorization;
 });
 
 export const demoLogin = createAsyncThunk(
