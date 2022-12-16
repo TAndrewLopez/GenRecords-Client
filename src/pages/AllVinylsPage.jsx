@@ -13,12 +13,12 @@ import {
 
 import { SpinningLoader } from "../components/assets";
 
-import {
-  sortAlbumNames,
-  sortArtistName,
-  sortPopularityScore,
-  sortPrice,
-} from "../../redux/features/shopSlice";
+// import {
+//   sortAlbumNames,
+//   sortArtistName,
+//   sortPopularityScore,
+//   sortPrice,
+// } from "../../redux/features/shopSlice";
 
 const AllVinylsPage = () => {
   const dispatch = useDispatch();
@@ -29,12 +29,12 @@ const AllVinylsPage = () => {
   //SEARCH FIELD STATES
   const [userInput, setUserInput] = useState("");
   const [filteredAlbums, setFilterAlbums] = useState([]);
-  const sortOptions = [
-    { method: "Name", sort: sortAlbumNames, test: sortByAlbumName },
-    { method: "Artist", sort: sortArtistName, test: null },
-    { method: "Popularity", sort: sortPopularityScore, test: null },
-    { method: "Price", sort: sortPrice, test: null },
-  ];
+  // const sortOptions = [
+  //   { method: "Name", sort: sortAlbumNames, test: sortByAlbumName },
+  //   { method: "Artist", sort: sortArtistName, test: null },
+  //   { method: "Popularity", sort: sortPopularityScore, test: null },
+  //   { method: "Price", sort: sortPrice, test: null },
+  // ];
 
   //PAGINATION
   const [currPage, setCurrPage] = useState(1);
@@ -86,7 +86,7 @@ const AllVinylsPage = () => {
             {/* FIXME: DROP DOWN ONLY WORKS FOR THE STORE BUT SEARCH FIELD USES LOCAL STATE */}
             <DropDown
               set={setFilterAlbums}
-              sortOptions={sortOptions}
+              sortOptions={[]}
               vinyls={filteredAlbums}
             />
           </li>

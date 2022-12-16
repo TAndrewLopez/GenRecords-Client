@@ -14,4 +14,6 @@ export { default as DropDown } from "./DropDown";
 export { default as Pagination } from "./Pagination";
 export { default as SearchField } from "./SearchField";
 export { default as SortSelector } from "./SortSelector";
-export { default as UserProfileCard } from "./UserProfileCard";
+export { default as OrderList } from "./UserProfile/OrderList";
+export { default as UserProfileCard } from "./UserProfile/UserProfileCard";
+export { default as UserProfileInfo } from "./UserProfile/UserProfileInfo";

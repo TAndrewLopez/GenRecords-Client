@@ -1,6 +1,8 @@
 export { default as AddUserIcon } from "./AddUserIcon";
 export { default as AdminIcon } from "./AdminIcon";
+export { default as CartFailure } from "./CartFailure";
 export { default as CartIcon } from "./CartIcon";
+export { default as CartSuccess } from "./CartSuccess";
 export { default as ErrorIcon } from "./ErrorMessageIcon";
 export { default as GithubIcon } from "./GithubIcon";
 export { default as LockIcon } from "./LockIcon";

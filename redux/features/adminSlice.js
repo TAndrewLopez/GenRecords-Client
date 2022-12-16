@@ -55,12 +55,12 @@ export const adminGetVinyls = createAsyncThunk(
 export const adminGetUsers = createAsyncThunk(
   "adminGetUsers",
   async (thunkAPI) => {
+    const authorization = localStorage.getItem("authorization");
     const baseURL = "http://localhost:7000/api/";
     const response = await fetch(baseURL + "auth", {
       method: "GET",
       headers: {
-        authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzMwMTQxNjQsImlkIjoxLCJpYXQiOjE2NzA0MjIxNjR9.kbRz3rBmJIPZTBAY81ZxaNMK4PjvTCm69PoyYZh8AQY",
+        authorization,
       },
     })
       .then((res) => res.json())

@@ -6,8 +6,71 @@ const shopSlice = createSlice({
     allVinyls: [],
     isLoading: false,
     shopError: null,
+    orders: [],
   },
-  reducers: {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(shopGetVinyls.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(shopGetVinyls.rejected, (state, action) => {
+      state.isLoading = false;
+      state.allVinyls = [];
+      state.shopError = action.payload;
+    });
+    builder.addCase(shopGetVinyls.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const { vinyls } = action.payload;
+      state.allVinyls = vinyls.sort((a, b) => a.id - b.id);
+    });
+    builder.addCase(getUserOrders.fulfilled, (state, action) => {
+      state.orders = [...action.payload];
+    });
+  },
+});
+
+const BASE_URL = "http://localhost:7000/api/";
+
+export const shopGetVinyls = createAsyncThunk(
+  "shopGetVinyls",
+  async (thunkAPI) => {
+    const response = await fetch(BASE_URL + "shop", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    return response;
+  }
+);
+
+export const getUserOrders = createAsyncThunk(
+  "getUserOrders",
+  async (userId, thunkAPI) => {
+    const authorization = localStorage.getItem("authorization");
+
+    const { userOrders } = await fetch(BASE_URL + `shop/cart/${userId}`, {
+      method: "GET",
+      headers: {
+        authorization,
+      },
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    return userOrders;
+  }
+);
+
+export default shopSlice.reducer;
+/*
+
+export const {
+  sortAlbumNames,
+  sortArtistName,
+  sortPopularityScore,
+  sortPrice,
+} = shopSlice.actions;
+
+
     sortAlbumNames(state, { payload }) {
       const arr = [...state.allVinyls];
       if (payload) {
@@ -83,41 +146,4 @@ const shopSlice = createSlice({
       });
       return;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(shopGetVinyls.pending, (state, action) => {
-      state.isLoading = true;
-    });
-    builder.addCase(shopGetVinyls.rejected, (state, action) => {
-      state.isLoading = false;
-      state.allVinyls = [];
-      state.shopError = action.payload;
-    });
-    builder.addCase(shopGetVinyls.fulfilled, (state, action) => {
-      state.isLoading = false;
-      const { vinyls } = action.payload;
-      state.allVinyls = vinyls.sort((a, b) => a.id - b.id);
-    });
-  },
-});
-
-export const shopGetVinyls = createAsyncThunk(
-  "shopGetVinyls",
-  async (thunkAPI) => {
-    const baseURL = "http://localhost:7000/api/";
-    const response = await fetch(baseURL + "shop", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .catch((err) => console.error(err));
-    return response;
-  }
-);
-
-export default shopSlice.reducer;
-export const {
-  sortAlbumNames,
-  sortArtistName,
-  sortPopularityScore,
-  sortPrice,
-} = shopSlice.actions;
+*/
