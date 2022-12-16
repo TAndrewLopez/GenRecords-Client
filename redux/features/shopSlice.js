@@ -25,7 +25,11 @@ const shopSlice = createSlice({
       state.allVinyls = vinyls.sort((a, b) => a.id - b.id);
     });
     builder.addCase(getUserOrders.fulfilled, (state, action) => {
+      const [openOrder] = action.payload.filter(
+        (order) => order.complete === false
+      );
       state.orders = [...action.payload];
+      state.cart = [...openOrder.lineItems];
     });
     // builder.addCase(addCartLineItem.fulfilled, (state, action) => {
     //   state.orders = [...action.payload];
@@ -77,7 +81,7 @@ export const addCartLineItem = createAsyncThunk(
     })
       .then((res) => res.json())
       .catch((err) => console.error(err));
-    console.log(newItem);
+
     return newItem;
   }
 );

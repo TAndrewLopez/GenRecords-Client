@@ -67,13 +67,9 @@ const AllVinylsPage = () => {
 
   return (
     <>
-      <Header
-        headerClass={
-          "flex text-xl justify-between p-5 bg-shade-9 min-w-[350px]"
-        }
-      />
+      <Header headerClass={"flex text-xl justify-between p-5 bg-shade-9"} />
 
-      <div className="flex-1 flex flex-col justify-center min-w-[350px] bg-shade-6">
+      <div className="flex-1 flex flex-col justify-center bg-shade-6">
         <ul className="p-3 flex flex-col gap-5 sm:gap-0 sm:flex-row justify-between bg-shade-8">
           <li>
             <SearchField
@@ -113,11 +109,7 @@ const AllVinylsPage = () => {
           currPage={currPage}
         />
       </div>
-      <Footer
-        twClass={
-          "px-5 py-3 text-white flex justify-center bg-shade-9 min-w-[350px]"
-        }
-      />
+      <Footer twClass={"px-5 py-3 text-white flex justify-center bg-shade-9"} />
     </>
   );
 };

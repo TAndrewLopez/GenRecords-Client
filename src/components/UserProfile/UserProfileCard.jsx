@@ -2,9 +2,7 @@ import { useDispatch } from "react-redux";
 import { ProfileIcon } from "../assets";
 import { logout } from "../../../redux/features/authSlice";
 
-const UserProfileCard = ({
-  user: { firstName, lastName, username, email },
-}) => {
+const UserProfileCard = ({ user: { firstName, lastName, username } }) => {
   const dispatch = useDispatch();
   return (
     <div className="w-full max-w-sm bg-shade-9 rounded-lg shadow-md">
@@ -18,7 +16,7 @@ const UserProfileCard = ({
           <a
             href="#"
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-accent rounded-lg hover:bg-highlight focus:ring-4 focus:outline-none focus:ring-blue-300">
-            Go To Cart
+            Edit Profile
           </a>
 
           <a

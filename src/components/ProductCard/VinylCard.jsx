@@ -36,8 +36,7 @@ const VinylCard = ({ vinyl }) => {
             onClick={() => {
               dispatch(addCartLineItem(vinyl.id));
             }}
-            href="#"
-            className="bg-accent px-5 py-2 rounded hover:bg-highlight ease-in-out duration-300">
+            className="bg-accent px-5 py-2 rounded hover:bg-highlight ease-in-out duration-300 cursor-pointer">
             Add to cart
           </a>
         </div>

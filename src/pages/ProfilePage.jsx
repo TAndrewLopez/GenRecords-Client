@@ -11,9 +11,10 @@ import { useEffect } from "react";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const { loggedIn, firstName, lastName, username, email } = useSelector(
-    (state) => state.authReducer
-  );
+  const {
+    authReducer: { loggedIn, firstName, lastName, username, email },
+    shopReducer: { cart },
+  } = useSelector((state) => state);
 
   useEffect(() => {
     if (!loggedIn) {
@@ -34,7 +35,7 @@ const ProfilePage = () => {
               <OrderList />
             </div>
 
-            <UserProfileCart />
+            <UserProfileCart cart={cart} />
           </div>
         ) : (
           <Link className="text-white hover:text-sec" to="/auth">
