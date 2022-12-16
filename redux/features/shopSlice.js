@@ -7,6 +7,7 @@ const shopSlice = createSlice({
     isLoading: false,
     shopError: null,
     orders: [],
+    cart: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -26,6 +27,9 @@ const shopSlice = createSlice({
     builder.addCase(getUserOrders.fulfilled, (state, action) => {
       state.orders = [...action.payload];
     });
+    // builder.addCase(addCartLineItem.fulfilled, (state, action) => {
+    //   state.orders = [...action.payload];
+    // });
   },
 });
 
@@ -60,7 +64,26 @@ export const getUserOrders = createAsyncThunk(
   }
 );
 
+export const addCartLineItem = createAsyncThunk(
+  "addCartLineItem",
+  async (vinylId, thunkAPI) => {
+    const authorization = localStorage.getItem("authorization");
+
+    const { newItem } = await fetch(BASE_URL + `shop/cart/${vinylId}`, {
+      method: "PUT",
+      headers: {
+        authorization,
+      },
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    console.log(newItem);
+    return newItem;
+  }
+);
+
 export default shopSlice.reducer;
+
 /*
 
 export const {

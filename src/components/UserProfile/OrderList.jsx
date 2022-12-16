@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserOrders } from "../../../redux/features/shopSlice";
 import { CartSuccess, CartFailure } from "../assets";
+import { formatToUSD } from "../helpers";
 
 const testOrders = [
   { status: "open", date: "Oct 18, 2020", total: "320" },
@@ -27,7 +28,7 @@ const OrderList = () => {
     <div className="w-full max-w-md p-10 bg-shade-9 rounded-lg shadow-md sm:p-8">
       <div className="flex items-center justify-between mb-4">
         <h5 className="text-xl font-bold leading-none text-shade-1">
-          Latest Customers
+          Order History
         </h5>
         <a
           href="#"
@@ -44,19 +45,24 @@ const OrderList = () => {
                   {order.complete ? (
                     <CartSuccess twClass="w-8 h-8 fill-green-600" />
                   ) : (
-                    <CartFailure twClass="w-8 h-8 fill-red-400" />
+                    <CartFailure twClass="w-8 h-8 fill-yellow-400" />
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-shade-4 truncate">
-                    {`#${order.id}`}
+                    {`Order #${order.id}`}
+                    <span className="ml-2 text-xs">
+                      {order.lineItems.length > 1
+                        ? `(${order.lineItems.length} items)`
+                        : `(${order.lineItems.length} item)`}
+                    </span>
                   </p>
                   <p className="text-sm text-shade-6 truncate">
                     {getLocalDateFromOrderDbCreatedDate(order.createdAt)}
                   </p>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-shade-4">
-                  $320
+                  {totalOrderLineItems(order)}
                 </div>
               </div>
             </li>
@@ -68,6 +74,13 @@ const OrderList = () => {
 };
 
 export default OrderList;
+
+const totalOrderLineItems = (arr) => {
+  const total = arr.lineItems.reduce((acc, item) => {
+    return (acc += item.vinyl.price);
+  }, 0);
+  return `$${formatToUSD(total)}`;
+};
 
 const getLocalDateFromOrderDbCreatedDate = (str) => {
   const months = [

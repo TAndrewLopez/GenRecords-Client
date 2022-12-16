@@ -16,4 +16,5 @@ export { default as SearchField } from "./SearchField";
 export { default as SortSelector } from "./SortSelector";
 export { default as OrderList } from "./UserProfile/OrderList";
 export { default as UserProfileCard } from "./UserProfile/UserProfileCard";
+export { default as UserProfileCart } from "./UserProfile/UserProfileCart";
 export { default as UserProfileInfo } from "./UserProfile/UserProfileInfo";

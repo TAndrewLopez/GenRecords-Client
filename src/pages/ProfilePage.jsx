@@ -1,6 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Header, Footer, UserProfileCard, OrderList } from "../components";
+import {
+  Header,
+  Footer,
+  UserProfileCard,
+  UserProfileCart,
+  OrderList,
+} from "../components";
 import { useEffect } from "react";
 
 const ProfilePage = () => {
@@ -28,7 +34,7 @@ const ProfilePage = () => {
               <OrderList />
             </div>
 
-            <OrderList />
+            <UserProfileCart />
           </div>
         ) : (
           <Link className="text-white hover:text-sec" to="/auth">

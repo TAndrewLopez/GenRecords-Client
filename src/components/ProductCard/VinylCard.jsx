@@ -1,12 +1,14 @@
+import { useDispatch } from "react-redux";
+import { addCartLineItem } from "../../../redux/features/shopSlice";
+import { formatToUSD, popularityToStart } from "../helpers";
 import { StarIcon } from "../assets";
 
 const VinylCard = ({ vinyl }) => {
+  const dispatch = useDispatch();
   const numberOfStars = Math.floor(popularityToStart(vinyl.popularity));
 
   return (
-    <div
-      onClick={() => console.log(vinyl)}
-      className="w-full m-5 max-w-[300px] rounded-lg shadow-md bg-shade-9">
+    <div className="w-full m-5 max-w-[300px] rounded-lg shadow-md bg-shade-9">
       <a href="#">
         <img className="p-5 rounded-t-lg" src={vinyl.img} alt="vinyl-image" />
       </a>
@@ -31,6 +33,9 @@ const VinylCard = ({ vinyl }) => {
             {`$${formatToUSD(vinyl.price)}`}
           </span>
           <a
+            onClick={() => {
+              dispatch(addCartLineItem(vinyl.id));
+            }}
             href="#"
             className="bg-accent px-5 py-2 rounded hover:bg-highlight ease-in-out duration-300">
             Add to cart
@@ -42,15 +47,6 @@ const VinylCard = ({ vinyl }) => {
 };
 
 export default VinylCard;
-
-const formatToUSD = (num) => {
-  const numString = `${num}`;
-  return `${numString.slice(0, 2)}.${numString.slice(2)}`;
-};
-
-const popularityToStart = (num) => {
-  return num / 20;
-};
 
 const popularityStars = (num) => {
   const stars = [];
