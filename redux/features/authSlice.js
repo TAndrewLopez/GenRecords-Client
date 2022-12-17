@@ -5,13 +5,13 @@ const BASE_URL = "http://localhost:7000/api/auth/";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    id: -1,
+    id: 0,
     firstName: "",
     lastName: "",
     username: "",
     email: "",
-    img: "",
     isAdmin: false,
+    img: "",
     loggedIn: false,
   },
   reducers: {
@@ -23,6 +23,7 @@ const authSlice = createSlice({
       state.username = "";
       state.email = "";
       state.isAdmin = false;
+      state.img = "";
       state.loggedIn = false;
     },
   },
@@ -46,26 +47,30 @@ const authSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload);
     });
-    builder.addCase(me.fulfilled, (state, action) => {
-      const { id, firstName, lastName, username, email, isAdmin } =
-        action.payload;
+    builder.addCase(updateUser.rejected, (state, action) => {
+      state.isLoading = false;
+      console.log(action.payload);
+    });
+    builder.addCase(me.fulfilled, (state, { payload }) => {
+      const { id, firstName, lastName, username, email, img, isAdmin } =
+        payload;
       state.id = id;
       state.firstName = firstName;
       state.lastName = lastName;
       state.username = username;
       state.email = email;
       state.isAdmin = isAdmin;
+      state.img = img;
       state.loggedIn = true;
       state.isLoading = false;
     });
-    builder.addCase(updateUser.fulfilled, (state, action) => {
-      const { firstName, lastName, username, email, password, img } =
-        action.payload;
-      state.firstName = firstName;
-      state.lastName = lastName;
-      state.username = username;
-      state.email = email;
-      state.img = img;
+    builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+      state.firstName = payload.firstName;
+      state.lastName = payload.lastName;
+      state.username = payload.username;
+      state.email = payload.email;
+      state.img = payload.img;
+      state.isLoading = false;
     });
   },
 });
@@ -157,7 +162,7 @@ export const updateUser = createAsyncThunk(
   async (form, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
 
-    const response = await fetch(BASE_URL + form.id, {
+    const { user } = await fetch(BASE_URL + form.id, {
       method: "PUT",
       headers: {
         authorization,
@@ -167,7 +172,8 @@ export const updateUser = createAsyncThunk(
     })
       .then((res) => res.json())
       .catch((err) => console.error(err));
-    return response;
+
+    return user;
   }
 );
 

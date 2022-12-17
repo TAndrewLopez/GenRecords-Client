@@ -1,23 +1,20 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { AdminIcon, UsersIcon } from "../assets";
 import { demoLogin } from "../../../redux/features/authSlice";
 
 const DemoLoginButtons = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [adminHover, setAdminHover] = useState(false);
   const [employeeHover, setEmployeeHover] = useState(false);
 
-  //FIXME NAVIGATING TO NEXT PAGE DOESN'T HAPPEN ON FIRST CLICK
+  //FIXME: NAVIGATING TO NEXT PAGE DOESN'T HAPPEN ON FIRST CLICK
   return (
     <div className="w-full flex justify-center gap-16 md:gap-24 pb-3">
       <div
         onClick={() => {
           dispatch(demoLogin(true));
-          navigate("/profilePage");
         }}
         onMouseEnter={() => {
           if (!adminHover) setAdminHover(true);
@@ -43,7 +40,6 @@ const DemoLoginButtons = () => {
       <div
         onClick={() => {
           dispatch(demoLogin(false));
-          navigate("/profilePage");
         }}
         onMouseEnter={() => {
           if (!employeeHover) setEmployeeHover(true);

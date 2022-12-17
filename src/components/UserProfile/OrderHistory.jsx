@@ -1,21 +1,9 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserOrders } from "../../../redux/features/shopSlice";
+import { useSelector } from "react-redux";
 import { CartSuccess, CartFailure } from "../assets";
 import { formatToUSD } from "../helpers";
 
 const OrderHistory = () => {
-  const dispatch = useDispatch();
-  const {
-    authReducer: { id },
-    shopReducer: { orders },
-  } = useSelector((state) => state);
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getUserOrders(id));
-    }
-  }, []);
+  const { orders } = useSelector((state) => state.shopReducer);
 
   return (
     <div

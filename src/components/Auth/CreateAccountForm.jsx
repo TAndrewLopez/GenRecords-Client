@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { ErrorIcon } from "../assets";
 import { createUser } from "../../../redux/features/authSlice";
 
 const CreateAccountForm = ({ toggle }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [errMessage, setErrMessage] = useState("");
   const [formError, setFormError] = useState(false);
@@ -34,7 +32,6 @@ const CreateAccountForm = ({ toggle }) => {
       password: "",
       confirm: "",
     });
-    navigate("/profilePage");
   };
 
   return (

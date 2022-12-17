@@ -2,14 +2,14 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/features/authSlice";
 import defaultProfileImage from "./assets/defaultProfileImage.png";
 
-const UserProfileCard = ({ user: { firstName, lastName, username } }) => {
+const UserProfileCard = ({ user: { firstName, lastName, username, img } }) => {
   const dispatch = useDispatch();
   return (
     <div className="w-full max-w-sm bg-shade-9 rounded-lg shadow-md">
       <div className="flex flex-col items-center py-10">
         <img
           className="w-24 aspect-square mb-3 rounded-full shadow-lg"
-          src={defaultProfileImage}
+          src={img || defaultProfileImage}
           alt="profile-image"
         />
         <h5 className="mb-1 text-xl font-medium text-shade-1">

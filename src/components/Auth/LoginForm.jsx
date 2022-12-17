@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { ErrorIcon, ProfileIcon, LockIcon } from "../assets";
 import { login } from "../../../redux/features/authSlice";
 
 const LoginForm = ({ toggle }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [formError, setFormError] = useState(false);
   const [nameFocused, setNameFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
@@ -18,7 +16,7 @@ const LoginForm = ({ toggle }) => {
     password: "",
   });
 
-  //FIXME NAVIGATING TO NEXT PAGE DOESN'T HAPPEN ON FIRST CLICK
+  //FIXME: NAVIGATING TO NEXT PAGE DOESN'T HAPPEN ON FIRST CLICK
   const handleSubmit = async (evt) => {
     evt.preventDefault();
 
@@ -40,8 +38,6 @@ const LoginForm = ({ toggle }) => {
       username: "",
       password: "",
     });
-
-    navigate("/profilePage");
   };
 
   return (

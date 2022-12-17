@@ -31,9 +31,9 @@ const shopSlice = createSlice({
       state.orders = [...action.payload];
       state.cart = [...openOrder.lineItems];
     });
-    // builder.addCase(addCartLineItem.fulfilled, (state, action) => {
-    //   state.orders = [...action.payload];
-    // });
+    builder.addCase(addCartLineItem.fulfilled, (state, { payload }) => {
+      state.cart.push(payload);
+    });
   },
 });
 

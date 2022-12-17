@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-const DropDown = ({ sortOptions, vinyls, set }) => {
-  const dispatch = useDispatch();
 
+const DropDown = ({ sortOptions, vinyls, set }) => {
   const [sortDropDown, setSortDropDown] = useState(false);
   const [albumDir, setAlbumDir] = useState(false);
 

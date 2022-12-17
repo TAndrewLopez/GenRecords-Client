@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   Header,
@@ -8,20 +8,12 @@ import {
   UserCart,
   OrderHistory,
 } from "../components";
-import { useEffect } from "react";
 
 const ProfilePage = () => {
-  const navigate = useNavigate();
   const {
-    authReducer: { loggedIn, firstName, lastName, username, email },
+    authReducer: { loggedIn, firstName, lastName, username, email, img },
     shopReducer: { cart },
   } = useSelector((state) => state);
-
-  useEffect(() => {
-    if (!loggedIn) {
-      navigate("/auth");
-    }
-  }, []);
 
   return (
     <>
@@ -31,7 +23,7 @@ const ProfilePage = () => {
           <div className="flex flex-col sm:flex-row p-5 gap-5">
             <div className="flex flex-1 flex-col items-center gap-5">
               <UserProfileCard
-                user={{ firstName, lastName, username, email }}
+                user={{ firstName, lastName, username, email, img }}
               />
               <OrderHistory />
               <UserCart title images controls cart={cart} />

@@ -26,8 +26,9 @@ const UserProfileForm = () => {
       email: emailRef.current.value,
       username: usernameRef.current.value,
       password: passwordRef.current.value,
-      imageURL: imgURLRef.current.value,
+      img: imgURLRef.current.value,
     };
+
     evt.preventDefault();
 
     if (passwordRef.current.value !== confirmRef.current.value) {
@@ -36,6 +37,7 @@ const UserProfileForm = () => {
     }
 
     dispatch(updateUser(form));
+    evt.target.reset();
   };
   return (
     <div className="w-full max-w-md p-10 bg-shade-9 rounded-lg shadow-md sm:p-8">
