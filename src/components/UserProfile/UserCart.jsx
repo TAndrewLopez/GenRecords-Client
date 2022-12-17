@@ -53,12 +53,16 @@ const UserCart = ({ cart, title, images, controls }) => {
           </li>
         ))}
       </ul>
-      <Pagination
-        itemsPerPage={itemsPerPage}
-        total={cart.length}
-        setPage={setCurrPage}
-        currPage={currPage}
-      />
+      {currSlice.length ? (
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          total={cart.length}
+          setPage={setCurrPage}
+          currPage={currPage}
+        />
+      ) : (
+        <p className="text-shade-5">Cart Empty.</p>
+      )}
     </div>
   );
 };

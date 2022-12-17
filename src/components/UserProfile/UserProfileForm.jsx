@@ -6,6 +6,10 @@ const userTestImage =
   "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80";
 
 const UserProfileForm = () => {
+  const dispatch = useDispatch();
+  const { id } = useSelector((state) => state.authReducer);
+
+  //FORM STATES
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
@@ -15,24 +19,29 @@ const UserProfileForm = () => {
   const imgURLRef = useRef();
 
   const handleSubmit = (evt) => {
+    const form = {
+      id,
+      firstName: firstNameRef.current.value,
+      lastName: lastNameRef.current.value,
+      email: emailRef.current.value,
+      username: usernameRef.current.value,
+      password: passwordRef.current.value,
+      imageURL: imgURLRef.current.value,
+    };
     evt.preventDefault();
 
     if (passwordRef.current.value !== confirmRef.current.value) {
       console.error("passwords don't match");
       return;
     }
-    console.log({
-      firstName: firstNameRef.current.value,
-      lastName: lastNameRef.current.value,
-      email: emailRef.current.value,
-      username: usernameRef.current.value,
-      password: passwordRef.current.value,
-      confirm: confirmRef.current.value,
-      imageURL: imgURLRef.current.value,
-    });
+
+    dispatch(updateUser(form));
   };
   return (
     <div className="w-full max-w-md p-10 bg-shade-9 rounded-lg shadow-md sm:p-8">
+      <h5 className="text-xl font-semibold leading-none text-shade-1 mb-5">
+        Update Profile Information:
+      </h5>
       <form onSubmit={handleSubmit}>
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 mb-6 w-full group">
@@ -45,7 +54,7 @@ const UserProfileForm = () => {
             />
             <label
               htmlFor="floating_first_name"
-              className="peer-focus:font-medium absolute text-sm text-shade-6 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              className="peer-focus:font-medium absolute text-sm text-shade-5 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               First name
             </label>
           </div>
@@ -59,7 +68,7 @@ const UserProfileForm = () => {
             />
             <label
               htmlFor="floating_last_name"
-              className="peer-focus:font-medium absolute text-sm text-shade-6 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              className="peer-focus:font-medium absolute text-sm text-shade-5 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Last name
             </label>
           </div>
@@ -75,7 +84,7 @@ const UserProfileForm = () => {
           />
           <label
             htmlFor="floating_email"
-            className="peer-focus:font-medium absolute text-sm text-shade-6 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            className="peer-focus:font-medium absolute text-sm text-shade-5 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
             Email address
           </label>
         </div>
@@ -89,7 +98,7 @@ const UserProfileForm = () => {
           />
           <label
             htmlFor="floating_username"
-            className="peer-focus:font-medium absolute text-sm text-shade-6 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            className="peer-focus:font-medium absolute text-sm text-shade-5 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
             Username
           </label>
         </div>
@@ -104,7 +113,7 @@ const UserProfileForm = () => {
             />
             <label
               htmlFor="floating_password"
-              className="peer-focus:font-medium absolute text-sm text-shade-6 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              className="peer-focus:font-medium absolute text-sm text-shade-5 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Password
             </label>
           </div>
@@ -118,7 +127,7 @@ const UserProfileForm = () => {
             />
             <label
               htmlFor="floating_confirm"
-              className="peer-focus:font-medium absolute text-sm text-shade-6 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              className="peer-focus:font-medium absolute text-sm text-shade-5 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Confirm password
             </label>
           </div>
@@ -133,7 +142,7 @@ const UserProfileForm = () => {
           />
           <label
             htmlFor="floating_username"
-            className="peer-focus:font-medium absolute text-sm text-shade-6 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            className="peer-focus:font-medium absolute text-sm text-shade-5 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-accent peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
             Image Url
           </label>
         </div>

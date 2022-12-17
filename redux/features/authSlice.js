@@ -61,7 +61,6 @@ const authSlice = createSlice({
     builder.addCase(updateUser.fulfilled, (state, action) => {
       const { firstName, lastName, username, email, password, img } =
         action.payload;
-
       state.firstName = firstName;
       state.lastName = lastName;
       state.username = username;
@@ -157,15 +156,18 @@ export const updateUser = createAsyncThunk(
   "updateUser",
   async (form, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
-    const { user } = await fetch(BASE_URL + "", {
+
+    const response = await fetch(BASE_URL + form.id, {
       method: "PUT",
       headers: {
         authorization,
         "Content-Type": "application/json",
       },
-      body: form,
-    });
-    return user;
+      body: JSON.stringify(form),
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    return response;
   }
 );
 
