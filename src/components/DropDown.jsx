@@ -23,6 +23,7 @@ const DropDown = ({ sortOptions, vinyls, set }) => {
             uppercase
             rounded
             shadow-md
+            hover:text-shade-9
             hover:bg-highlight
             hover:shadow-lg
             focus:bg-highlight

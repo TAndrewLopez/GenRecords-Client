@@ -4,8 +4,9 @@ import {
   Header,
   Footer,
   UserProfileCard,
-  UserProfileCart,
-  OrderList,
+  UserProfileForm,
+  UserCart,
+  OrderHistory,
 } from "../components";
 import { useEffect } from "react";
 
@@ -32,10 +33,12 @@ const ProfilePage = () => {
               <UserProfileCard
                 user={{ firstName, lastName, username, email }}
               />
-              <OrderList />
+              <OrderHistory />
+              <UserCart title images controls cart={cart} />
             </div>
-
-            <UserProfileCart cart={cart} />
+            <div className="flex flex-1 flex-col items-center gap-5">
+              <UserProfileForm />
+            </div>
           </div>
         ) : (
           <Link className="text-white hover:text-sec" to="/auth">

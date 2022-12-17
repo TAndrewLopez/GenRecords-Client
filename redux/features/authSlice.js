@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+const BASE_URL = "http://localhost:7000/api/auth/";
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -8,6 +10,7 @@ const authSlice = createSlice({
     lastName: "",
     username: "",
     email: "",
+    img: "",
     isAdmin: false,
     loggedIn: false,
   },
@@ -55,10 +58,18 @@ const authSlice = createSlice({
       state.loggedIn = true;
       state.isLoading = false;
     });
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      const { firstName, lastName, username, email, password, img } =
+        action.payload;
+
+      state.firstName = firstName;
+      state.lastName = lastName;
+      state.username = username;
+      state.email = email;
+      state.img = img;
+    });
   },
 });
-
-const BASE_URL = "http://localhost:7000/api/auth/";
 
 export const me = createAsyncThunk("me", async (thunkAPI) => {
   const authorization = localStorage.getItem("authorization");
@@ -139,6 +150,22 @@ export const createUser = createAsyncThunk(
       thunkAPI.dispatch(me());
     }
     return authorization;
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "updateUser",
+  async (form, thunkAPI) => {
+    const authorization = localStorage.getItem("authorization");
+    const { user } = await fetch(BASE_URL + "", {
+      method: "PUT",
+      headers: {
+        authorization,
+        "Content-Type": "application/json",
+      },
+      body: form,
+    });
+    return user;
   }
 );
 

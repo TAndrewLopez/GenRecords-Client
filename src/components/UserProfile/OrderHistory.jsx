@@ -4,14 +4,7 @@ import { getUserOrders } from "../../../redux/features/shopSlice";
 import { CartSuccess, CartFailure } from "../assets";
 import { formatToUSD } from "../helpers";
 
-const testOrders = [
-  { status: "open", date: "Oct 18, 2020", total: "320" },
-  { status: "completed", date: "Nov 3, 2022", total: "400" },
-  { status: "cancelled", date: "Jan 26, 2021", total: "100" },
-  { status: "closed", date: "Jun 21, 2022", total: "900" },
-];
-
-const OrderList = () => {
+const OrderHistory = () => {
   const dispatch = useDispatch();
   const {
     authReducer: { id },
@@ -25,14 +18,16 @@ const OrderList = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-md p-10 bg-shade-9 rounded-lg shadow-md sm:p-8">
+    <div
+      id="orderHistory"
+      className="w-full max-w-md p-10 bg-shade-9 rounded-lg shadow-md sm:p-8">
       <div className="flex items-center justify-between mb-4">
         <h5 className="text-xl font-bold leading-none text-shade-1">
           Order History
         </h5>
         <a
           href="#"
-          className="text-sm font-medium text-accent hover:text-highlight hover:underline">
+          className="text-sm font-medium text-accent hover:text-highlight hover:underline ease-in-out duration-300">
           View all
         </a>
       </div>
@@ -57,7 +52,7 @@ const OrderList = () => {
                         : `(${order.lineItems.length} item)`}
                     </span>
                   </p>
-                  <p className="text-sm text-shade-6 truncate">
+                  <p className="text-sm text-shade-4 truncate">
                     {getLocalDateFromOrderDbCreatedDate(order.createdAt)}
                   </p>
                 </div>
@@ -73,7 +68,7 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default OrderHistory;
 
 const totalOrderLineItems = (arr) => {
   const total = arr.lineItems.reduce((acc, item) => {

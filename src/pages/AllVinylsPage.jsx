@@ -72,6 +72,7 @@ const AllVinylsPage = () => {
       <div className="flex-1 flex flex-col justify-center bg-shade-6">
         <ul className="p-3 flex flex-col gap-5 sm:gap-0 sm:flex-row justify-between bg-shade-8">
           <li>
+            {/* FIXME: AFTER FILTERING, UPDATE PAGINATION WITH AMOUNT FILTERED */}
             <SearchField
               setInput={setUserInput}
               vinyls={allVinyls}
@@ -102,12 +103,14 @@ const AllVinylsPage = () => {
           )}
         </div>
 
-        <Pagination
-          itemsPerPage={itemsPerPage}
-          total={allVinyls.length}
-          setPage={setCurrPage}
-          currPage={currPage}
-        />
+        <div className="mb-5">
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            total={allVinyls.length}
+            setPage={setCurrPage}
+            currPage={currPage}
+          />
+        </div>
       </div>
       <Footer twClass={"px-5 py-3 text-white flex justify-center bg-shade-9"} />
     </>

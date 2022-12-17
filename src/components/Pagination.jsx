@@ -5,7 +5,7 @@ const Pagination = ({ itemsPerPage, total, setPage, currPage }) => {
   }
 
   return (
-    <div className="flex justify-center mb-5">
+    <div className="flex justify-center">
       <ul className="flex bg-shade-9 rounded-md">
         <li
           onClick={() => {
@@ -13,9 +13,7 @@ const Pagination = ({ itemsPerPage, total, setPage, currPage }) => {
               setPage(currPage - 1);
             }
           }}>
-          <a
-            className="relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-shade-2  hover:bg-accent focus:shadow-none"
-            href="#">
+          <a className="relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer">
             prev
           </a>
         </li>
@@ -24,10 +22,9 @@ const Pagination = ({ itemsPerPage, total, setPage, currPage }) => {
           return (
             <li onClick={() => setPage(page)} key={page + i}>
               <a
-                className={`relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded text-shade-2  hover:bg-accent focus:shadow-none ${
+                className={`relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer ${
                   page === currPage ? "bg-accent" : ""
-                }`}
-                href="#">
+                }`}>
                 {page}
               </a>
             </li>
@@ -40,9 +37,7 @@ const Pagination = ({ itemsPerPage, total, setPage, currPage }) => {
               setPage(currPage + 1);
             }
           }}>
-          <a
-            className="relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-shade-2  hover:bg-accent focus:shadow-none"
-            href="#">
+          <a className="relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer">
             next
           </a>
         </li>

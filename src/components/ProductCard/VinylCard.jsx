@@ -21,22 +21,22 @@ const VinylCard = ({ vinyl }) => {
             {vinyl.artist.name}
           </h6>
         </a>
+        =
         <div className="flex items-center mt-2.5 mb-5">
           {popularityStars(numberOfStars)}
-
-          <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+          <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ml-3">
             {`${popularityToStart(vinyl.popularity)} Popularity`}
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-3xl font-bold text-gray-900 dark:text-white">
+          <span className="text-3xl font-bold text-shade-1">
             {`$${formatToUSD(vinyl.price)}`}
           </span>
           <a
             onClick={() => {
               dispatch(addCartLineItem(vinyl.id));
             }}
-            className="bg-accent px-5 py-2 rounded hover:bg-highlight ease-in-out duration-300 cursor-pointer">
+            className="bg-accent px-5 py-2 rounded text-shade-1 hover:text-shade-9 hover:bg-highlight ease-in-out duration-300 cursor-pointer">
             Add to cart
           </a>
         </div>
