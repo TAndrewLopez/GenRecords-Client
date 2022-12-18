@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 const BASE_URL = "http://localhost:7000/api/auth/";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     id: 0,
-    firstName: "",
+    firstName: "Test",
     lastName: "",
     username: "",
     email: "",
@@ -17,7 +16,7 @@ const authSlice = createSlice({
   reducers: {
     logout(state) {
       localStorage.removeItem("authorization");
-      state.id = -1;
+      state.id = 0;
       state.firstName = "";
       state.lastName = "";
       state.username = "";

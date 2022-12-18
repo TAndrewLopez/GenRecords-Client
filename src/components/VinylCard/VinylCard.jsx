@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addCartLineItem } from "../../../redux/features/shopSlice";
+// import { addCartLineItem } from "../../../redux/features/shopSlice";
 import { formatToUSD, popularityToStart } from "../helpers";
 import { StarIcon } from "../assets";
 
@@ -33,7 +33,7 @@ const VinylCard = ({ vinyl }) => {
           </span>
           <a
             onClick={() => {
-              dispatch(addCartLineItem(vinyl.id));
+              // dispatch(addCartLineItem(vinyl.id));
             }}
             className="bg-accent px-5 py-2 rounded text-shade-1 hover:text-shade-9 hover:bg-highlight ease-in-out duration-300 cursor-pointer">
             Add to cart

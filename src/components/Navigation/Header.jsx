@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserOrders } from "../../../redux/features/shopSlice";
+
 import { CartIcon, ProfileIcon } from "../assets";
 import { NavLinks, MobileNavOverlay } from "..";
 
 //TODO: RACE CONDITION!
 const Header = ({ headerClass }) => {
-  const dispatch = useDispatch();
   const {
-    authReducer: { id, isAdmin },
+    authReducer: { isAdmin },
     shopReducer: { cart },
   } = useSelector((state) => state);
   const [overlay, setOverlay] = useState(false);
@@ -18,12 +17,6 @@ const Header = ({ headerClass }) => {
     { path: "/", name: "Home" },
     { path: "/vinyls", name: "Shop Vinyls" },
   ];
-
-  useEffect(() => {
-    if (id) {
-      dispatch(getUserOrders(id));
-    }
-  }, []);
 
   return (
     <header className={headerClass}>

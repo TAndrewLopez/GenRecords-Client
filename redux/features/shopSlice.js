@@ -29,11 +29,13 @@ const shopSlice = createSlice({
         (order) => order.complete === false
       );
       state.orders = [...action.payload];
-      state.cart = [...openOrder.lineItems];
+      state.cart = [...openOrder.lineItems.sort((a, b) => a.id - b.id)];
     });
-    builder.addCase(addCartLineItem.fulfilled, (state, { payload }) => {
-      state.cart.push(payload);
-    });
+    // builder.addCase(addCartLineItem.fulfilled, (state, { payload }) => {
+    //   if (payload) {
+    //     console.log(payload);
+    //   }
+    // });
   },
 });
 
@@ -68,23 +70,26 @@ export const getUserOrders = createAsyncThunk(
   }
 );
 
-export const addCartLineItem = createAsyncThunk(
-  "addCartLineItem",
-  async (vinylId, thunkAPI) => {
-    const authorization = localStorage.getItem("authorization");
+// export const addCartLineItem = createAsyncThunk(
+//   "addCartLineItem",
+//   async (vinylId, thunkAPI) => {
+//     const authorization = localStorage.getItem("authorization");
 
-    const { newItem } = await fetch(BASE_URL + `shop/cart/${vinylId}`, {
-      method: "PUT",
-      headers: {
-        authorization,
-      },
-    })
-      .then((res) => res.json())
-      .catch((err) => console.error(err));
-
-    return newItem;
-  }
-);
+//     const { newItem, existingItem } = await fetch(
+//       BASE_URL + `shop/cart/${vinylId}`,
+//       {
+//         method: "PUT",
+//         headers: {
+//           authorization,
+//         },
+//       }
+//     )
+//       .then((res) => res.json())
+//       .catch((err) => console.error(err));
+//     if (existingItem) return existingItem;
+//     return newItem;
+//   }
+// );
 
 export default shopSlice.reducer;
 
