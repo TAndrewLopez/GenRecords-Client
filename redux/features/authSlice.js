@@ -59,19 +59,23 @@ const authSlice = createSlice({
       state.cart = [...openOrder.lineItems.sort((a, b) => a.id - b.id)];
     });
     builder.addCase(addCartLineItem.fulfilled, (state, { payload }) => {
-      //LOOK FOR ADDED ITEM IN EXISTING CART
       const existingItems = state.cart.filter((item) => payload.id !== item.id);
-
-      //IF IT'S NOT FOUND WE ADD NEW ITEM
       if (existingItems.length === state.cart.length) {
         state.cart.push(payload);
         return;
       }
-
-      //IF FOUND WE
       existingItems.push(payload);
       state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
     });
+    // builder.addCase(removeCartLineItem.fulfilled, (state, { payload }) => {
+    //   const existingItems = state.cart.filter((item) => payload.id !== item.id);
+    //   if (existingItems.length === state.cart.length) {
+    //     state.cart.push(payload);
+    //     return;
+    //   }
+    //   existingItems.push(payload);
+    //   state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
+    // });
   },
 });
 
@@ -207,24 +211,44 @@ export const getUserOrders = createAsyncThunk(
 
 export const addCartLineItem = createAsyncThunk(
   "addCartLineItem",
-  async (vinylId, thunkAPI) => {
+  async (item, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
-
     const { newItem, existingItem } = await fetch(
-      `http://localhost:7000/api/shop/cart/${vinylId}`,
+      `http://localhost:7000/api/shop/cart/${item.vinyl.id}`,
       {
         method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           authorization,
         },
+        body: JSON.stringify(item),
       }
     )
       .then((res) => res.json())
       .catch((err) => console.error(err));
-    // if (existingItem) return existingItem;
     return newItem || existingItem;
   }
 );
+
+// export const removeCartLineItem = createAsyncThunk(
+//   "removeCartLineItem",
+//   async (vinylId, thunkAPI) => {
+//     const authorization = localStorage.getItem("authorization");
+
+//     const { newItem, existingItem } = await fetch(
+//       `http://localhost:7000/api/shop/cart/${vinylId}`,
+//       {
+//         method: "PUT",
+//         headers: {
+//           authorization,
+//         },
+//       }
+//     )
+//       .then((res) => res.json())
+//       .catch((err) => console.error(err));
+//     return newItem || existingItem;
+//   }
+// );
 
 export default authSlice.reducer;
 export const { logout } = authSlice.actions;

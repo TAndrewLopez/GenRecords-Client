@@ -7,6 +7,8 @@ import { formatToUSD } from "../helpers";
 import { addCartLineItem } from "../../../redux/features/authSlice";
 
 const UserCart = ({ cart, title, images, controls }) => {
+  const dispatch = useDispatch();
+
   //PAGINATION
   const [currPage, setCurrPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -14,13 +16,12 @@ const UserCart = ({ cart, title, images, controls }) => {
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
   const currSlice = cart.slice(indexOfFirstPost, indexOfLastPost);
 
-  const adjustQty = (addOrSub, itemId) => {
-    const dispatch = useDispatch();
+  const adjustQty = (reduxDispatch, addOrSub, item) => {
     if (addOrSub) {
       return (
         <button
           onClick={() => {
-            dispatch(addCartLineItem(itemId));
+            reduxDispatch(addCartLineItem(item));
           }}
           className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300 peer">
           <PlusIcon twClass="w-2 fill-shade-2" />
@@ -30,7 +31,7 @@ const UserCart = ({ cart, title, images, controls }) => {
     return (
       <button
         onClick={() => {
-          console.log("remove");
+          reduxDispatch(addCartLineItem(item));
         }}
         className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300">
         <MinusIcon twClass="w-2 fill-shade-2" />
@@ -77,8 +78,16 @@ const UserCart = ({ cart, title, images, controls }) => {
                     <p className="text-sm text-shade-5 truncate">
                       {`qty: ${item?.qty}`}
                     </p>
-                    {controls ? adjustQty(false, item?.vinyl.id) : ""}
-                    {controls ? adjustQty(true, item?.vinyl.id) : ""}
+                    {controls ? (
+                      adjustQty(dispatch, false, { ...item, qty: item.qty - 1 })
+                    ) : (
+                      <></>
+                    )}
+                    {controls ? (
+                      adjustQty(dispatch, true, { ...item, qty: item.qty + 1 })
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-shade-1">
