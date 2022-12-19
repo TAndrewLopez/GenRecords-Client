@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { ErrorIcon } from "../assets";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { createUser } from "../../../redux/features/authSlice";
+import { ErrorIcon } from "../assets";
 
 const CreateAccountForm = ({ toggle }) => {
   const dispatch = useDispatch();
+  const { loggedIn } = useSelector((state) => state.authReducer);
 
   const [errMessage, setErrMessage] = useState("");
   const [formError, setFormError] = useState(false);
@@ -33,6 +35,10 @@ const CreateAccountForm = ({ toggle }) => {
       confirm: "",
     });
   };
+
+  if (loggedIn) {
+    return <Navigate to={"/profilePage"} />;
+  }
 
   return (
     <form onSubmit={handleSubmit}>

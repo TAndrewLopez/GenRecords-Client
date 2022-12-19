@@ -3,7 +3,7 @@ import { CartSuccess, CartFailure } from "../assets";
 import { formatToUSD } from "../helpers";
 
 const OrderHistory = () => {
-  const { orders } = useSelector((state) => state.shopReducer);
+  const { orders } = useSelector((state) => state.authReducer);
 
   return (
     <div

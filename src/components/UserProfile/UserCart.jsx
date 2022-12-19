@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { Pagination } from "../../components";
 import { PlusIcon, MinusIcon } from "../assets";
 import { formatToUSD } from "../helpers";
@@ -29,12 +30,14 @@ const UserCart = ({ cart, title, images, controls }) => {
             <li className="py-2" key={item?.id}>
               <div className="flex items-center space-x-4">
                 {images ? (
-                  <div className="flex-shrink-0 border-highlight border p-1 border-opacity-50 rounded-full cursor-pointer">
+                  <Link
+                    to={`/singleVinyl/${item.vinyl.id}`}
+                    className="flex-shrink-0 border-highlight border p-1 border-opacity-50 rounded-full cursor-pointer">
                     <img
                       className="w-8 h-8 rounded-full"
                       src={item?.vinyl.img}
                     />
-                  </div>
+                  </Link>
                 ) : (
                   <></>
                 )}
@@ -59,6 +62,7 @@ const UserCart = ({ cart, title, images, controls }) => {
           );
         })}
       </ul>
+
       {currSlice.length ? (
         <Pagination
           itemsPerPage={itemsPerPage}

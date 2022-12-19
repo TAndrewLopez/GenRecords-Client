@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { CartIcon, ProfileIcon } from "../assets";
+import { UserCart } from "../../components";
 import { NavLinks, MobileNavOverlay } from "..";
 
-//TODO: RACE CONDITION!
 const Header = ({ headerClass }) => {
   const {
-    authReducer: { isAdmin },
-    shopReducer: { cart },
+    authReducer: { isAdmin, cart },
   } = useSelector((state) => state);
   const [overlay, setOverlay] = useState(false);
+  const [toggleCart, setToggleCart] = useState(false);
 
   const linkInfo = [
     { path: "/", name: "Home" },
@@ -33,10 +33,12 @@ const Header = ({ headerClass }) => {
           ) : (
             ""
           )}
-          <CartIcon
-            amount={cart.length}
-            twClass={`w-4 fill-white hover:fill-sec cursor-pointer`}
-          />
+          <div className="flex" onClick={() => setToggleCart(!toggleCart)}>
+            <CartIcon
+              amount={cart.length}
+              twClass={`w-4 fill-white hover:fill-sec cursor-pointer`}
+            />
+          </div>
           <Link className="flex" to={"/profilePage"}>
             <ProfileIcon
               twClass={"w-4 fill-white hover:fill-sec cursor-pointer"}
@@ -50,7 +52,13 @@ const Header = ({ headerClass }) => {
         <button>Hamburger</button>
       </div>
       {overlay ? <MobileNavOverlay links={linkInfo} /> : <></>}
-      {/* <MobileNavOverlay links={linkInfo} isOpen={overlay} /> */}
+      {toggleCart ? (
+        <div className="absolute top-20 right-3 shadow-lg z-50 bg-red-300">
+          <UserCart controls title cart={cart} />
+        </div>
+      ) : (
+        <></>
+      )}
     </header>
   );
 };

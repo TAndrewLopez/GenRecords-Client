@@ -1,16 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const BASE_URL = "http://localhost:7000/api/auth/";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     id: 0,
-    firstName: "Test",
+    firstName: "",
     lastName: "",
     username: "",
     email: "",
-    isAdmin: false,
+    orders: [],
+    cart: [],
     img: "",
+    isAdmin: false,
     loggedIn: false,
   },
   reducers: {
@@ -21,35 +22,14 @@ const authSlice = createSlice({
       state.lastName = "";
       state.username = "";
       state.email = "";
-      state.isAdmin = false;
+      state.orders = [];
+      state.cart = [];
       state.img = "";
+      state.isAdmin = false;
       state.loggedIn = false;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(createUser.rejected, (state, action) => {
-      state.isLoading = false;
-      console.log(action.error);
-    });
-    builder.addCase(login.rejected, (state, action) => {
-      state.isLoading = false;
-      console.log(action.error);
-    });
-    builder.addCase(demoLogin.rejected, (state, action) => {
-      state.isLoading = false;
-      console.log(action.error);
-    });
-    builder.addCase(me.rejected, (state, action) => {
-      state.isLoading = false;
-      console.log(action.payload);
-    });
-    builder.addCase(updateUser.rejected, (state, action) => {
-      state.isLoading = false;
-      console.log(action.payload);
-    });
     builder.addCase(me.fulfilled, (state, { payload }) => {
       const { id, firstName, lastName, username, email, img, isAdmin } =
         payload;
@@ -71,12 +51,34 @@ const authSlice = createSlice({
       state.img = payload.img;
       state.isLoading = false;
     });
+    builder.addCase(getUserOrders.fulfilled, (state, action) => {
+      const [openOrder] = action.payload.filter(
+        (order) => order.complete === false
+      );
+      state.orders = [...action.payload];
+      state.cart = [...openOrder.lineItems.sort((a, b) => a.id - b.id)];
+    });
+    builder.addCase(addCartLineItem.fulfilled, (state, { payload }) => {
+      //LOOK FOR ADDED ITEM IN EXISTING CART
+      const existingItems = state.cart.filter((item) => payload.id !== item.id);
+
+      //IF IT'S NOT FOUND WE ADD NEW ITEM
+      if (existingItems.length === state.cart.length) {
+        state.cart.push(payload);
+        return;
+      }
+
+      //IF FOUND WE
+      existingItems.push(payload);
+      state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
+    });
   },
 });
 
+//AUTH
 export const me = createAsyncThunk("me", async (thunkAPI) => {
   const authorization = localStorage.getItem("authorization");
-  const response = await fetch(BASE_URL + "me", {
+  const response = await fetch("http://localhost:7000/api/auth/me", {
     method: "GET",
     headers: { authorization },
   })
@@ -86,7 +88,7 @@ export const me = createAsyncThunk("me", async (thunkAPI) => {
 });
 
 export const login = createAsyncThunk("login", async (form, thunkAPI) => {
-  const response = await fetch(BASE_URL + "login", {
+  const response = await fetch("http://localhost:7000/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(form),
@@ -121,11 +123,14 @@ export const demoLogin = createAsyncThunk(
       };
     }
 
-    const { authorization } = await fetch(BASE_URL + "login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(demoForm),
-    })
+    const { authorization } = await fetch(
+      "http://localhost:7000/api/auth/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(demoForm),
+      }
+    )
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
@@ -140,11 +145,14 @@ export const demoLogin = createAsyncThunk(
 export const createUser = createAsyncThunk(
   "createUser",
   async (form, thunkAPI) => {
-    const { authorization } = await fetch(BASE_URL + "signUp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    })
+    const { authorization } = await fetch(
+      "http://localhost:7000/api/auth/signUp",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      }
+    )
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
@@ -161,7 +169,7 @@ export const updateUser = createAsyncThunk(
   async (form, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
 
-    const { user } = await fetch(BASE_URL + form.id, {
+    const { user } = await fetch(`http://localhost:7000/api/auth/${form.id}`, {
       method: "PUT",
       headers: {
         authorization,
@@ -173,6 +181,48 @@ export const updateUser = createAsyncThunk(
       .catch((err) => console.error(err));
 
     return user;
+  }
+);
+
+//USER SPECIFIC ORDER
+export const getUserOrders = createAsyncThunk(
+  "getUserOrders",
+  async (userId, thunkAPI) => {
+    const authorization = localStorage.getItem("authorization");
+
+    const { userOrders } = await fetch(
+      `http://localhost:7000/api/shop/cart/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          authorization,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    return userOrders;
+  }
+);
+
+export const addCartLineItem = createAsyncThunk(
+  "addCartLineItem",
+  async (vinylId, thunkAPI) => {
+    const authorization = localStorage.getItem("authorization");
+
+    const { newItem, existingItem } = await fetch(
+      `http://localhost:7000/api/shop/cart/${vinylId}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    // if (existingItem) return existingItem;
+    return newItem || existingItem;
   }
 );
 

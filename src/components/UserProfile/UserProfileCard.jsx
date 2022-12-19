@@ -8,7 +8,7 @@ const UserProfileCard = ({ user: { firstName, lastName, username, img } }) => {
     <div className="w-full max-w-sm bg-shade-9 rounded-lg shadow-md">
       <div className="flex flex-col items-center py-10">
         <img
-          className="w-24 aspect-square mb-3 rounded-full shadow-lg"
+          className="w-24 aspect-square mb-3 rounded-full shadow-lg object-cover"
           src={img || defaultProfileImage}
           alt="profile-image"
         />

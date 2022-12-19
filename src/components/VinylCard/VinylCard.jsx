@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-// import { addCartLineItem } from "../../../redux/features/shopSlice";
+import { Link } from "react-router-dom";
+import { addCartLineItem } from "../../../redux/features/authSlice";
 import { formatToUSD, popularityToStart } from "../helpers";
 import { StarIcon } from "../assets";
 
@@ -9,9 +10,10 @@ const VinylCard = ({ vinyl }) => {
 
   return (
     <div className="w-full m-5 max-w-[300px] rounded-lg shadow-md bg-shade-9">
-      <a href="#">
+      <Link to={`/singleVinyl/${vinyl.id}`}>
         <img className="p-5 rounded-t-lg" src={vinyl.img} alt="vinyl-image" />
-      </a>
+      </Link>
+
       <div className="px-5 pb-5">
         <a href="#">
           <h5 className="text-xl font-semibold tracking-tight text-shade-1 hover:text-sec whitespace-nowrap text-ellipsis overflow-hidden">
@@ -33,7 +35,7 @@ const VinylCard = ({ vinyl }) => {
           </span>
           <a
             onClick={() => {
-              // dispatch(addCartLineItem(vinyl.id));
+              dispatch(addCartLineItem(vinyl.id));
             }}
             className="bg-accent px-5 py-2 rounded text-shade-1 hover:text-shade-9 hover:bg-highlight ease-in-out duration-300 cursor-pointer">
             Add to cart

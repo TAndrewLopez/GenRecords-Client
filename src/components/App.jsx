@@ -13,10 +13,10 @@ import {
 
 // THUNKS
 import { me } from "../../redux/features/authSlice";
-import { getUserOrders } from "../../redux/features/shopSlice";
+import { getUserOrders } from "../../redux/features/authSlice";
 
 //PROTECTED ADMIN ROUTE
-import { PrivateRoute } from "./";
+import { AdminRoute, UserRoute } from "./";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,13 +40,16 @@ const App = () => {
       <Routes>
         <Route index element={<LandingPage />} />
         <Route path={"/vinyls"} element={<AllVinylsPage />} />
-        <Route path={"/profilePage"} element={<ProfilePage />} />
+        {/* <Route path={"/profilePage"} element={<ProfilePage />} /> */}
         <Route path={"/auth"} element={<Auth />} />
 
         <Route path={"/singleVinyl/:id"} element={<SingleVinylPage />} />
         <Route path={"/singleArtist/:id"} element={<SingleArtistPage />} />
 
-        <Route element={<PrivateRoute />}>
+        <Route element={<UserRoute />}>
+          <Route path={"/profilePage"} element={<ProfilePage />} />
+        </Route>
+        <Route element={<AdminRoute />}>
           <Route path={"/admin"} element={<AdminDashboard />} />
         </Route>
       </Routes>

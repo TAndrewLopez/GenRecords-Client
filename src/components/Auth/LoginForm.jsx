@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { ErrorIcon, ProfileIcon, LockIcon } from "../assets";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { login } from "../../../redux/features/authSlice";
+import { ErrorIcon, ProfileIcon, LockIcon } from "../assets";
 
 const LoginForm = ({ toggle }) => {
   const dispatch = useDispatch();
+  const { loggedIn } = useSelector((state) => state.authReducer);
+
+  //FORM STATE
   const [formError, setFormError] = useState(false);
   const [nameFocused, setNameFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
@@ -39,6 +43,10 @@ const LoginForm = ({ toggle }) => {
       password: "",
     });
   };
+
+  if (loggedIn) {
+    return <Navigate to={"/profilePage"} />;
+  }
 
   return (
     <form onSubmit={handleSubmit}>
