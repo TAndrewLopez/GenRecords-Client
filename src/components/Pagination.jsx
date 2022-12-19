@@ -13,7 +13,7 @@ const Pagination = ({ itemsPerPage, total, setPage, currPage }) => {
               setPage(currPage - 1);
             }
           }}>
-          <a className="relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer">
+          <a className="relative block py-1.5 px-3 border-0 bg-transparent outline-none ease-in-out duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer">
             prev
           </a>
         </li>
@@ -22,7 +22,7 @@ const Pagination = ({ itemsPerPage, total, setPage, currPage }) => {
           return (
             <li onClick={() => setPage(page)} key={page + i}>
               <a
-                className={`relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer ${
+                className={`relative block py-1.5 px-3 border-0 outline-none ease-in-out duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer ${
                   page === currPage ? "bg-accent" : ""
                 }`}>
                 {page}
@@ -37,7 +37,7 @@ const Pagination = ({ itemsPerPage, total, setPage, currPage }) => {
               setPage(currPage + 1);
             }
           }}>
-          <a className="relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer">
+          <a className="relative block py-1.5 px-3 border-0 bg-transparent outline-none ease-in-out duration-300 rounded text-shade-2 hover:text-shade-9 hover:bg-highlight focus:shadow-none cursor-pointer">
             next
           </a>
         </li>

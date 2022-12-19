@@ -20,14 +20,18 @@ const Header = ({ headerClass }) => {
 
   return (
     <header className={headerClass}>
-      <Link className="text-white hover:text-sec" to="/">
+      <Link
+        className="text-white hover:text-sec ease-in-out duration-300"
+        to="/">
         Gen Records
       </Link>
       <nav className="hidden sm:block">
         <ul className="flex gap-8">
           <NavLinks links={linkInfo} />
           {isAdmin ? (
-            <Link className="text-white hover:text-sec" to={"/admin"}>
+            <Link
+              className="text-white hover:text-sec ease-in-out duration-300"
+              to={"/admin"}>
               Admin Dashboard
             </Link>
           ) : (
@@ -36,12 +40,14 @@ const Header = ({ headerClass }) => {
           <div className="flex" onClick={() => setToggleCart(!toggleCart)}>
             <CartIcon
               amount={cart.length}
-              twClass={`w-4 fill-white hover:fill-sec cursor-pointer`}
+              twClass={`w-4 fill-white hover:fill-sec cursor-pointer ease-in-out duration-300`}
             />
           </div>
           <Link className="flex" to={"/profilePage"}>
             <ProfileIcon
-              twClass={"w-4 fill-white hover:fill-sec cursor-pointer"}
+              twClass={
+                "w-4 fill-white hover:fill-sec cursor-pointer ease-in-out duration-300"
+              }
             />
           </Link>
         </ul>
