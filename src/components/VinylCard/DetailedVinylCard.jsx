@@ -39,8 +39,8 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
             }`}
             type="submit">
             {cart?.filter((item) => item?.vinyl.id === singleVinyl?.id).length
-              ? CartButton(false)
-              : CartButton(true)}
+              ? AddToCartButton(false)
+              : AddToCartButton(true)}
           </button>
           <p className="text-shade-1 ">Ships on 'Get Date' plus 7 days</p>
           <p className="text-shade-1 ">Vinyl Details</p>
@@ -52,7 +52,7 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
 
 export default DetailedVinylCard;
 
-const CartButton = (add) => {
+const AddToCartButton = (add) => {
   if (add) {
     return (
       <div className="flex justify-center gap-5 px-6 py-2 hover:text-shade-9 group ease-in-out duration-300">

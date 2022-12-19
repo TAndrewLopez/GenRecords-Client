@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Pagination } from "../../components";
 import { PlusIcon, MinusIcon } from "../assets";
 import { formatToUSD } from "../helpers";
-// import { addCartLineItem } from "../../../redux/features/shopSlice";
+import { addCartLineItem } from "../../../redux/features/authSlice";
 
 const UserCart = ({ cart, title, images, controls }) => {
   //PAGINATION
@@ -13,6 +13,31 @@ const UserCart = ({ cart, title, images, controls }) => {
   const indexOfLastPost = currPage * itemsPerPage;
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
   const currSlice = cart.slice(indexOfFirstPost, indexOfLastPost);
+
+  const adjustQty = (addOrSub, itemId) => {
+    const dispatch = useDispatch();
+    if (addOrSub) {
+      return (
+        <button
+          onClick={() => {
+            dispatch(addCartLineItem(itemId));
+          }}
+          className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300 peer">
+          <PlusIcon twClass="w-2 fill-shade-2" />
+        </button>
+      );
+    }
+    return (
+      <button
+        onClick={() => {
+          console.log("remove");
+        }}
+        className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300">
+        <MinusIcon twClass="w-2 fill-shade-2" />
+      </button>
+    );
+  };
+
   return (
     <div
       id="userCart"
@@ -43,15 +68,17 @@ const UserCart = ({ cart, title, images, controls }) => {
                 )}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-shade-1 truncate">
-                    {`${item?.vinyl.name} by ${item?.vinyl.artist.name}`}
+                    <Link to={`/singleVinyl/${item.vinyl.id}`}>
+                      {`${item?.vinyl.name} by ${item?.vinyl.artist.name}`}
+                    </Link>
                   </p>
 
                   <div className="flex gap-3 py-1">
                     <p className="text-sm text-shade-5 truncate">
                       {`qty: ${item?.qty}`}
                     </p>
-                    {controls ? adjustQty(false, item?.id) : ""}
-                    {controls ? adjustQty(true, item?.id) : ""}
+                    {controls ? adjustQty(false, item?.vinyl.id) : ""}
+                    {controls ? adjustQty(true, item?.vinyl.id) : ""}
                   </div>
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-shade-1">
@@ -78,23 +105,3 @@ const UserCart = ({ cart, title, images, controls }) => {
 };
 
 export default UserCart;
-
-const adjustQty = (addOrSub, itemId) => {
-  const dispatch = useDispatch();
-  if (addOrSub) {
-    return (
-      <button
-        onClick={() => {
-          // dispatch(addCartLineItem(itemId));
-        }}
-        className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300 peer">
-        <PlusIcon twClass="w-2 fill-shade-2" />
-      </button>
-    );
-  }
-  return (
-    <button className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300">
-      <MinusIcon twClass="w-2 fill-shade-2" />
-    </button>
-  );
-};

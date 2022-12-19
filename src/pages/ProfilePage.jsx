@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   Header,
@@ -11,7 +10,7 @@ import {
 
 const ProfilePage = () => {
   const {
-    authReducer: { loggedIn, firstName, lastName, username, email, cart, img },
+    authReducer: { firstName, lastName, username, email, cart, img },
   } = useSelector((state) => state);
 
   return (
@@ -24,7 +23,7 @@ const ProfilePage = () => {
               user={{ firstName, lastName, username, email, img }}
             />
             <OrderHistory />
-            <UserCart title images cart={cart} />
+            <UserCart controls title images cart={cart} />
           </div>
           <div className="flex flex-1 flex-col items-center gap-5">
             <UserProfileForm />

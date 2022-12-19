@@ -54,7 +54,7 @@ const Header = ({ headerClass }) => {
       {overlay ? <MobileNavOverlay links={linkInfo} /> : <></>}
       {toggleCart ? (
         <div className="absolute top-20 right-3 shadow-lg z-50 bg-red-300">
-          <UserCart controls title cart={cart} />
+          <UserCart title cart={cart} />
         </div>
       ) : (
         <></>
