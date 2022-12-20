@@ -4,11 +4,9 @@ import { Link } from "react-router-dom";
 import { Pagination } from "../../components";
 import { PlusIcon, MinusIcon } from "../assets";
 import { formatToUSD } from "../helpers";
-import { addCartLineItem } from "../../../redux/features/authSlice";
+import { changeLineItemQty } from "../../../redux/features/authSlice";
 
 const UserCart = ({ cart, title, images, controls }) => {
-  const dispatch = useDispatch();
-
   //PAGINATION
   const [currPage, setCurrPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -16,12 +14,18 @@ const UserCart = ({ cart, title, images, controls }) => {
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
   const currSlice = cart.slice(indexOfFirstPost, indexOfLastPost);
 
-  const adjustQty = (reduxDispatch, addOrSub, item) => {
+  const adjustQty = (addOrSub, item) => {
+    const dispatch = useDispatch();
     if (addOrSub) {
       return (
         <button
           onClick={() => {
-            reduxDispatch(addCartLineItem(item));
+            dispatch(
+              changeLineItemQty({
+                ...item,
+                qty: item.qty + 1,
+              })
+            );
           }}
           className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300 peer">
           <PlusIcon twClass="w-2 fill-shade-2" />
@@ -31,7 +35,12 @@ const UserCart = ({ cart, title, images, controls }) => {
     return (
       <button
         onClick={() => {
-          reduxDispatch(addCartLineItem(item));
+          dispatch(
+            changeLineItemQty({
+              ...item,
+              qty: item.qty - 1,
+            })
+          );
         }}
         className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300">
         <MinusIcon twClass="w-2 fill-shade-2" />
@@ -79,12 +88,10 @@ const UserCart = ({ cart, title, images, controls }) => {
                       {`qty: ${item?.qty}`}
                     </p>
                     {controls ? (
-                      adjustQty(dispatch, false, { ...item, qty: item.qty - 1 })
-                    ) : (
-                      <></>
-                    )}
-                    {controls ? (
-                      adjustQty(dispatch, true, { ...item, qty: item.qty + 1 })
+                      <>
+                        {adjustQty(0, item)}
+                        {adjustQty(1, item)}
+                      </>
                     ) : (
                       <></>
                     )}

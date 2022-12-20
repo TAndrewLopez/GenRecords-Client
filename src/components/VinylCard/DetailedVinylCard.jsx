@@ -1,8 +1,11 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { formatToUSD } from "../helpers";
 import { CartIcon } from "../assets";
+import { addLineItem } from "../../../redux/features/authSlice";
 
 const DetailedVinylCard = ({ singleVinyl, cart }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <div className="flex gap-5 flex-col sm:flex-row m-5 bg-shade-9 p-5 rounded-lg">
@@ -40,7 +43,7 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
             type="submit">
             {cart?.filter((item) => item?.vinyl.id === singleVinyl?.id).length
               ? AddToCartButton(false)
-              : AddToCartButton(true)}
+              : AddToCartButton(true, singleVinyl?.id)}
           </button>
           <p className="text-shade-1 ">Ships on 'Get Date' plus 7 days</p>
           <p className="text-shade-1 ">Vinyl Details</p>
@@ -52,10 +55,16 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
 
 export default DetailedVinylCard;
 
-const AddToCartButton = (add) => {
+const AddToCartButton = (add, id) => {
+  const dispatch = useDispatch();
+
   if (add) {
     return (
-      <div className="flex justify-center gap-5 px-6 py-2 hover:text-shade-9 group ease-in-out duration-300">
+      <div
+        onClick={() => {
+          dispatch(addLineItem(id));
+        }}
+        className="flex justify-center gap-5 px-6 py-2 hover:text-shade-9 group ease-in-out duration-300">
         <CartIcon
           twClass={`w-4 fill-white cursor-pointer group-hover:fill-shade-9 ease-in-out duration-300`}
         />

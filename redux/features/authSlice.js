@@ -58,15 +58,23 @@ const authSlice = createSlice({
       state.orders = [...action.payload];
       state.cart = [...openOrder.lineItems.sort((a, b) => a.id - b.id)];
     });
-    builder.addCase(addCartLineItem.fulfilled, (state, { payload }) => {
-      const existingItems = state.cart.filter((item) => payload.id !== item.id);
-      if (existingItems.length === state.cart.length) {
-        state.cart.push(payload);
+    builder.addCase(addLineItem.fulfilled, (state, { payload }) => {
+      if (!payload) {
+        console.log("uh oh, undefined");
         return;
       }
-      existingItems.push(payload);
-      state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
+      state.cart.push(payload);
+      console.log("success");
     });
+    // builder.addCase(changeLineItemQty.fulfilled, (state, { payload }) => {
+    //   const existingItems = state.cart.filter((item) => payload.id !== item.id);
+    //   if (existingItems.length === state.cart.length) {
+    //     state.cart.push(payload);
+    //     return;
+    //   }
+    //   existingItems.push(payload);
+    //   state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
+    // });
     // builder.addCase(removeCartLineItem.fulfilled, (state, { payload }) => {
     //   const existingItems = state.cart.filter((item) => payload.id !== item.id);
     //   if (existingItems.length === state.cart.length) {
@@ -209,12 +217,32 @@ export const getUserOrders = createAsyncThunk(
   }
 );
 
-export const addCartLineItem = createAsyncThunk(
-  "addCartLineItem",
+export const addLineItem = createAsyncThunk(
+  "addLineItem",
+  async (vinylId, thunkAPI) => {
+    const authorization = localStorage.getItem("authorization");
+
+    const { itemWithContents } = await fetch(
+      `http://localhost:7000/api/shop/cart/${vinylId}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    return itemWithContents;
+  }
+);
+
+export const changeLineItemQty = createAsyncThunk(
+  "changeLineItemQty",
   async (item, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
-    const { newItem, existingItem } = await fetch(
-      `http://localhost:7000/api/shop/cart/${item.vinyl.id}`,
+    const { lineItem } = await fetch(
+      `http://localhost:7000/api/shop/cart/qty`,
       {
         method: "PUT",
         headers: {
@@ -226,12 +254,12 @@ export const addCartLineItem = createAsyncThunk(
     )
       .then((res) => res.json())
       .catch((err) => console.error(err));
-    return newItem || existingItem;
+    return lineItem;
   }
 );
 
-// export const removeCartLineItem = createAsyncThunk(
-//   "removeCartLineItem",
+// export const removeLineItem = createAsyncThunk(
+//   "removeLineItem",
 //   async (vinylId, thunkAPI) => {
 //     const authorization = localStorage.getItem("authorization");
 

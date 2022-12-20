@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Header, Footer } from "../components";
+import { Header, Footer, ToastNotification } from "../components";
 import { adminGetUsers, adminGetVinyls } from "../../redux/features/adminSlice";
 
 const AdminDashboard = () => {
@@ -25,9 +25,13 @@ const AdminDashboard = () => {
   return (
     <>
       <Header headerClass={"flex text-xl justify-between p-5 bg-shade-9"} />
-      <div className="flex-1 flex justify-center bg-shade-7 ">
-        {`Users loaded: ${users.length}`} <br />
+      <div className="flex-1 bg-shade-7 ">
+        {`Users loaded: ${users.length}`}
         {`Vinyls loaded: ${vinyls.length}`}
+        <ToastNotification
+          type={"warning"}
+          toastMessage={"Change a few things up and try submitting again."}
+        />
       </div>
       <Footer
         twClass={"px-5 py-3 text-white flex justify-center bg-shade-9 "}

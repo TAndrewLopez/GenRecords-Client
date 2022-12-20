@@ -45,7 +45,6 @@ const AllVinylsPage = () => {
     filteredAlbums.length || userInput
       ? filteredAlbums.slice(indexOfFirstPost, indexOfLastPost)
       : allVinyls.slice(indexOfFirstPost, indexOfLastPost);
-  const paginate = (pageNumber) => setCurrPage(pageNumber);
 
   useEffect(() => {
     if (!allVinyls.length) {
@@ -119,19 +118,19 @@ const AllVinylsPage = () => {
 
 export default AllVinylsPage;
 
-const sortByAlbumName = (arr, dir) => {
-  if (dir) {
-    arr.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      }
-      return 0;
-    });
-  }
-  arr.sort((a, b) => {
-    if (a.name > b.name) {
-      return -1;
-    }
-    return 0;
-  });
-};
+// const sortByAlbumName = (arr, dir) => {
+//   if (dir) {
+//     arr.sort((a, b) => {
+//       if (a.name < b.name) {
+//         return -1;
+//       }
+//       return 0;
+//     });
+//   }
+//   arr.sort((a, b) => {
+//     if (a.name > b.name) {
+//       return -1;
+//     }
+//     return 0;
+//   });
+// };

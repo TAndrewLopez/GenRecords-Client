@@ -9,6 +9,7 @@ export { default as Hamburger } from "./Navigation/Hamburger";
 export { default as Header } from "./Navigation/Header";
 export { default as MobileNavOverlay } from "./Navigation/MobileNavOverlay";
 export { default as NavLinks } from "./Navigation/NavLinks";
+export { default as ToastNotification } from "./Toast/ToastNotification";
 export { default as OrderHistory } from "./UserProfile/OrderHistory";
 export { default as UserCart } from "./UserProfile/UserCart";
 export { default as UserProfileCard } from "./UserProfile/UserProfileCard";

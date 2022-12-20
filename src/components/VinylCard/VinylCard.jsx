@@ -1,12 +1,22 @@
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addCartLineItem } from "../../../redux/features/authSlice";
 import { formatToUSD, popularityToStart } from "../helpers";
 import { StarIcon } from "../assets";
+import { addLineItem } from "../../../redux/features/authSlice";
 
 const VinylCard = ({ vinyl }) => {
   const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.authReducer);
+  const [existInCart, setExistInCart] = useState(false);
   const numberOfStars = Math.floor(popularityToStart(vinyl.popularity));
+
+  useEffect(() => {
+    const itemExist = cart.some((item) => item.vinyl.id === vinyl.id);
+    if (itemExist) {
+      setExistInCart(true);
+    }
+  }, []);
 
   return (
     <div className="w-full m-5 max-w-[300px] rounded-lg shadow-md bg-shade-9">
@@ -33,12 +43,19 @@ const VinylCard = ({ vinyl }) => {
           <span className="text-3xl font-bold text-shade-1">
             {`$${formatToUSD(vinyl.price)}`}
           </span>
+
           <a
             onClick={() => {
-              dispatch(addCartLineItem(vinyl.id));
+              if (!existInCart) {
+                dispatch(addLineItem(vinyl.id));
+              }
             }}
-            className="bg-accent px-5 py-2 rounded text-shade-1 hover:text-shade-9 hover:bg-highlight ease-in-out duration-300 cursor-pointer">
-            Add to cart
+            className={`sm:px-5 px-3 py-2 rounded  ease-in-out duration-300 cursor-pointer ${
+              existInCart
+                ? "bg-shade-8 cursor-default disabled"
+                : "bg-accent text-shade-1 hover:bg-highlight hover:text-shade-9"
+            }`}>
+            {existInCart ? "Already in Cart" : "Add to Cart"}
           </a>
         </div>
       </div>
@@ -50,11 +67,9 @@ export default VinylCard;
 
 const popularityStars = (num) => {
   const stars = [];
-
   for (let i = 1; i < 6; i++) {
     i <= num ? stars.push(1) : stars.push(0);
   }
-
   return (
     <>
       {stars.map((star, i) => {
