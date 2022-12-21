@@ -7,6 +7,7 @@ import { formatToUSD } from "../helpers";
 import { changeLineItemQty } from "../../../redux/features/authSlice";
 
 const UserCart = ({ cart, title, images, controls }) => {
+  const dispatch = useDispatch();
   //PAGINATION
   const [currPage, setCurrPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -15,7 +16,6 @@ const UserCart = ({ cart, title, images, controls }) => {
   const currSlice = cart.slice(indexOfFirstPost, indexOfLastPost);
 
   const adjustQty = (addOrSub, item) => {
-    const dispatch = useDispatch();
     if (addOrSub) {
       return (
         <button

@@ -58,13 +58,13 @@ const Header = ({ headerClass }) => {
         <button>Hamburger</button>
       </div>
       {overlay ? <MobileNavOverlay links={linkInfo} /> : <></>}
-      {toggleCart ? (
+      {/* {toggleCart ? (
         <div className="absolute top-20 right-3 shadow-lg z-50 bg-red-300">
           <UserCart title cart={cart} />
         </div>
       ) : (
         <></>
-      )}
+      )} */}
     </header>
   );
 };

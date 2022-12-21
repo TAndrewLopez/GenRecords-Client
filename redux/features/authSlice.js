@@ -51,11 +51,9 @@ const authSlice = createSlice({
       state.img = payload.img;
       state.isLoading = false;
     });
-    builder.addCase(getUserOrders.fulfilled, (state, action) => {
-      const [openOrder] = action.payload.filter(
-        (order) => order.complete === false
-      );
-      state.orders = [...action.payload];
+    builder.addCase(getUserOrders.fulfilled, (state, { payload }) => {
+      const [openOrder] = payload.filter((order) => order.complete === false);
+      state.orders = [...payload];
       state.cart = [...openOrder.lineItems.sort((a, b) => a.id - b.id)];
     });
     builder.addCase(addLineItem.fulfilled, (state, { payload }) => {
@@ -64,26 +62,15 @@ const authSlice = createSlice({
         return;
       }
       state.cart.push(payload);
-      console.log("success");
     });
-    // builder.addCase(changeLineItemQty.fulfilled, (state, { payload }) => {
-    //   const existingItems = state.cart.filter((item) => payload.id !== item.id);
-    //   if (existingItems.length === state.cart.length) {
-    //     state.cart.push(payload);
-    //     return;
-    //   }
-    //   existingItems.push(payload);
-    //   state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
-    // });
-    // builder.addCase(removeCartLineItem.fulfilled, (state, { payload }) => {
-    //   const existingItems = state.cart.filter((item) => payload.id !== item.id);
-    //   if (existingItems.length === state.cart.length) {
-    //     state.cart.push(payload);
-    //     return;
-    //   }
-    //   existingItems.push(payload);
-    //   state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
-    // });
+    builder.addCase(changeLineItemQty.fulfilled, (state, { payload }) => {
+      const existingItems = state.cart.filter((item) => payload.id !== item.id);
+      existingItems.push(payload);
+      state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
+    });
+    builder.addCase(removeLineItem.fulfilled, (state, { payload }) => {
+      state.cart = [...state.cart.filter((item) => item.id !== payload)];
+    });
   },
 });
 
@@ -241,7 +228,7 @@ export const changeLineItemQty = createAsyncThunk(
   "changeLineItemQty",
   async (item, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
-    const { lineItem } = await fetch(
+    const { updatedItem } = await fetch(
       `http://localhost:7000/api/shop/cart/qty`,
       {
         method: "PUT",
@@ -254,29 +241,30 @@ export const changeLineItemQty = createAsyncThunk(
     )
       .then((res) => res.json())
       .catch((err) => console.error(err));
-    return lineItem;
+
+    return updatedItem;
   }
 );
 
-// export const removeLineItem = createAsyncThunk(
-//   "removeLineItem",
-//   async (vinylId, thunkAPI) => {
-//     const authorization = localStorage.getItem("authorization");
+export const removeLineItem = createAsyncThunk(
+  "removeLineItem",
+  async (lineItemId, thunkAPI) => {
+    const authorization = localStorage.getItem("authorization");
 
-//     const { newItem, existingItem } = await fetch(
-//       `http://localhost:7000/api/shop/cart/${vinylId}`,
-//       {
-//         method: "PUT",
-//         headers: {
-//           authorization,
-//         },
-//       }
-//     )
-//       .then((res) => res.json())
-//       .catch((err) => console.error(err));
-//     return newItem || existingItem;
-//   }
-// );
+    const { deletedItem } = await fetch(
+      `http://localhost:7000/api/shop/cart/${lineItemId}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .catch((err) => console.error(err));
+    return deletedItem;
+  }
+);
 
 export default authSlice.reducer;
 export const { logout } = authSlice.actions;
