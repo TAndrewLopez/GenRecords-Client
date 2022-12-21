@@ -22,9 +22,7 @@ import { SpinningLoader } from "../components/assets";
 
 const AllVinylsPage = () => {
   const dispatch = useDispatch();
-  const { allVinyls, isLoading, shopError } = useSelector(
-    (state) => state.shopReducer
-  );
+  const { allVinyls, isLoading } = useSelector((state) => state.shopReducer);
 
   //SEARCH FIELD STATES
   const [userInput, setUserInput] = useState("");
@@ -41,10 +39,7 @@ const AllVinylsPage = () => {
   const [itemsPerPage] = useState(20);
   const indexOfLastPost = currPage * 20;
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
-  const currSlice =
-    filteredAlbums.length || userInput
-      ? filteredAlbums.slice(indexOfFirstPost, indexOfLastPost)
-      : allVinyls.slice(indexOfFirstPost, indexOfLastPost);
+  const currSlice = allVinyls.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
     if (!allVinyls.length) {
@@ -55,10 +50,6 @@ const AllVinylsPage = () => {
   useEffect(() => {
     setFilterAlbums(allVinyls);
   }, [allVinyls]);
-
-  if (shopError) {
-    return <div>{`Error: ${shopError}`}</div>;
-  }
 
   if (isLoading) {
     return <SpinningLoader />;
@@ -80,11 +71,7 @@ const AllVinylsPage = () => {
           </li>
           <li>
             {/* FIXME: DROP DOWN ONLY WORKS FOR THE STORE BUT SEARCH FIELD USES LOCAL STATE */}
-            <DropDown
-              set={setFilterAlbums}
-              sortOptions={[]}
-              vinyls={filteredAlbums}
-            />
+            <DropDown />
           </li>
         </ul>
 
@@ -111,26 +98,9 @@ const AllVinylsPage = () => {
           />
         </div>
       </div>
-      <Footer twClass={"px-5 py-3 text-white flex justify-center bg-shade-9"} />
+      <Footer twClass={"p-5 text-white flex justify-center bg-shade-9"} />
     </>
   );
 };
 
 export default AllVinylsPage;
-
-// const sortByAlbumName = (arr, dir) => {
-//   if (dir) {
-//     arr.sort((a, b) => {
-//       if (a.name < b.name) {
-//         return -1;
-//       }
-//       return 0;
-//     });
-//   }
-//   arr.sort((a, b) => {
-//     if (a.name > b.name) {
-//       return -1;
-//     }
-//     return 0;
-//   });
-// };

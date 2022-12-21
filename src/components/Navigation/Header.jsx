@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { NavLinks, Hamburger, MobileNavOverlay } from "..";
 import { CartIcon, ProfileIcon } from "../assets";
 import { UserCart } from "../../components";
-import { NavLinks, MobileNavOverlay } from "..";
 
 const Header = ({ headerClass }) => {
   const {
@@ -17,6 +17,12 @@ const Header = ({ headerClass }) => {
     { path: "/", name: "Home" },
     { path: "/vinyls", name: "Shop Vinyls" },
   ];
+
+  if (overlay) {
+    document.getElementById("root").style.overflow = "hidden";
+  } else {
+    document.getElementById("root").style.overflow = "auto";
+  }
 
   return (
     <header className={headerClass}>
@@ -54,8 +60,8 @@ const Header = ({ headerClass }) => {
       </nav>
       <div
         onClick={() => setOverlay(!overlay)}
-        className="relative z-30 text-white sm:hidden">
-        <button>Hamburger</button>
+        className="relative z-30 text-white sm:hidden flex">
+        <Hamburger visible={overlay} />
       </div>
       {overlay ? <MobileNavOverlay links={linkInfo} /> : <></>}
       {/* {toggleCart ? (

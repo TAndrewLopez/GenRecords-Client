@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Header, Footer, ToastNotification } from "../components";
+import {
+  Header,
+  Footer,
+  ToastNotification,
+  UserCartDropDown,
+} from "../components";
 import { adminGetUsers, adminGetVinyls } from "../../redux/features/adminSlice";
 
 const AdminDashboard = () => {
@@ -32,10 +37,9 @@ const AdminDashboard = () => {
           type={"warning"}
           toastMessage={"Change a few things up and try submitting again."}
         />
+        <UserCartDropDown />
       </div>
-      <Footer
-        twClass={"px-5 py-3 text-white flex justify-center bg-shade-9 "}
-      />
+      <Footer twClass={"p-5 text-white flex justify-center bg-shade-9 "} />
     </>
   );
 };

@@ -13,14 +13,12 @@ const OrderHistory = () => {
         <h5 className="text-xl font-bold leading-none text-shade-1">
           Order History
         </h5>
-        <a
-          href="#"
-          className="text-sm font-medium text-accent hover:text-highlight hover:underline ease-in-out duration-300">
+        <a className="text-sm font-medium text-accent hover:text-highlight hover:underline ease-in-out duration-300">
           View all
         </a>
       </div>
-      <div className="flow-root">
-        <ul role="list" className="divide-y divide-shade-6">
+      <div>
+        <ul className="divide-y divide-shade-6">
           {orders.map((order, i) => (
             <li className="py-3 sm:py-4" key={order.id + i}>
               <div className="flex items-center space-x-4">

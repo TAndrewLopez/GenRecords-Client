@@ -11,8 +11,7 @@ const ToastNotification = ({ type, toastMessage }) => {
       onClick={() => {
         console.log("close notification");
       }}
-      className={`absolute bottom-16 left-1/2 -translate-x-1/2 w-full md:max-w-md flex p-4 text-sm rounded-lg cursor-pointer ${colors[type]}`}
-      role="alert">
+      className={`absolute bottom-16 left-1/2 -translate-x-1/2 w-full md:max-w-md flex p-4 text-sm rounded-lg cursor-pointer ${colors[type]}`}>
       <svg
         aria-hidden="true"
         className="flex-shrink-0 inline w-5 h-5 mr-3"

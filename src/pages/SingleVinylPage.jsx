@@ -23,9 +23,7 @@ const SingleVinylPage = () => {
         <DetailedVinylCard singleVinyl={singleVinyl} cart={cart} />
         <TrackList vinyl={singleVinyl} />
       </div>
-      <Footer
-        twClass={"px-5 py-3 text-white flex justify-center bg-shade-9 "}
-      />
+      <Footer twClass={"p-5 text-white flex justify-center bg-shade-9 "} />
     </>
   );
 };

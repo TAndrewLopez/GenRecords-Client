@@ -12,6 +12,7 @@ export { default as NavLinks } from "./Navigation/NavLinks";
 export { default as ToastNotification } from "./Toast/ToastNotification";
 export { default as OrderHistory } from "./UserProfile/OrderHistory";
 export { default as UserCart } from "./UserProfile/UserCart";
+export { default as UserCartDropDown } from "./UserProfile/UserCartDropDown";
 export { default as UserProfileCard } from "./UserProfile/UserProfileCard";
 export { default as UserProfileForm } from "./UserProfile/UserProfileForm";
 export { default as UserProfileInfo } from "./UserProfile/UserProfileInfo";

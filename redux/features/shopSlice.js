@@ -6,7 +6,6 @@ const shopSlice = createSlice({
     allVinyls: [],
     singleVinyl: null,
     isLoading: false,
-    shopError: null,
   },
   reducers: {},
   extraReducers: (builder) => {

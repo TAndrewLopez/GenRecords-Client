@@ -1,21 +1,34 @@
-const Hamburger = () => {
+const Hamburger = ({ visible }) => {
   return (
     <button
-      class="button-three"
+      className="border-shade-1 border-2 rounded group"
       aria-controls="primary-navigation"
       aria-expanded="false">
-      <svg
-        stroke="var(--button-color)"
-        fill="none"
-        class="hamburger"
-        viewBox="-10 -10 120 120"
-        width="250">
-        <path
-          class="line"
-          stroke-width="10"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="m 20 40 h 60 a 1 1 0 0 1 0 20 h -60 a 1 1 0 0 1 0 -40 h 30 v 70"></path>
+      <svg className={"fill-shade-1"} viewBox="0 0 100 100" width={25}>
+        <rect
+          className={`origin-center ease-in-out duration-300 
+          ${visible ? "rotate-45" : ""}`}
+          x={10}
+          y={visible ? 45 : 20}
+          width={80}
+          height={10}
+          rx={5}></rect>
+        <rect
+          className={`origin-center ease-in-out duration-300
+          ${visible ? "opacity-0" : "opacity-100"}`}
+          x={10}
+          y={45}
+          width={80}
+          height={10}
+          rx={5}></rect>
+        <rect
+          className={`origin-center ease-in-out duration-300
+          ${visible ? "-rotate-45" : ""}`}
+          x={10}
+          y={visible ? 45 : 70}
+          width={80}
+          height={10}
+          rx={5}></rect>
       </svg>
     </button>
   );

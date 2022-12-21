@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const DropDown = ({ sortOptions, vinyls, set }) => {
+const DropDown = () => {
   const [sortDropDown, setSortDropDown] = useState(false);
   const [albumDir, setAlbumDir] = useState(false);
 
@@ -54,7 +54,7 @@ const DropDown = ({ sortOptions, vinyls, set }) => {
             </svg>
           </button>
           <ul
-            style={sortDropDown ? { display: "block" } : { display: "none" }}
+            // style={sortDropDown ? { display: "block" } : { display: "none" }}
             className="
             dropdown-menu
             min-w-full
@@ -75,7 +75,7 @@ const DropDown = ({ sortOptions, vinyls, set }) => {
             border-none
             "
             aria-labelledby="sort-options">
-            {sortOptions.map((option, i) => (
+            {/* {sortOptions.map((option, i) => (
               <li
                 onClick={() => {
                   // option.test(vinyls);
@@ -102,7 +102,7 @@ const DropDown = ({ sortOptions, vinyls, set }) => {
                   {option.method}
                 </a>
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
       </div>
