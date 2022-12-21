@@ -37,7 +37,6 @@ const AdminDashboard = () => {
           type={"warning"}
           toastMessage={"Change a few things up and try submitting again."}
         />
-        <UserCartDropDown />
       </div>
       <Footer twClass={"p-5 text-white flex justify-center bg-shade-9 "} />
     </>

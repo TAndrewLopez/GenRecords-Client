@@ -1,7 +1,7 @@
 const Hamburger = ({ visible }) => {
   return (
     <button
-      className="border-shade-1 border-2 rounded group"
+      className="border-accent border-2 rounded group"
       aria-controls="primary-navigation"
       aria-expanded="false">
       <svg className={"fill-shade-1"} viewBox="0 0 100 100" width={25}>

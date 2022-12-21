@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { NavLinks, Hamburger, MobileNavOverlay } from "..";
 import { CartIcon, ProfileIcon } from "../assets";
-import { UserCart } from "../../components";
+import { UserCartDropDown } from "../../components";
 
 const Header = ({ headerClass }) => {
   const {
@@ -64,13 +64,7 @@ const Header = ({ headerClass }) => {
         <Hamburger visible={overlay} />
       </div>
       {overlay ? <MobileNavOverlay links={linkInfo} /> : <></>}
-      {/* {toggleCart ? (
-        <div className="absolute top-20 right-3 shadow-lg z-50 bg-red-300">
-          <UserCart title cart={cart} />
-        </div>
-      ) : (
-        <></>
-      )} */}
+      {toggleCart ? <UserCartDropDown cart={cart} /> : <></>}
     </header>
   );
 };
