@@ -8,6 +8,7 @@ export { default as GithubIcon } from "./GithubIcon";
 export { default as LockIcon } from "./LockIcon";
 export { default as MagnifyingGlassIcon } from "./MagnifyingGlassIcon";
 export { default as MinusIcon } from "./MinusIcon";
+export { default as PlayIcon } from "./PlayIcon";
 export { default as PlusIcon } from "./PlusIcon";
 export { default as ProfileIcon } from "./ProfileIcon";
 export { default as SpinningLoader } from "./SpinningLoader";

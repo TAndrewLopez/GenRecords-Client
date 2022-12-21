@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { shopGetVinyls } from "../../redux/features/shopSlice";
+import { getShopVinyls } from "../../redux/features/shopSlice";
 import {
   Header,
   Footer,
@@ -48,7 +48,7 @@ const AllVinylsPage = () => {
 
   useEffect(() => {
     if (!allVinyls.length) {
-      dispatch(shopGetVinyls());
+      dispatch(getShopVinyls());
     }
   }, []);
 

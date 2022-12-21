@@ -58,12 +58,16 @@ const authSlice = createSlice({
     });
     builder.addCase(addLineItem.fulfilled, (state, { payload }) => {
       if (!payload) {
-        console.log("uh oh, undefined");
+        console.log("addLineItem-Failed");
         return;
       }
       state.cart.push(payload);
     });
     builder.addCase(changeLineItemQty.fulfilled, (state, { payload }) => {
+      if (!payload) {
+        console.log("changeLineItemQty-Failed");
+        return;
+      }
       const existingItems = state.cart.filter((item) => payload.id !== item.id);
       existingItems.push(payload);
       state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
@@ -240,7 +244,7 @@ export const changeLineItemQty = createAsyncThunk(
       }
     )
       .then((res) => res.json())
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("guess who", err));
 
     return updatedItem;
   }

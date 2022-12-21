@@ -18,7 +18,7 @@ const LandingPage = () => {
               Music Enthusiasts
             </span>
           </h1>
-          <p className="mb-6 text-lg font-normal text-shade-4 lg:text-xl sm:px-16 xl:px-48">
+          <p className="mb-4 text-lg font-normal text-shade-4 lg:text-xl sm:px-16 xl:px-48">
             Listen to music the way the{" "}
             <Link
               className="font-semibold text-shade-1 hover:text-highlight underline decoration-accent hover:decoration-highlight ease-in-out duration-300"

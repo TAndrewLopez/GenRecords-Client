@@ -16,6 +16,7 @@ export { default as UserProfileCard } from "./UserProfile/UserProfileCard";
 export { default as UserProfileForm } from "./UserProfile/UserProfileForm";
 export { default as UserProfileInfo } from "./UserProfile/UserProfileInfo";
 export { default as DetailedVinylCard } from "./VinylCard/DetailedVinylCard";
+export { default as TrackList } from "./VinylCard/TrackList";
 export { default as VinylCard } from "./VinylCard/VinylCard";
 export { default as AdminTable } from "./AdminTable";
 export { default as DropDown } from "./DropDown";

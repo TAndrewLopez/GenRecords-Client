@@ -10,10 +10,10 @@ const shopSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(shopGetVinyls.pending, (state, action) => {
+    builder.addCase(getShopVinyls.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(shopGetVinyls.fulfilled, (state, action) => {
+    builder.addCase(getShopVinyls.fulfilled, (state, action) => {
       const { vinyls } = action.payload;
       state.allVinyls = vinyls.sort((a, b) => a.id - b.id);
       state.isLoading = false;
@@ -28,8 +28,8 @@ const shopSlice = createSlice({
   },
 });
 
-export const shopGetVinyls = createAsyncThunk(
-  "shopGetVinyls",
+export const getShopVinyls = createAsyncThunk(
+  "getShopVinyls",
   async (thunkAPI) => {
     const response = await fetch(`http://localhost:7000/api/shop`, {
       method: "GET",

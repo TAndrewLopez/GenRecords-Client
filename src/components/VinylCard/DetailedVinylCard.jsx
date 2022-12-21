@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { formatToUSD } from "../helpers";
 import { CartIcon } from "../assets";
 import { addLineItem, removeLineItem } from "../../../redux/features/authSlice";
+import { useEffect } from "react";
 
 const DetailedVinylCard = ({ singleVinyl, cart }) => {
   const navigate = useNavigate();
@@ -10,8 +11,10 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
   date.setDate(date.getDate() + 7);
   const [lineItemId] = cart.filter((item) => item.vinyl.id === singleVinyl?.id);
 
+  useEffect(() => {}, [singleVinyl]);
+
   return (
-    <div className="flex sm:gap-5 flex-col sm:flex-row m-5 p-5 rounded-lg">
+    <div className="flex sm:gap-5 flex-col sm:flex-row mx-5 p-5 rounded-lg">
       <div className="flex-1 relative flex items-center">
         <button
           onClick={() => {
@@ -44,7 +47,7 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
             : AddToCartButton(true, singleVinyl?.id)}
           <p className="text-shade-1 font-light">{`Ships on ${date.toDateString()}`}</p>
           <div>
-            <h6>Additional Details:</h6>
+            <h6 className="text-shade-4 font-semibold">Additional Details:</h6>
             <p className="text-shade-1 font-light">{`Stock: ${singleVinyl?.stock}`}</p>
             <p className="text-shade-1 font-light">{`Release Date: ${singleVinyl?.releaseDate}`}</p>
             <p className="text-shade-1 font-light">{`Label: ${singleVinyl?.label}`}</p>
