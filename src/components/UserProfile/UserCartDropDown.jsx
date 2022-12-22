@@ -20,13 +20,13 @@ const UserCartDropDown = ({ cart }) => {
             </p>
           </li>
           <li className="pt-3 text-shade-3">
-            <span className="font-light text-center pt-2">
+            <span className="font-light text-center pt-2 hover:underline hover:text-highlight">
               <Link className="cursor-pointer " to={"/profilePage"}>
                 View Cart
               </Link>
             </span>
             {" || "}
-            <span className="font-light text-center pt-2">
+            <span className="font-light text-center pt-2 hover:underline hover:text-highlight">
               <Link className="cursor-pointer " to={"/checkout"}>
                 Checkout
               </Link>

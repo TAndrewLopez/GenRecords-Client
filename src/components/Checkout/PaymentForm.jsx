@@ -63,15 +63,15 @@ const PaymentForm = () => {
     <>
       {!success ? (
         <form onSubmit={handleSubmit}>
-          <fieldset className="FormGroup">
-            <div className="FormRow">
+          <fieldset className="block mx-4 rounded shadow-lg bg-shade-8">
+            <div className="ml-4 flex items-center">
               <CardElement options={CARD_OPTIONS} />
             </div>
           </fieldset>
           <button
             type="submit"
             className="block w-[calc(100%-30px)] text-base h-10 my-10 mx-4 bg-accent hover:bg-highlight shadow-lg rounded text-shade-1 hover:text-shade-9 cursor-pointer ease-in-out duration-300">
-            PAY
+            Pay
           </button>
         </form>
       ) : (

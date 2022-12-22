@@ -3,9 +3,11 @@ import { MagnifyingGlassIcon } from "./assets";
 const SearchField = ({ vinyls, filter, setInput }) => {
   const handleChange = (evt) => {
     setInput(evt.target.value);
+
     const matchingAlbums = vinyls.filter((album) =>
       album.name.toLowerCase().includes(evt.target.value.toLowerCase())
     );
+
     const matchingArtist = vinyls.filter((album) =>
       album.artist.name.toLowerCase().includes(evt.target.value.toLowerCase())
     );

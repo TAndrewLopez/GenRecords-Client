@@ -1,3 +1,4 @@
+import "@stripe/stripe-js";
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";

@@ -26,7 +26,7 @@ const AllVinylsPage = () => {
 
   //SEARCH FIELD STATES
   const [userInput, setUserInput] = useState("");
-  const [filteredAlbums, setFilterAlbums] = useState([]);
+  const [filteredAlbums, setFilterAlbums] = useState(allVinyls);
   // const sortOptions = [
   //   { method: "Name", sort: sortAlbumNames, test: sortByAlbumName },
   //   { method: "Artist", sort: sortArtistName, test: null },
@@ -39,7 +39,7 @@ const AllVinylsPage = () => {
   const [itemsPerPage] = useState(20);
   const indexOfLastPost = currPage * 20;
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
-  const currSlice = allVinyls.slice(indexOfFirstPost, indexOfLastPost);
+  const currSlice = filteredAlbums.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
     if (!allVinyls.length) {
@@ -59,10 +59,9 @@ const AllVinylsPage = () => {
     <>
       <Header headerClass={"flex text-xl justify-between p-5 bg-shade-9"} />
 
-      <div className="flex-1 flex flex-col justify-center bg-shade-6">
+      <div className="flex-1 flex flex-col justify-center bg-shade-7">
         <ul className="p-3 flex flex-col gap-5 sm:gap-0 sm:flex-row justify-between bg-shade-8">
           <li>
-            {/* FIXME: AFTER FILTERING, UPDATE PAGINATION WITH AMOUNT FILTERED */}
             <SearchField
               setInput={setUserInput}
               vinyls={allVinyls}
@@ -92,7 +91,7 @@ const AllVinylsPage = () => {
         <div className="mb-5">
           <Pagination
             itemsPerPage={itemsPerPage}
-            total={allVinyls.length}
+            total={filteredAlbums.length}
             setPage={setCurrPage}
             currPage={currPage}
           />
