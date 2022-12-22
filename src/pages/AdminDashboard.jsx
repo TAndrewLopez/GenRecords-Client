@@ -5,6 +5,7 @@ import {
   Footer,
   ToastNotification,
   UserCartDropDown,
+  StripeContainer,
 } from "../components";
 import { adminGetUsers, adminGetVinyls } from "../../redux/features/adminSlice";
 
@@ -33,6 +34,7 @@ const AdminDashboard = () => {
       <div className="flex-1 bg-shade-7 ">
         {`Users loaded: ${users.length}`}
         {`Vinyls loaded: ${vinyls.length}`}
+        <StripeContainer />
         <ToastNotification
           type={"warning"}
           toastMessage={"Change a few things up and try submitting again."}

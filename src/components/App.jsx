@@ -5,6 +5,7 @@ import {
   AdminDashboard,
   AllVinylsPage,
   Auth,
+  CheckoutPage,
   LandingPage,
   ProfilePage,
   SingleArtistPage,
@@ -48,6 +49,7 @@ const App = () => {
 
         <Route element={<UserRoute />}>
           <Route path={"/profilePage"} element={<ProfilePage />} />
+          <Route path={"/checkout"} element={<CheckoutPage />} />
         </Route>
         <Route element={<AdminRoute />}>
           <Route path={"/admin"} element={<AdminDashboard />} />

@@ -4,6 +4,8 @@ export { default as CreateAccountForm } from "./Auth/CreateAccountForm";
 export { default as DemoLoginButtons } from "./Auth/DemoLoginButtons";
 export { default as LoginForm } from "./Auth/LoginForm";
 export { default as UserRoute } from "./Auth/UserRoute";
+export { default as PaymentForm } from "./Checkout/PaymentForm";
+export { default as StripeContainer } from "./Checkout/StripeContainer";
 export { default as Footer } from "./Navigation/Footer";
 export { default as Hamburger } from "./Navigation/Hamburger";
 export { default as Header } from "./Navigation/Header";

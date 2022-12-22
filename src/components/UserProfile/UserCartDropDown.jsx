@@ -27,7 +27,7 @@ const UserCartDropDown = ({ cart }) => {
             </span>
             {" || "}
             <span className="font-light text-center pt-2">
-              <Link className="cursor-pointer " to={"/profilePage"}>
+              <Link className="cursor-pointer " to={"/checkout"}>
                 Checkout
               </Link>
             </span>
