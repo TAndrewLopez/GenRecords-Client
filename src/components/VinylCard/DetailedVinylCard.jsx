@@ -32,7 +32,7 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
       </div>
       <div className="flex-1 flex items-center">
         <div className="w-full flex gap-2.5 flex-col">
-          <h5 className="max-w-full text-xl md:text-4xl font-bold tracking-tight text-shade-1 break-words">
+          <h5 className="max-w-full text-xl md:text-3xl font-bold tracking-tight text-shade-1 break-words">
             {singleVinyl?.name}
           </h5>
           <h6 className="text-4xl font-normal tracking-tight text-shade-5">

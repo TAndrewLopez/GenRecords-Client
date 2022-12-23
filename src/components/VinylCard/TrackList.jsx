@@ -16,7 +16,7 @@ const TrackList = ({ vinyl }) => {
       stopPreview(currTrackPlaying);
     }
     const currentTrack = document.getElementById(id);
-    currentTrack.volume = 1;
+    currentTrack.volume = 0.1;
     currentTrack.play();
   };
 
@@ -25,9 +25,9 @@ const TrackList = ({ vinyl }) => {
       <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
         Track List:
       </h2>
-      <ul className="space-y-1 max-w-md list-inside text-gray-500 dark:text-gray-400">
+      <ul className="text-shade-5 grid grid-cols-1 sm:grid-cols-2 gap-x-8">
         {vinyl?.tracks.map((track) => (
-          <li key={track.id} className="flex items-center">
+          <li key={track.id} className="flex items-center my-2">
             {track.preview ? (
               <>
                 <div
@@ -53,14 +53,16 @@ const TrackList = ({ vinyl }) => {
             ) : (
               <PlayIcon twClass={"w-4 h-4 mr-1.5 fill-shade-1"} />
             )}
-            {track.name}
-            {track.explicit ? (
-              <span className="px-2 py-px m-2 font-light text-sm text-shade-1 rounded border border-errorRed">
-                Explicit
-              </span>
-            ) : (
-              ""
-            )}
+            <div className="w-full flex items-center justify-between ">
+              {track.name}
+              {track.explicit ? (
+                <span className="px-2 py-px ml-2 font-light text-sm text-shade-1 rounded border border-errorRed">
+                  Explicit
+                </span>
+              ) : (
+                ""
+              )}
+            </div>
           </li>
         ))}
       </ul>
