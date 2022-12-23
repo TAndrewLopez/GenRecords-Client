@@ -1,6 +1,25 @@
-import { PlayIcon } from "../assets";
+import { useState } from "react";
+import { PlayIcon, StopIcon } from "../assets";
 
 const TrackList = ({ vinyl }) => {
+  const [currTrackPlaying, setCurrTrackPlaying] = useState(-1);
+
+  const stopPreview = (trackId) => {
+    const track = document.getElementById(trackId);
+    track.pause();
+    track.currentTime = 0;
+    setCurrTrackPlaying(-1);
+  };
+
+  const playPreview = (id) => {
+    if (currTrackPlaying > -1) {
+      stopPreview(currTrackPlaying);
+    }
+    const currentTrack = document.getElementById(id);
+    currentTrack.volume = 1;
+    currentTrack.play();
+  };
+
   return (
     <div className="mx-5 p-5">
       <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
@@ -10,7 +29,27 @@ const TrackList = ({ vinyl }) => {
         {vinyl?.tracks.map((track) => (
           <li key={track.id} className="flex items-center">
             {track.preview ? (
-              <PlayIcon twClass={"w-4 h-4 mr-1.5 fill-green-400"} />
+              <>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (currTrackPlaying > -1) {
+                      return stopPreview(currTrackPlaying);
+                    }
+                    setCurrTrackPlaying(track.id);
+                    playPreview(track.id);
+                  }}>
+                  {currTrackPlaying === track.id ? (
+                    <StopIcon twClass={"w-4 h-4 mr-1.5 fill-shade-1"} />
+                  ) : (
+                    <PlayIcon twClass={"w-4 h-4 mr-1.5 fill-green-400"} />
+                  )}
+                  <audio
+                    preload="auto"
+                    src={track.preview}
+                    id={track.id}></audio>
+                </div>
+              </>
             ) : (
               <PlayIcon twClass={"w-4 h-4 mr-1.5 fill-shade-1"} />
             )}

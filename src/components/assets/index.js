@@ -14,5 +14,6 @@ export { default as ProfileIcon } from "./ProfileIcon";
 export { default as SpinningLoader } from "./SpinningLoader";
 export { default as SpotifyIcon } from "./SpotifyIcon";
 export { default as StarIcon } from "./StarIcon";
+export { default as StopIcon } from "./StopIcon";
 export { default as ToastNotification } from "./ToastNotification";
 export { default as UsersIcon } from "./UsersIcon";
