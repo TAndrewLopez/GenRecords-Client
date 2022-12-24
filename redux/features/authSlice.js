@@ -53,6 +53,7 @@ const authSlice = createSlice({
       state.img = img;
       state.loggedIn = true;
       state.isLoading = false;
+      state.error = null;
     });
     builder.addCase(updateUser.fulfilled, (state, { payload }) => {
       if (!payload) {
@@ -80,6 +81,7 @@ const authSlice = createSlice({
         state.message = "Unable to add line item.";
         return;
       }
+      state.error = null;
       state.message = "Item added to cart.";
       state.cart.push(payload);
     });
@@ -95,10 +97,12 @@ const authSlice = createSlice({
       const existingItems = state.cart.filter((item) => payload.id !== item.id);
       existingItems.push(payload);
       state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
+      state.error = null;
     });
     builder.addCase(removeLineItem.fulfilled, (state, { payload }) => {
       if (payload) {
         state.cart = [...state.cart.filter((item) => item.id !== payload)];
+        state.error = null;
         state.message = "Item removed from cart.";
       }
     });
