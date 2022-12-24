@@ -19,7 +19,9 @@ const AdminDashboard = () => {
   }, []);
 
   if (adminError) {
-    return <div>Admin Error has Occurred</div>;
+    return (
+      <ToastNotification type={"error"} toastMessage={adminError.message} />
+    );
   }
 
   return (
@@ -28,10 +30,6 @@ const AdminDashboard = () => {
       <div className="flex-1 bg-shade-7 ">
         {`Users loaded: ${users.length}`}
         {`Vinyls loaded: ${vinyls.length}`}
-        <ToastNotification
-          type={"warning"}
-          toastMessage={"Change a few things up and try submitting again."}
-        />
       </div>
       <Footer twClass={"p-5 text-white flex justify-center bg-shade-9 "} />
     </>

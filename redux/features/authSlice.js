@@ -13,6 +13,8 @@ const authSlice = createSlice({
     img: "",
     isAdmin: false,
     loggedIn: false,
+    error: null,
+    message: null,
   },
   reducers: {
     logout(state) {
@@ -27,6 +29,15 @@ const authSlice = createSlice({
       state.img = "";
       state.isAdmin = false;
       state.loggedIn = false;
+      state.error = null;
+      state.message = null;
+    },
+    clearErrorMessage(state) {
+      state.error = null;
+      state.message = null;
+    },
+    clearSuccessMessage(state) {
+      state.message = null;
     },
   },
   extraReducers: (builder) => {
@@ -44,12 +55,19 @@ const authSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+      if (!payload) {
+        state.error = true;
+        state.message = "Unable to update user information.";
+        return;
+      }
       state.firstName = payload.firstName;
       state.lastName = payload.lastName;
       state.username = payload.username;
       state.email = payload.email;
       state.img = payload.img;
       state.isLoading = false;
+      state.error = null;
+      state.message = "Information has been saved!";
     });
     builder.addCase(getUserOrders.fulfilled, (state, { payload }) => {
       const [openOrder] = payload.filter((order) => order.complete === false);
@@ -58,22 +76,31 @@ const authSlice = createSlice({
     });
     builder.addCase(addLineItem.fulfilled, (state, { payload }) => {
       if (!payload) {
-        console.log("addLineItem-Failed");
+        state.error = true;
+        state.message = "Unable to add line item.";
         return;
       }
+      state.message = "Item added to cart.";
       state.cart.push(payload);
     });
-    builder.addCase(changeLineItemQty.fulfilled, (state, { payload }) => {
+    builder.addCase(changeLineItemQty.fulfilled, (state, action) => {
+      const { payload } = action;
+
       if (!payload) {
-        console.log("changeLineItemQty-Failed");
+        state.error = true;
+        state.message = "Unable to modify line item. Please try again.";
         return;
       }
+
       const existingItems = state.cart.filter((item) => payload.id !== item.id);
       existingItems.push(payload);
       state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
     });
     builder.addCase(removeLineItem.fulfilled, (state, { payload }) => {
-      state.cart = [...state.cart.filter((item) => item.id !== payload)];
+      if (payload) {
+        state.cart = [...state.cart.filter((item) => item.id !== payload)];
+        state.message = "Item removed from cart.";
+      }
     });
   },
 });
@@ -232,7 +259,7 @@ export const changeLineItemQty = createAsyncThunk(
   "changeLineItemQty",
   async (item, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
-    const { updatedItem } = await fetch(
+    const { updatedItem, error } = await fetch(
       `http://localhost:7000/api/shop/cart/qty`,
       {
         method: "PUT",
@@ -245,7 +272,9 @@ export const changeLineItemQty = createAsyncThunk(
     )
       .then((res) => res.json())
       .catch((err) => console.error("guess who", err));
-
+    if (error) {
+      return error;
+    }
     return updatedItem;
   }
 );
@@ -271,4 +300,5 @@ export const removeLineItem = createAsyncThunk(
 );
 
 export default authSlice.reducer;
-export const { logout } = authSlice.actions;
+export const { logout, clearErrorMessage, clearSuccessMessage } =
+  authSlice.actions;

@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  clearErrorMessage,
+  clearSuccessMessage,
+} from "../../redux/features/authSlice";
 import { getShopVinyls } from "../../redux/features/shopSlice";
 import {
   Header,
@@ -9,6 +13,7 @@ import {
   Pagination,
   SearchField,
   SortSelector,
+  ToastNotification,
 } from "../components";
 
 import { SpinningLoader } from "../components/assets";
@@ -22,7 +27,10 @@ import { SpinningLoader } from "../components/assets";
 
 const AllVinylsPage = () => {
   const dispatch = useDispatch();
-  const { allVinyls, isLoading } = useSelector((state) => state.shopReducer);
+  const {
+    authReducer: { error, message },
+    shopReducer: { allVinyls, isLoading },
+  } = useSelector((state) => state);
 
   //SEARCH FIELD STATES
   const [userInput, setUserInput] = useState("");
@@ -98,6 +106,21 @@ const AllVinylsPage = () => {
         </div>
       </div>
       <Footer twClass={"p-5 text-white flex justify-center bg-shade-9"} />
+
+      {message && (
+        <ToastNotification
+          clear={() => dispatch(clearSuccessMessage())}
+          type="success"
+          toastMessage={message}
+        />
+      )}
+      {error && message && (
+        <ToastNotification
+          clear={() => dispatch(clearErrorMessage())}
+          type="error"
+          toastMessage={message}
+        />
+      )}
     </>
   );
 };

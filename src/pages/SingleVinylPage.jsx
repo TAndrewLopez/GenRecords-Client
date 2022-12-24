@@ -2,13 +2,23 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleVinyl } from "../../redux/features/shopSlice";
-import { Header, Footer, DetailedVinylCard, TrackList } from "../components";
+import {
+  Header,
+  Footer,
+  DetailedVinylCard,
+  TrackList,
+  ToastNotification,
+} from "../components";
+import {
+  clearErrorMessage,
+  clearSuccessMessage,
+} from "../../redux/features/authSlice";
 
 const SingleVinylPage = () => {
   const dispatch = useDispatch();
   const {
     shopReducer: { singleVinyl },
-    authReducer: { cart },
+    authReducer: { cart, error, message },
   } = useSelector((state) => state);
   const { id } = useParams();
 
@@ -24,6 +34,21 @@ const SingleVinylPage = () => {
         <TrackList vinyl={singleVinyl} />
       </div>
       <Footer twClass={"p-5 text-white flex justify-center bg-shade-9 "} />
+      {message && (
+        <ToastNotification
+          clear={() => dispatch(clearSuccessMessage())}
+          type="success"
+          toastMessage={message}
+        />
+      )}
+
+      {error && message && (
+        <ToastNotification
+          clear={() => dispatch(clearErrorMessage())}
+          type="error"
+          toastMessage={message}
+        />
+      )}
     </>
   );
 };

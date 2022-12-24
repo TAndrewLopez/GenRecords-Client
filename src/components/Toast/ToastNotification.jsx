@@ -1,17 +1,25 @@
-const ToastNotification = ({ type, toastMessage }) => {
-  const colors = {
-    info: "bg-blue-200 text-blue-800",
-    error: "bg-red-200 text-red-800",
-    success: "bg-green-200 text-green-800",
-    warning: "bg-yellow-200 text-yellow-800",
-    dark: "bg-gray-700 text-gray-300",
-  };
+import { useEffect } from "react";
+
+const colors = {
+  info: "bg-blue-200 text-blue-800",
+  error: "bg-red-200 text-red-800",
+  success: "bg-green-200 text-green-800",
+  warning: "bg-yellow-200 text-yellow-800",
+  dark: "bg-gray-700 text-gray-300",
+};
+
+const ToastNotification = ({ type, toastMessage, clear }) => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      clear();
+    }, 2500);
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <div
-      onClick={() => {
-        console.log("close notification");
-      }}
-      className={`absolute bottom-16 left-1/2 -translate-x-1/2 w-full md:max-w-md flex p-4 text-sm rounded-lg cursor-pointer ${colors[type]}`}>
+      onClick={clear}
+      className={`absolute top-20 left-1/2 -translate-x-1/2 w-full flex md:max-w-md p-4 text-sm rounded-lg cursor-pointer ${colors[type]}`}>
       <svg
         aria-hidden="true"
         className="flex-shrink-0 inline w-5 h-5 mr-3"

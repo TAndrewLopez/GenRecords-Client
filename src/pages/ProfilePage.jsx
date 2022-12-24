@@ -1,4 +1,8 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  clearErrorMessage,
+  clearSuccessMessage,
+} from "../../redux/features/authSlice";
 import {
   Header,
   Footer,
@@ -6,11 +10,22 @@ import {
   UserProfileForm,
   UserCart,
   OrderHistory,
+  ToastNotification,
 } from "../components";
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
   const {
-    authReducer: { firstName, lastName, username, email, cart, img },
+    authReducer: {
+      firstName,
+      lastName,
+      username,
+      email,
+      cart,
+      img,
+      error,
+      message,
+    },
   } = useSelector((state) => state);
 
   return (
@@ -31,6 +46,22 @@ const ProfilePage = () => {
         </div>
       </div>
       <Footer twClass={"p-5 text-white flex justify-center bg-shade-9"} />
+
+      {message && (
+        <ToastNotification
+          clear={() => dispatch(clearSuccessMessage())}
+          type="success"
+          toastMessage={message}
+        />
+      )}
+
+      {error && message && (
+        <ToastNotification
+          clear={() => dispatch(clearErrorMessage())}
+          type="error"
+          toastMessage={message}
+        />
+      )}
     </>
   );
 };
