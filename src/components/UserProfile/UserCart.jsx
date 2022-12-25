@@ -67,9 +67,9 @@ const UserCart = ({ cart, title, images, controls }) => {
         <></>
       )}
       <ul className="w-full sm:max-w-sm divide-y-2 divide-accent divide-opacity-40">
-        {currSlice?.map((item) => {
+        {currSlice?.map((item, i) => {
           return (
-            <li className="py-2" key={item?.id}>
+            <li className="py-2" key={item?.id || i}>
               <div className="flex items-center space-x-4">
                 {images ? (
                   <Link

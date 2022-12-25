@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { formatToUSD, popularityToStart } from "../helpers";
 import { StarIcon } from "../assets";
-import { addLineItem } from "../../../redux/features/authSlice";
+import { addLineItem, addItemLocally } from "../../../redux/features/authSlice";
 
 const VinylCard = ({ vinyl }) => {
   const dispatch = useDispatch();
-  const { cart } = useSelector((state) => state.authReducer);
+  const { id, cart } = useSelector((state) => state.authReducer);
   const [existInCart, setExistInCart] = useState(false);
   const numberOfStars = Math.floor(popularityToStart(vinyl.popularity));
 
@@ -49,8 +49,13 @@ const VinylCard = ({ vinyl }) => {
 
           <button
             onClick={() => {
-              if (!existInCart) {
+              if (!existInCart && id) {
                 dispatch(addLineItem(vinyl.id));
+                return;
+              }
+              if (!existInCart) {
+                dispatch(addItemLocally(vinyl));
+                return;
               }
             }}
             className={`sm:px-5 px-3 py-2 rounded  ease-in-out duration-300 cursor-pointer ${

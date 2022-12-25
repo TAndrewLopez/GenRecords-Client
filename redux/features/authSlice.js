@@ -39,6 +39,26 @@ const authSlice = createSlice({
     clearSuccessMessage(state) {
       state.message = null;
     },
+    getLocalOrder(state) {
+      const cart = localStorage.getItem("localCart");
+      if (cart) {
+        state.cart = JSON.parse(cart);
+      } else {
+        localStorage.setItem("localCart", JSON.stringify([]));
+      }
+    },
+    addItemLocally(state, action) {
+      const cart = JSON.parse(localStorage.getItem("localCart"));
+      cart.push({ qty: 1, vinyl: action.payload });
+      localStorage.setItem("localCart", JSON.stringify(cart));
+      state.cart.push({ qty: 1, vinyl: action.payload });
+    },
+    removeItemLocally(state, { payload }) {
+      const cart = JSON.parse(localStorage.getItem("localCart"));
+      const filteredCart = cart.filter((item) => item.vinyl.id !== payload.id);
+      localStorage.setItem("localCart", JSON.stringify(filteredCart));
+      state.cart = [...filteredCart];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(me.fulfilled, (state, { payload }) => {
@@ -224,12 +244,6 @@ export const getUserOrders = createAsyncThunk(
   async (userId, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
 
-    if (!authorization) {
-      console.log("guest user order");
-    } else {
-      console.log(authorization);
-    }
-
     const { userOrders } = await fetch(
       `http://localhost:7000/api/shop/cart/${userId}`,
       {
@@ -310,5 +324,11 @@ export const removeLineItem = createAsyncThunk(
 );
 
 export default authSlice.reducer;
-export const { logout, clearErrorMessage, clearSuccessMessage } =
-  authSlice.actions;
+export const {
+  logout,
+  clearErrorMessage,
+  clearSuccessMessage,
+  getLocalOrder,
+  addItemLocally,
+  removeItemLocally,
+} = authSlice.actions;

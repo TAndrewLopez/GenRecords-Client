@@ -1,17 +1,55 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { formatToUSD } from "../helpers";
 import { CartIcon } from "../assets";
-import { addLineItem, removeLineItem } from "../../../redux/features/authSlice";
+import {
+  addLineItem,
+  removeLineItem,
+  addItemLocally,
+  removeItemLocally,
+} from "../../../redux/features/authSlice";
 
 const DetailedVinylCard = ({ singleVinyl, cart }) => {
   const navigate = useNavigate();
-
-  //CHECK FOR ITEM IN CART
+  const { order } = useSelector((state) => state.authReducer);
   const [lineItemId] = cart.filter((item) => item.vinyl.id === singleVinyl?.id);
 
   const date = new Date();
   date.setDate(date.getDate() + 7);
+
+  const AddRemoveLineItemButton = (add, id) => {
+    const dispatch = useDispatch();
+    return (
+      <button
+        onClick={
+          add
+            ? () => {
+                if (order) {
+                  dispatch(addLineItem(id));
+                } else {
+                  dispatch(addItemLocally(singleVinyl));
+                }
+              }
+            : () => {
+                if (order) {
+                  dispatch(removeLineItem(id));
+                } else {
+                  dispatch(removeItemLocally(singleVinyl));
+                }
+              }
+        }
+        className={`flex items-center justify-center gap-5 px-6 py-2 rounded hover:text-shade-9 hover:bg-highlight group ease-in-out duration-300 cursor-pointer ${
+          add ? "text-shade-1 bg-accent" : "text-accent bg-shade-8"
+        }`}>
+        <CartIcon
+          twClass={`w-4 group-hover:fill-shade-9 ease-in-out duration-300 ${
+            add ? "fill-shade-1" : "fill-accent"
+          }`}
+        />
+        {add ? "Add to Cart" : "Remove from Cart"}
+      </button>
+    );
+  };
 
   return (
     <div className="flex sm:gap-5 flex-col sm:flex-row mx-5 p-5 rounded-lg">
@@ -60,25 +98,3 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
 };
 
 export default DetailedVinylCard;
-
-const AddRemoveLineItemButton = (add, id) => {
-  const dispatch = useDispatch();
-  return (
-    <button
-      onClick={
-        add
-          ? () => dispatch(addLineItem(id))
-          : () => dispatch(removeLineItem(id))
-      }
-      className={`flex items-center justify-center gap-5 px-6 py-2 rounded hover:text-shade-9 hover:bg-highlight group ease-in-out duration-300 cursor-pointer ${
-        add ? "text-shade-1 bg-accent" : "text-accent bg-shade-8"
-      }`}>
-      <CartIcon
-        twClass={`w-4 group-hover:fill-shade-9 ease-in-out duration-300 ${
-          add ? "fill-shade-1" : "fill-accent"
-        }`}
-      />
-      {add ? "Add to Cart" : "Remove from Cart"}
-    </button>
-  );
-};

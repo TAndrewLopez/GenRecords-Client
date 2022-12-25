@@ -92,3 +92,44 @@ export const sortPriceAmount = (inputArray, dir) => {
   });
   return arr;
 };
+
+// export const getLocalOrder = () => {
+//   const order = localStorage.getItem("localOrder");
+//   if (order) {
+//     return JSON.parse(order);
+//   } else {
+//     localStorage.setItem(
+//       "localOrder",
+//       JSON.stringify({
+//         order: {
+//           id: "GUEST",
+//           complete: false,
+//           createdAt: new Date().toLocaleString(),
+//           lineItems: [],
+//         },
+//       })
+//     );
+//     const localOrder = localStorage.getItem("localOrder");
+//     return JSON.parse(localOrder);
+//   }
+// };
+
+// export const addLocalLineItem = (vinyl) => {
+//   const order = getLocalOrder();
+//   const itemExist = checkLocalOrderForItem(vinyl);
+
+//   if (!itemExist) {
+//     order.lineItems.push(vinyl);
+//     localStorage.setItem("localOrder", JSON.stringify(order));
+//   }
+// };
+
+// export const removeLocalLineItem = (vinyl) => {
+//   const order = getLocalOrder();
+//   console.log(order);
+// };
+
+// export const checkLocalOrderForItem = (vinyl) => {
+//   const order = getLocalOrder();
+//   return order.lineItems.some((item) => item.id === vinyl?.id);
+// };

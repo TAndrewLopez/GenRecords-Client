@@ -14,8 +14,11 @@ import {
 } from "../pages";
 
 // THUNKS
-import { me } from "../../redux/features/authSlice";
-import { getUserOrders } from "../../redux/features/authSlice";
+import {
+  me,
+  getUserOrders,
+  getLocalOrder,
+} from "../../redux/features/authSlice";
 
 //PROTECTED ADMIN ROUTE
 import { AdminRoute, UserRoute } from "./";
@@ -29,7 +32,7 @@ const App = () => {
     if (authorization) {
       dispatch(me(authorization));
     } else {
-      console.log("get guest cart from local storage");
+      dispatch(getLocalOrder());
     }
   }, []);
 
