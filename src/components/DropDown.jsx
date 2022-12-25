@@ -1,26 +1,33 @@
 import { useState } from "react";
+import {
+  sortAlbumNames,
+  sortArtistName,
+  sortPopularityScore,
+  sortPriceAmount,
+} from "./helpers";
 
-const sortOptions = [
-  {
-    method: "Name",
-    sort: sortAlbumNames,
-  },
-  {
-    method: "Artist",
-    sort: sortArtistName,
-  },
-  {
-    method: "Popularity",
-    sort: sortPopularityScore,
-  },
-  {
-    method: "Price",
-    sort: sortPriceAmount,
-  },
-];
 const DropDown = ({ vinyls, setFilterVinyl }) => {
   const [sortDropDown, setSortDropDown] = useState(false);
   const [sortNameDir, setSortNameDir] = useState(false);
+
+  const sortOptions = [
+    {
+      method: "Name",
+      sort: sortAlbumNames,
+    },
+    {
+      method: "Artist",
+      sort: sortArtistName,
+    },
+    {
+      method: "Popularity",
+      sort: sortPopularityScore,
+    },
+    {
+      method: "Price",
+      sort: sortPriceAmount,
+    },
+  ];
 
   return (
     <div className="flex justify-center">
@@ -128,87 +135,3 @@ const DropDown = ({ vinyls, setFilterVinyl }) => {
 };
 
 export default DropDown;
-
-function sortAlbumNames(inputArray, dir) {
-  const arr = [...inputArray];
-
-  if (dir) {
-    arr.sort((a, b) => {
-      if (a.name < b.name) {
-        return -1;
-      }
-      return 0;
-    });
-    return arr;
-  }
-  arr.sort((a, b) => {
-    if (a.name > b.name) {
-      return -1;
-    }
-    return 0;
-  });
-  return arr;
-}
-
-function sortArtistName(inputArray, dir) {
-  const arr = [...inputArray];
-
-  if (dir) {
-    arr.sort((a, b) => {
-      if (a.artist.name < b.artist.name) {
-        return -1;
-      }
-      return 0;
-    });
-    return arr;
-  }
-  arr.sort((a, b) => {
-    if (a.artist.name > b.artist.name) {
-      return -1;
-    }
-    return 0;
-  });
-  return arr;
-}
-
-function sortPopularityScore(inputArray, dir) {
-  const arr = [...inputArray];
-
-  if (dir) {
-    arr.sort((a, b) => {
-      if (a.popularity < b.popularity) {
-        return -1;
-      }
-      return 0;
-    });
-    return arr;
-  }
-  arr.sort((a, b) => {
-    if (a.popularity > b.popularity) {
-      return -1;
-    }
-    return 0;
-  });
-  return arr;
-}
-
-function sortPriceAmount(inputArray, dir) {
-  const arr = [...inputArray];
-
-  if (dir) {
-    arr.sort((a, b) => {
-      if (a.price < b.price) {
-        return -1;
-      }
-      return 0;
-    });
-    return arr;
-  }
-  arr.sort((a, b) => {
-    if (a.price > b.price) {
-      return -1;
-    }
-    return 0;
-  });
-  return arr;
-}
