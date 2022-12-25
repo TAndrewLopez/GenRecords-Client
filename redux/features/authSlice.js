@@ -224,6 +224,12 @@ export const getUserOrders = createAsyncThunk(
   async (userId, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
 
+    if (!authorization) {
+      console.log("guest user order");
+    } else {
+      console.log(authorization);
+    }
+
     const { userOrders } = await fetch(
       `http://localhost:7000/api/shop/cart/${userId}`,
       {

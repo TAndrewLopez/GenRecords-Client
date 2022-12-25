@@ -20,6 +20,7 @@ const UserCart = ({ cart, title, images, controls }) => {
       return (
         <button
           onClick={() => {
+            //cannot add more than what is in stock
             dispatch(
               changeLineItemQty({
                 ...item,
@@ -35,6 +36,12 @@ const UserCart = ({ cart, title, images, controls }) => {
     return (
       <button
         onClick={() => {
+          //if you want less than 1 item, do you want to delete item
+          if (item.qty - 1 < 1) {
+            console.log("delete item");
+            return;
+          }
+
           dispatch(
             changeLineItemQty({
               ...item,

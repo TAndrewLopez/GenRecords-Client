@@ -16,7 +16,7 @@ const TrackList = ({ vinyl }) => {
       stopPreview(currTrackPlaying);
     }
     const currentTrack = document.getElementById(id);
-    currentTrack.volume = 0.1;
+    currentTrack.volume = 0.3;
     currentTrack.play();
   };
 
@@ -51,7 +51,7 @@ const TrackList = ({ vinyl }) => {
                 </div>
               </>
             ) : (
-              <PlayIcon twClass={"w-4 h-4 mr-1.5 fill-shade-1"} />
+              <></>
             )}
             <div className="w-full flex items-center justify-between ">
               {track.name}

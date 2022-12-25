@@ -11,6 +11,7 @@ import {
   UserCart,
   OrderHistory,
   ToastNotification,
+  DeleteItemModal,
 } from "../components";
 
 const ProfilePage = () => {

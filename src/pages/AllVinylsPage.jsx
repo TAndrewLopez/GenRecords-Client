@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import {
   clearErrorMessage,
   clearSuccessMessage,
 } from "../../redux/features/authSlice";
 import { getShopVinyls } from "../../redux/features/shopSlice";
+
 import {
   Header,
   Footer,
@@ -12,18 +14,10 @@ import {
   DropDown,
   Pagination,
   SearchField,
-  SortSelector,
   ToastNotification,
 } from "../components";
 
 import { SpinningLoader } from "../components/assets";
-
-// import {
-//   sortAlbumNames,
-//   sortArtistName,
-//   sortPopularityScore,
-//   sortPrice,
-// } from "../../redux/features/shopSlice";
 
 const AllVinylsPage = () => {
   const dispatch = useDispatch();
@@ -34,20 +28,14 @@ const AllVinylsPage = () => {
 
   //SEARCH FIELD STATES
   const [userInput, setUserInput] = useState("");
-  const [filteredAlbums, setFilterAlbums] = useState(allVinyls);
-  // const sortOptions = [
-  //   { method: "Name", sort: sortAlbumNames, test: sortByAlbumName },
-  //   { method: "Artist", sort: sortArtistName, test: null },
-  //   { method: "Popularity", sort: sortPopularityScore, test: null },
-  //   { method: "Price", sort: sortPrice, test: null },
-  // ];
+  const [filteredVinyls, setFilterVinyls] = useState(allVinyls);
 
   //PAGINATION
   const [currPage, setCurrPage] = useState(1);
   const [itemsPerPage] = useState(20);
   const indexOfLastPost = currPage * 20;
   const indexOfFirstPost = indexOfLastPost - itemsPerPage;
-  const currSlice = filteredAlbums.slice(indexOfFirstPost, indexOfLastPost);
+  const currSlice = filteredVinyls.slice(indexOfFirstPost, indexOfLastPost);
 
   useEffect(() => {
     if (!allVinyls.length) {
@@ -56,12 +44,8 @@ const AllVinylsPage = () => {
   }, []);
 
   useEffect(() => {
-    setFilterAlbums(allVinyls);
+    setFilterVinyls(allVinyls);
   }, [allVinyls]);
-
-  if (isLoading) {
-    return <SpinningLoader />;
-  }
 
   return (
     <>
@@ -73,37 +57,47 @@ const AllVinylsPage = () => {
             <SearchField
               setInput={setUserInput}
               vinyls={allVinyls}
-              filter={setFilterAlbums}
+              filter={setFilterVinyls}
             />
           </li>
           <li>
-            {/* FIXME: DROP DOWN ONLY WORKS FOR THE STORE BUT SEARCH FIELD USES LOCAL STATE */}
-            <DropDown />
+            <DropDown
+              setFilterVinyl={setFilterVinyls}
+              vinyls={filteredVinyls}
+            />
           </li>
         </ul>
 
-        <h1 className="text-center text-5xl my-5 text-shade-1 whitespace-nowrap after:content=[''] after:block after:h-1 after:mt-2 after:m-auto after:max-w-xs after:bg-accent">
-          Discover Vinyls
-        </h1>
-
-        <div className="flex flex-1 flex-wrap justify-center">
-          {currSlice.length ? (
-            currSlice.map((vinyl) => <VinylCard vinyl={vinyl} key={vinyl.id} />)
-          ) : (
-            <p className="text-shade-1 text-3xl m-auto">
-              Unfortunately, no results.
-            </p>
-          )}
-        </div>
-
-        <div className="mb-5">
-          <Pagination
-            itemsPerPage={itemsPerPage}
-            total={filteredAlbums.length}
-            setPage={setCurrPage}
-            currPage={currPage}
-          />
-        </div>
+        {isLoading ? (
+          <div className="flex flex-1 items-center justify-center">
+            <SpinningLoader />
+          </div>
+        ) : (
+          <>
+            <h1 className="text-center text-5xl my-5 text-shade-1 whitespace-nowrap after:content=[''] after:block after:h-1 after:mt-2 after:m-auto after:max-w-xs after:bg-accent">
+              Discover Vinyls
+            </h1>
+            <div className="flex flex-1 flex-wrap justify-center">
+              {currSlice.length ? (
+                currSlice.map((vinyl) => (
+                  <VinylCard vinyl={vinyl} key={vinyl.id} />
+                ))
+              ) : (
+                <p className="text-shade-1 text-3xl m-auto">
+                  Unfortunately, no results.
+                </p>
+              )}
+            </div>
+            <div className="mb-5">
+              <Pagination
+                itemsPerPage={itemsPerPage}
+                total={filteredVinyls.length}
+                setPage={setCurrPage}
+                currPage={currPage}
+              />
+            </div>
+          </>
+        )}
       </div>
       <Footer twClass={"p-5 text-white flex justify-center bg-shade-9"} />
 

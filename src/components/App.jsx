@@ -28,6 +28,8 @@ const App = () => {
     const authorization = localStorage.getItem("authorization");
     if (authorization) {
       dispatch(me(authorization));
+    } else {
+      console.log("get guest cart from local storage");
     }
   }, []);
 
@@ -42,9 +44,7 @@ const App = () => {
       <Routes>
         <Route index element={<LandingPage />} />
         <Route path={"/vinyls"} element={<AllVinylsPage />} />
-        {/* <Route path={"/profilePage"} element={<ProfilePage />} /> */}
         <Route path={"/auth"} element={<Auth />} />
-
         <Route path={"/singleVinyl/:id"} element={<SingleVinylPage />} />
         <Route path={"/singleArtist/:id"} element={<SingleArtistPage />} />
 
@@ -52,6 +52,7 @@ const App = () => {
           <Route path={"/profilePage"} element={<ProfilePage />} />
           <Route path={"/checkout"} element={<CheckoutPage />} />
         </Route>
+
         <Route element={<AdminRoute />}>
           <Route path={"/admin"} element={<AdminDashboard />} />
         </Route>
