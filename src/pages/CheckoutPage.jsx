@@ -4,7 +4,7 @@ const CheckoutPage = () => {
   return (
     <>
       <Header headerClass={"flex text-xl justify-between p-5 bg-shade-9"} />
-      <div className="flex-1 bg-shade-7 ">
+      <div className="flex-1 bg-shade-1 ">
         <h3>CHECKOUT</h3>
         <StripePayment />
       </div>

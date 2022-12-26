@@ -19,7 +19,7 @@ const ToastNotification = ({ type, toastMessage, clear }) => {
   return (
     <div
       onClick={clear}
-      className={`absolute top-20 left-1/2 -translate-x-1/2 w-full flex md:max-w-md p-4 text-sm rounded-lg cursor-pointer ${colors[type]}`}>
+      className={`absolute top-20 left-1/2 z-10 -translate-x-1/2 w-full flex md:max-w-md p-4 text-sm rounded-lg cursor-pointer ${colors[type]}`}>
       <svg
         aria-hidden="true"
         className="flex-shrink-0 inline w-5 h-5 mr-3"

@@ -31,6 +31,7 @@ const authSlice = createSlice({
       state.loggedIn = false;
       state.error = null;
       state.message = null;
+      state.cart = JSON.parse(localStorage.getItem("localCart"));
     },
     clearErrorMessage(state) {
       state.error = null;
@@ -47,11 +48,11 @@ const authSlice = createSlice({
         localStorage.setItem("localCart", JSON.stringify([]));
       }
     },
-    addItemLocally(state, action) {
+    addItemLocally(state, { payload }) {
       const cart = JSON.parse(localStorage.getItem("localCart"));
-      cart.push({ qty: 1, vinyl: action.payload });
+      cart.push({ qty: 1, vinyl: payload });
       localStorage.setItem("localCart", JSON.stringify(cart));
-      state.cart.push({ qty: 1, vinyl: action.payload });
+      state.cart.push({ qty: 1, vinyl: payload });
     },
     removeItemLocally(state, { payload }) {
       const cart = JSON.parse(localStorage.getItem("localCart"));
@@ -59,6 +60,7 @@ const authSlice = createSlice({
       localStorage.setItem("localCart", JSON.stringify(filteredCart));
       state.cart = [...filteredCart];
     },
+    changeQuantityLocally(state, action) {},
   },
   extraReducers: (builder) => {
     builder.addCase(me.fulfilled, (state, { payload }) => {
@@ -331,4 +333,5 @@ export const {
   getLocalOrder,
   addItemLocally,
   removeItemLocally,
+  changeQuantityLocally,
 } = authSlice.actions;

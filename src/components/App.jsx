@@ -50,10 +50,10 @@ const App = () => {
         <Route path={"/auth"} element={<Auth />} />
         <Route path={"/singleVinyl/:id"} element={<SingleVinylPage />} />
         <Route path={"/singleArtist/:id"} element={<SingleArtistPage />} />
+        <Route path={"/checkout"} element={<CheckoutPage />} />
 
         <Route element={<UserRoute />}>
           <Route path={"/profilePage"} element={<ProfilePage />} />
-          <Route path={"/checkout"} element={<CheckoutPage />} />
         </Route>
 
         <Route element={<AdminRoute />}>

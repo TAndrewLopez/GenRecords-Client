@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   useStripe,
   useElements,
@@ -34,7 +34,7 @@ const StripeCheckoutForm = () => {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form className="text-shade-9" id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement />
       <button disabled={isProcessing} id="submit">
         <span id="button-text">{isProcessing ? "Processing" : " Pay Now"}</span>
