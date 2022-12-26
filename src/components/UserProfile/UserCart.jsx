@@ -23,7 +23,7 @@ const UserCart = ({ cart, title, images, controls }) => {
             //cannot add more than what is in stock
             dispatch(
               changeLineItemQty({
-                ...item,
+                id: item.id,
                 qty: item.qty + 1,
               })
             );
@@ -44,7 +44,7 @@ const UserCart = ({ cart, title, images, controls }) => {
 
           dispatch(
             changeLineItemQty({
-              ...item,
+              id: item.id,
               qty: item.qty - 1,
             })
           );

@@ -38,6 +38,7 @@ const authSlice = createSlice({
       state.message = null;
     },
     clearSuccessMessage(state) {
+      state.error = null;
       state.message = null;
     },
     getLocalOrder(state) {
@@ -50,17 +51,38 @@ const authSlice = createSlice({
     },
     addItemLocally(state, { payload }) {
       const cart = JSON.parse(localStorage.getItem("localCart"));
-      cart.push({ qty: 1, vinyl: payload });
-      localStorage.setItem("localCart", JSON.stringify(cart));
-      state.cart.push({ qty: 1, vinyl: payload });
+      if (payload) {
+        cart.push({ qty: 1, vinyl: payload });
+        localStorage.setItem("localCart", JSON.stringify(cart));
+        state.cart.push({ qty: 1, vinyl: payload });
+        state.message = "Item added to cart.";
+      }
     },
     removeItemLocally(state, { payload }) {
       const cart = JSON.parse(localStorage.getItem("localCart"));
       const filteredCart = cart.filter((item) => item.vinyl.id !== payload.id);
       localStorage.setItem("localCart", JSON.stringify(filteredCart));
       state.cart = [...filteredCart];
+      state.message = "Item removed to cart.";
     },
-    changeQuantityLocally(state, action) {},
+    changeQuantityLocally(state, action) {
+      const cart = JSON.parse(localStorage.getItem("localCart"));
+      const adjustedCart = cart.map((item) => {
+        if (action.payload.qty > item.vinyl.stock || action.payload.qty < 1) {
+          state.error = true;
+          state.message = "Unable to modify line item. Please try again.";
+          return item;
+        }
+        if (action.payload.id === item.vinyl.id) {
+          state.error = null;
+          item.qty = action.payload.qty;
+          state.message = "Changes saved.";
+        }
+        return item;
+      });
+
+      localStorage.setItem("localCart", JSON.stringify(adjustedCart));
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(me.fulfilled, (state, { payload }) => {
@@ -293,7 +315,7 @@ export const changeLineItemQty = createAsyncThunk(
           "Content-Type": "application/json",
           authorization,
         },
-        body: JSON.stringify(item),
+        body: JSON.stringify({ id: item.id, qty: item.qty }),
       }
     )
       .then((res) => res.json())
