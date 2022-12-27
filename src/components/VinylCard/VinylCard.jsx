@@ -58,7 +58,7 @@ const VinylCard = ({ vinyl }) => {
                 return;
               }
             }}
-            className={`sm:px-5 px-3 py-2 rounded  ease-in-out duration-300 cursor-pointer ${
+            className={`sm:px-5 px-3 py-2 rounded ease-in-out duration-300 cursor-pointer ${
               existInCart
                 ? "bg-shade-8 text-accent cursor-default disabled"
                 : "bg-accent text-shade-1 hover:bg-highlight hover:text-shade-9"

@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { StripeCheckoutForm } from "../../components";
 import { Elements } from "@stripe/react-stripe-js";
 
-const StripePayment = () => {
+const StripePayment = ({ cart }) => {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
@@ -29,7 +29,7 @@ const StripePayment = () => {
     <>
       {stripePromise && clientSecret && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <StripeCheckoutForm />
+          <StripeCheckoutForm cart={cart} />
         </Elements>
       )}
     </>

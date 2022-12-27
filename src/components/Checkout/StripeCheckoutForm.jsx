@@ -4,8 +4,9 @@ import {
   useElements,
   PaymentElement,
 } from "@stripe/react-stripe-js";
+import { formatToUSD } from "../helpers";
 
-const StripeCheckoutForm = () => {
+const StripeCheckoutForm = ({ cart }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -34,10 +35,27 @@ const StripeCheckoutForm = () => {
   };
 
   return (
-    <form className="text-shade-9" id="payment-form" onSubmit={handleSubmit}>
+    <form
+      className="text-shade-9 mb-5"
+      id="payment-form"
+      onSubmit={handleSubmit}>
       <PaymentElement />
-      <button disabled={isProcessing} id="submit">
-        <span id="button-text">{isProcessing ? "Processing" : " Pay Now"}</span>
+      <button
+        className={`sm:px-5 px-3 py-2 rounded w-full mt-5 ease-in-out duration-300 cursor-pointer ${
+          false
+            ? "bg-shade-8 text-accent cursor-default disabled"
+            : "bg-accent text-shade-1 hover:bg-highlight hover:text-shade-9"
+        }`}
+        disabled={isProcessing}
+        id="submit">
+        {isProcessing
+          ? "Processing"
+          : `Pay $${formatToUSD(
+              cart.reduce(
+                (acc, lineItem) => (acc += lineItem.vinyl.price * lineItem.qty),
+                0
+              )
+            )}`}
       </button>
       {message && <div id="payment-message">{message}</div>}
     </form>
