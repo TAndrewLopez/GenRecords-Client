@@ -153,10 +153,13 @@ const authSlice = createSlice({
   },
 });
 
+const LIVE_BASE_URL = "https://genrecords-server.onrender.com/api";
+const LOCAL_BASE_URL = "http://localhost:7000/api";
+
 //AUTH
 export const me = createAsyncThunk("me", async (thunkAPI) => {
   const authorization = localStorage.getItem("authorization");
-  const response = await fetch("http://localhost:7000/api/auth/me", {
+  const response = await fetch(`${LIVE_BASE_URL}/auth/me`, {
     method: "GET",
     headers: { authorization },
   })
@@ -166,7 +169,7 @@ export const me = createAsyncThunk("me", async (thunkAPI) => {
 });
 
 export const login = createAsyncThunk("login", async (form, thunkAPI) => {
-  const response = await fetch("http://localhost:7000/api/auth/login", {
+  const response = await fetch(`${LIVE_BASE_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(form),
@@ -201,14 +204,11 @@ export const demoLogin = createAsyncThunk(
       };
     }
 
-    const { authorization } = await fetch(
-      "http://localhost:7000/api/auth/login",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(demoForm),
-      }
-    )
+    const { authorization } = await fetch(`${LIVE_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(demoForm),
+    })
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
@@ -223,14 +223,11 @@ export const demoLogin = createAsyncThunk(
 export const createUser = createAsyncThunk(
   "createUser",
   async (form, thunkAPI) => {
-    const { authorization } = await fetch(
-      "http://localhost:7000/api/auth/signUp",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      }
-    )
+    const { authorization } = await fetch(`${LIVE_BASE_URL}/auth/signUp`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    })
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
@@ -247,7 +244,7 @@ export const updateUser = createAsyncThunk(
   async (form, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
 
-    const { user } = await fetch(`http://localhost:7000/api/auth/${form.id}`, {
+    const { user } = await fetch(`${LIVE_BASE_URL}/auth/${form.id}`, {
       method: "PUT",
       headers: {
         authorization,
@@ -268,15 +265,12 @@ export const getUserOrders = createAsyncThunk(
   async (userId, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
 
-    const { userOrders } = await fetch(
-      `http://localhost:7000/api/shop/cart/${userId}`,
-      {
-        method: "GET",
-        headers: {
-          authorization,
-        },
-      }
-    )
+    const { userOrders } = await fetch(`${LIVE_BASE_URL}/shop/cart/${userId}`, {
+      method: "GET",
+      headers: {
+        authorization,
+      },
+    })
       .then((res) => res.json())
       .catch((err) => console.error(err));
     return userOrders;
@@ -289,7 +283,7 @@ export const addLineItem = createAsyncThunk(
     const authorization = localStorage.getItem("authorization");
 
     const { itemWithContents } = await fetch(
-      `http://localhost:7000/api/shop/cart/${vinylId}`,
+      `${LIVE_BASE_URL}/shop/cart/${vinylId}`,
       {
         method: "PUT",
         headers: {
@@ -308,7 +302,7 @@ export const changeLineItemQty = createAsyncThunk(
   async (item, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
     const { updatedItem, error } = await fetch(
-      `http://localhost:7000/api/shop/cart/qty`,
+      `${LIVE_BASE_URL}/shop/cart/qty`,
       {
         method: "PUT",
         headers: {
@@ -333,7 +327,7 @@ export const removeLineItem = createAsyncThunk(
     const authorization = localStorage.getItem("authorization");
 
     const { deletedItem } = await fetch(
-      `http://localhost:7000/api/shop/cart/${lineItemId}`,
+      `${LIVE_BASE_URL}/shop/cart/${lineItemId}`,
       {
         method: "DELETE",
         headers: {

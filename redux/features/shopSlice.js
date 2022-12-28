@@ -27,10 +27,14 @@ const shopSlice = createSlice({
   },
 });
 
+const LIVE_BASE_URL = "https://genrecords-server.onrender.com/api/";
+const LOCAL_BASE_URL = "http://localhost:7000/api/";
+
 export const getShopVinyls = createAsyncThunk(
   "getShopVinyls",
   async (thunkAPI) => {
-    const response = await fetch(`http://localhost:7000/api/shop`, {
+    // const response = await fetch(`http://localhost:7000/api/shop`, {
+    const response = await fetch(`${LIVE_BASE_URL}/shop`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -42,7 +46,7 @@ export const getShopVinyls = createAsyncThunk(
 export const getSingleVinyl = createAsyncThunk(
   "getSingleVinyl",
   async (vinylId, thunkAPI) => {
-    const response = await fetch(`http://localhost:7000/api/shop/${vinylId}`, {
+    const response = await fetch(`${LIVE_BASE_URL}/shop/${vinylId}`, {
       method: "GET",
     })
       .then((res) => res.json())
