@@ -7,15 +7,18 @@ const StripePayment = ({ cart }) => {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
+  const LIVE_BASE_URL = "https://genrecords-server.onrender.com/api";
+  const LOCAL_BASE_URL = "http://localhost:7000/api";
+
   useEffect(() => {
-    fetch("http://localhost:7000/api/stripe/config").then(async (res) => {
+    fetch(`${LIVE_BASE_URL}/stripe/config`).then(async (res) => {
       const { publishableKey } = await res.json();
       setStripePromise(loadStripe(publishableKey));
     });
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:7000/api/stripe/create-payment-intent", {
+    fetch(`${LIVE_BASE_URL}/stripe/create-payment-intent`, {
       method: "POST",
       headers: {},
       body: JSON.stringify({}),
