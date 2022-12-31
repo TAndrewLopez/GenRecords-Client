@@ -39,13 +39,10 @@ const adminSlice = createSlice({
   },
 });
 
-const LIVE_BASE_URL = "https://genrecords-server.onrender.com/api";
-const LOCAL_BASE_URL = "http://localhost:7000/api";
-
 export const adminGetVinyls = createAsyncThunk(
   "adminGetVinyls",
   async (thunkAPI) => {
-    const response = await fetch(`${LIVE_BASE_URL}/shop`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/shop`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -58,7 +55,7 @@ export const adminGetUsers = createAsyncThunk(
   "adminGetUsers",
   async (thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
-    const response = await fetch(`${LIVE_BASE_URL}/auth`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth`, {
       method: "GET",
       headers: {
         authorization,

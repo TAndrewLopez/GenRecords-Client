@@ -1,9 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
-  clearErrorMessage,
-  clearSuccessMessage,
-} from "../../redux/features/authSlice";
-import {
   Header,
   Footer,
   UserProfileCard,
@@ -11,8 +7,11 @@ import {
   UserCart,
   OrderHistory,
   ToastNotification,
-  DeleteItemModal,
 } from "../components";
+import {
+  clearErrorMessage,
+  clearSuccessMessage,
+} from "../../redux/features/authSlice";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -23,6 +22,7 @@ const ProfilePage = () => {
       username,
       email,
       cart,
+      orders,
       img,
       error,
       message,
@@ -39,7 +39,7 @@ const ProfilePage = () => {
               user={{ firstName, lastName, username, email, img }}
             />
             <OrderHistory />
-            <UserCart controls title images cart={cart} />
+            <UserCart orders={orders} cart={cart} controls title images />
           </div>
           <div className="flex flex-1 flex-col items-center gap-5">
             <UserProfileForm />

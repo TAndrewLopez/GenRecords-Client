@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  legacy_createStore,
+} from "@reduxjs/toolkit";
+import { AllVinylsPage } from "../../src/pages";
 
 const authSlice = createSlice({
   name: "auth",
@@ -81,6 +86,7 @@ const authSlice = createSlice({
         return item;
       });
 
+      state.cart = [...adjustedCart];
       localStorage.setItem("localCart", JSON.stringify(adjustedCart));
     },
   },
@@ -137,7 +143,6 @@ const authSlice = createSlice({
         state.message = "Unable to modify line item. Please try again.";
         return;
       }
-
       const existingItems = state.cart.filter((item) => payload.id !== item.id);
       existingItems.push(payload);
       state.cart = [...existingItems.sort((a, b) => a.id - b.id)];
@@ -153,13 +158,10 @@ const authSlice = createSlice({
   },
 });
 
-const LIVE_BASE_URL = "https://genrecords-server.onrender.com/api";
-const LOCAL_BASE_URL = "http://localhost:7000/api";
-
 //AUTH
 export const me = createAsyncThunk("me", async (thunkAPI) => {
   const authorization = localStorage.getItem("authorization");
-  const response = await fetch(`${LIVE_BASE_URL}/auth/me`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
     method: "GET",
     headers: { authorization },
   })
@@ -169,7 +171,7 @@ export const me = createAsyncThunk("me", async (thunkAPI) => {
 });
 
 export const login = createAsyncThunk("login", async (form, thunkAPI) => {
-  const response = await fetch(`${LIVE_BASE_URL}/auth/login`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(form),
@@ -204,11 +206,14 @@ export const demoLogin = createAsyncThunk(
       };
     }
 
-    const { authorization } = await fetch(`${LIVE_BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(demoForm),
-    })
+    const { authorization } = await fetch(
+      `${import.meta.env.VITE_API_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(demoForm),
+      }
+    )
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
@@ -223,11 +228,14 @@ export const demoLogin = createAsyncThunk(
 export const createUser = createAsyncThunk(
   "createUser",
   async (form, thunkAPI) => {
-    const { authorization } = await fetch(`${LIVE_BASE_URL}/auth/signUp`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    })
+    const { authorization } = await fetch(
+      `${import.meta.env.VITE_API_URL}/auth/signUp`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      }
+    )
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
@@ -244,14 +252,17 @@ export const updateUser = createAsyncThunk(
   async (form, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
 
-    const { user } = await fetch(`${LIVE_BASE_URL}/auth/${form.id}`, {
-      method: "PUT",
-      headers: {
-        authorization,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    })
+    const { user } = await fetch(
+      `${import.meta.env.VITE_API_URL}/auth/${form.id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      }
+    )
       .then((res) => res.json())
       .catch((err) => console.error(err));
 
@@ -265,12 +276,15 @@ export const getUserOrders = createAsyncThunk(
   async (userId, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
 
-    const { userOrders } = await fetch(`${LIVE_BASE_URL}/shop/cart/${userId}`, {
-      method: "GET",
-      headers: {
-        authorization,
-      },
-    })
+    const { userOrders } = await fetch(
+      `${import.meta.env.VITE_API_URL}/shop/cart/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          authorization,
+        },
+      }
+    )
       .then((res) => res.json())
       .catch((err) => console.error(err));
     return userOrders;
@@ -283,7 +297,7 @@ export const addLineItem = createAsyncThunk(
     const authorization = localStorage.getItem("authorization");
 
     const { itemWithContents } = await fetch(
-      `${LIVE_BASE_URL}/shop/cart/${vinylId}`,
+      `${import.meta.env.VITE_API_URL}/shop/cart/${vinylId}`,
       {
         method: "PUT",
         headers: {
@@ -301,8 +315,9 @@ export const changeLineItemQty = createAsyncThunk(
   "changeLineItemQty",
   async (item, thunkAPI) => {
     const authorization = localStorage.getItem("authorization");
+
     const { updatedItem, error } = await fetch(
-      `${LIVE_BASE_URL}/shop/cart/qty`,
+      `${import.meta.env.VITE_API_URL}/shop/cart/qty`,
       {
         method: "PUT",
         headers: {
@@ -313,10 +328,11 @@ export const changeLineItemQty = createAsyncThunk(
       }
     )
       .then((res) => res.json())
-      .catch((err) => console.error("guess who", err));
+      .catch((err) => console.error(err));
     if (error) {
       return error;
     }
+
     return updatedItem;
   }
 );
@@ -327,7 +343,7 @@ export const removeLineItem = createAsyncThunk(
     const authorization = localStorage.getItem("authorization");
 
     const { deletedItem } = await fetch(
-      `${LIVE_BASE_URL}/shop/cart/${lineItemId}`,
+      `${import.meta.env.VITE_API_URL}/shop/cart/${lineItemId}`,
       {
         method: "DELETE",
         headers: {

@@ -4,9 +4,14 @@ import { Link } from "react-router-dom";
 import { Pagination } from "../../components";
 import { PlusIcon, MinusIcon } from "../assets";
 import { formatToUSD } from "../helpers";
-import { changeLineItemQty } from "../../../redux/features/authSlice";
+import {
+  changeLineItemQty,
+  changeQuantityLocally,
+  removeLineItem,
+  removeItemLocally,
+} from "../../../redux/features/authSlice";
 
-const UserCart = ({ cart, title, images, controls }) => {
+const UserCart = ({ cart, title, images, controls, orders }) => {
   const dispatch = useDispatch();
   //PAGINATION
   const [currPage, setCurrPage] = useState(1);
@@ -20,13 +25,23 @@ const UserCart = ({ cart, title, images, controls }) => {
       return (
         <button
           onClick={() => {
-            //cannot add more than what is in stock
-            dispatch(
-              changeLineItemQty({
-                id: item.id,
-                qty: item.qty + 1,
-              })
-            );
+            if (orders.length) {
+              if (item.qty < item.vinyl.stock) {
+                dispatch(
+                  changeLineItemQty({
+                    id: item.id,
+                    qty: item.qty + 1,
+                  })
+                );
+              }
+            } else {
+              dispatch(
+                changeQuantityLocally({
+                  id: item.vinyl.id,
+                  qty: item.qty + 1,
+                })
+              );
+            }
           }}
           className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300 peer">
           <PlusIcon twClass="w-2 fill-shade-2" />
@@ -36,18 +51,29 @@ const UserCart = ({ cart, title, images, controls }) => {
     return (
       <button
         onClick={() => {
-          //if you want less than 1 item, do you want to delete item
-          if (item.qty - 1 < 1) {
-            console.log("delete item");
-            return;
+          if (orders.length) {
+            if (item.qty - 1 < 1) {
+              dispatch(removeLineItem(item.id));
+            } else {
+              dispatch(
+                changeLineItemQty({
+                  id: item.id,
+                  qty: item.qty - 1,
+                })
+              );
+            }
+          } else {
+            if (item.qty - 1 < 1) {
+              dispatch(removeItemLocally(item.vinyl));
+            } else {
+              dispatch(
+                changeQuantityLocally({
+                  id: item.vinyl.id,
+                  qty: item.qty - 1,
+                })
+              );
+            }
           }
-
-          dispatch(
-            changeLineItemQty({
-              id: item.id,
-              qty: item.qty - 1,
-            })
-          );
         }}
         className="px-2 bg-shade-7 opacity-50 hover:opacity-100 hover:bg-accent ease-in-out duration-300">
         <MinusIcon twClass="w-2 fill-shade-2" />
@@ -111,6 +137,22 @@ const UserCart = ({ cart, title, images, controls }) => {
             </li>
           );
         })}
+        <li>
+          {cart.length ? (
+            <h5 className="text-xl text-center py-5 font-bold leading-none text-shade-1">
+              {currSlice.length &&
+                `Total: $${formatToUSD(
+                  cart.reduce(
+                    (acc, lineItem) =>
+                      (acc += lineItem.vinyl.price * lineItem.qty),
+                    0
+                  )
+                )}`}
+            </h5>
+          ) : (
+            ""
+          )}
+        </li>
       </ul>
 
       {currSlice.length ? (

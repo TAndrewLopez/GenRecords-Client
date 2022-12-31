@@ -85,11 +85,9 @@ const DetailedVinylCard = ({ singleVinyl, cart }) => {
               onClick={() => {
                 if (orders.length) {
                   dispatch(
-                    changeLineItemQty({ id: singleVinyl.id, qty: userQuantity })
+                    changeLineItemQty({ id: lineItem.id, qty: userQuantity })
                   );
-                }
-
-                if (!orders.length) {
+                } else {
                   dispatch(
                     changeQuantityLocally({
                       id: singleVinyl.id,

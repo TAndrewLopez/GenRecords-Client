@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         shopperBG: `url(/vinylShopper.jpg)`,
-        cassetteWallBG: `url(/cassetteWall.jpg)`,
+        recordPlayerClose: `url(/recordPlayerClose.jpg)`,
       },
       colors: {
         "shade-1": "#f8f9fa",

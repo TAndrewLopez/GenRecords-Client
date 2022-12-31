@@ -134,14 +134,14 @@ const CreateAccountForm = ({ toggle }) => {
       <div className="w-full px-3 flex items-center justify-between">
         <p
           onClick={() => toggle(false)}
-          className="text-accent hover:text-shade-1 cursor-pointer p-2">
+          className="text-accent hover:text-highlight hover:underline cursor-pointer p-2">
           Sign in instead
         </p>
         <button
           className={`md:w-32 mt-2 px-6 py-2 rounded 
           ${
             form.username && form.email && form.password && form.confirm
-              ? "bg-accent text-shade-1 hover:bg-highlight"
+              ? "bg-accent text-shade-1 hover:bg-highlight hover:text-shade-9"
               : "bg-shade-8 cursor-default"
           }
           `}

@@ -60,7 +60,8 @@ const totalOrderLineItems = (arr) => {
   const total = arr.lineItems.reduce((acc, item) => {
     return (acc += item.vinyl.price);
   }, 0);
-  return `$${formatToUSD(total)}`;
+
+  return `$${total ? formatToUSD(total) : "0.00"}`;
 };
 
 const getLocalDateFromOrderDbCreatedDate = (str) => {

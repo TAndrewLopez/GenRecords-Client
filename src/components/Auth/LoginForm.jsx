@@ -150,7 +150,7 @@ const LoginForm = ({ toggle }) => {
       <button
         className={`w-full mt-2 px-6 py-2 rounded ease-in-out duration-300 ${
           form.username && form.password
-            ? "bg-accent text-shade-1 hover:bg-highlight"
+            ? "bg-accent text-shade-1 hover:bg-highlight hover:text-shade-9"
             : "bg-shade-8 cursor-default "
         }`}
         type="submit">
