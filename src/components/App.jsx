@@ -46,7 +46,7 @@ const App = () => {
     <div className="h-screen w-full flex flex-col">
       <Routes>
         <Route index element={<LandingPage />} />
-        <Route path={"/shop"} element={<AllVinylsPage />} />
+        <Route path={"/api/shop"} element={<AllVinylsPage />} />
         <Route path={"/auth"} element={<Auth />} />
         <Route path={"/singleVinyl/:id"} element={<SingleVinylPage />} />
         <Route path={"/singleArtist/:id"} element={<SingleArtistPage />} />
