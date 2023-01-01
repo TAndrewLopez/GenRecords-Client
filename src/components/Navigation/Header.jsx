@@ -15,7 +15,7 @@ const Header = ({ headerClass }) => {
 
   const linkInfo = [
     { path: "/", name: "Home" },
-    { path: "/shop", name: "Shop Vinyls" },
+    { path: "/api/shop", name: "Shop Vinyls" },
   ];
 
   if (overlay) {
